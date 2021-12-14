@@ -27,7 +27,6 @@ public class TeacherDAO implements DAO<Teacher>{
         return teacher;
     }
 
-    @Override
     public Teacher get(int id) {
         Statement stmt = ConnectBdd.getNewStatement();
         Teacher teacher = null;
@@ -62,7 +61,7 @@ public class TeacherDAO implements DAO<Teacher>{
     public boolean add(Teacher teacher) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("INSERT INTO teacher (firstname, lastname) VALUES ('"+teacher.getFirstName()+"', '"+teacher.getLastName()+"');")
+            stmt.executeUpdate("INSERT INTO teacher (firstname, lastname) VALUES ('"+teacher.getFirstName()+"', '"+teacher.getLastName()+"');");
         } catch (SQLException e){
             e.printStackTrace();
             return false;
