@@ -1,10 +1,10 @@
 package fr.banalian.tpbdd.tpdao.dao;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface DAO<T> {
 
-    List<T> getAll();
+    ArrayList<T> getAll();
     T get(int id);
     boolean update(T t);
     boolean delete(int id);
