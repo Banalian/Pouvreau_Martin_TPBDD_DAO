@@ -42,7 +42,12 @@ public class StudentDAO implements DAO<Student>{
         return false;
     }
 
+
     @Override
+    public boolean delete(int id) {
+        return delete(String.valueOf(id));
+    }
+
     public boolean delete(String id) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {

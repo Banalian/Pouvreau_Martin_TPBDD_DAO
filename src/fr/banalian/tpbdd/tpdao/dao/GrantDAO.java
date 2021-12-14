@@ -76,7 +76,7 @@ public class GrantDAO implements DAO<Grant>{
             int id = rs.getInt("id");
             String destination = rs.getString("destination");
             int totalSeats = rs.getInt("totalseats");
-            int teacherId = rs.getInt("teacherid")
+            int teacherId = rs.getInt("teacherid");
 
             Grant grant = new Grant(id, destination, totalSeats, teacherId);
             grants.add(grant);
