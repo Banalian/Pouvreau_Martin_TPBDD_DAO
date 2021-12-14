@@ -18,7 +18,7 @@ public class ConnectBdd {
         userInfo.setProperty("password", "root");
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", userInfo);
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/erasmus", userInfo);
         } catch (SQLException e) {
             e.printStackTrace();
         }

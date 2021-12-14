@@ -1,4 +1,4 @@
-package fr.banalian.tpbdd.tpdao;
+package fr.banalian.tpbdd.tpdao.dao;
 
 import java.util.List;
 
