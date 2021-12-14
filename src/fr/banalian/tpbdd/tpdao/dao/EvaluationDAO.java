@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class EvaluationDAO implements DAO<Evaluation>{
+    /**
+     * Get all the evaluations entries
+     * @return ArrayList of evaluations
+     */
     @Override
     public ArrayList<Evaluation> getAll() {
         String query = "SELECT * FROM evaluation";
@@ -23,6 +27,11 @@ public class EvaluationDAO implements DAO<Evaluation>{
         return null;
     }
 
+    /**
+     * update an evaluation
+     * @param evaluation the evaluation to update
+     * @return true if the update is successful, false otherwise
+     */
     @Override
     public boolean update(Evaluation evaluation) {
         String query = "UPDATE evaluation SET grade = " + evaluation.getGrade() + ", teacher="+ evaluation.getTeacherId() + " WHERE id = " + evaluation.getId();
@@ -36,6 +45,11 @@ public class EvaluationDAO implements DAO<Evaluation>{
         return false;
     }
 
+    /**
+     * Delete an evaluation
+     * @param id the id of the evaluation to delete
+     * @return true if the delete is successful, false otherwise
+     */
     @Override
     public boolean delete(int id) {
         String query = "DELETE FROM evaluation WHERE id = " + id;
@@ -49,6 +63,12 @@ public class EvaluationDAO implements DAO<Evaluation>{
         return false;
     }
 
+
+    /**
+     * Add an evaluation to the database
+     * @param evaluation the evaluation to add
+     * @return true if the add is successful, false otherwise
+     */
     @Override
     public boolean add(Evaluation evaluation) {
         String query = "INSERT INTO evaluation (grade, teacher) VALUES (" + evaluation.getGrade() + ", " + evaluation.getTeacherId() + ")";
@@ -69,6 +89,11 @@ public class EvaluationDAO implements DAO<Evaluation>{
         return true;
     }
 
+    /**
+     * Get all the evaluations from a teacher
+     * @param teacherId the id of the teacher
+     * @return ArrayList of evaluations
+     */
     public ArrayList<Evaluation> getAllByTeacher(int teacherId) {
         String query = "SELECT * FROM evaluation WHERE teacher = " + teacherId;
         Statement stmt = ConnectBdd.getNewStatement();
@@ -82,7 +107,12 @@ public class EvaluationDAO implements DAO<Evaluation>{
         return null;
     }
 
-    public Evaluation getByEvaluationId(int id) {
+    /**
+     * Get a specific evaluation
+     * @param id the id of the evaluation
+     * @return the evaluation
+     */
+    public Evaluation getEvaluationById(int id) {
         String query = "SELECT * FROM evaluation WHERE id = " + id;
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
@@ -95,6 +125,12 @@ public class EvaluationDAO implements DAO<Evaluation>{
         return null;
     }
 
+    /**
+     * Update the grade of an evaluation
+     * @param id the id of the evaluation
+     * @param grade the new grade
+     * @return true if the update is successful, false otherwise
+     */
     public boolean updateGrade(int id, int grade) {
         String query = "UPDATE evaluation SET grade = " + grade + " WHERE id = " + id;
         Statement stmt = ConnectBdd.getNewStatement();
@@ -108,6 +144,12 @@ public class EvaluationDAO implements DAO<Evaluation>{
     }
 
 
+    /**
+     * Iterate through the result set and create an ArrayList of evaluations
+     * @param rs the result set
+     * @return ArrayList of evaluations
+     * @throws SQLException if an error occurs
+     */
     private ArrayList<Evaluation> iterateThroughResultSet(ResultSet rs) throws SQLException {
         ArrayList<Evaluation> evaluations = new ArrayList<>();
         while(rs.next()) {

@@ -30,6 +30,11 @@ public class ApplicationDAO implements DAO<Application> {
     }
 
 
+    /**
+     * get all the applications of a student
+     * @param id the id of the student
+     * @return ArrayList<Application> of all applications of the student
+     */
     public ArrayList<Application> getAllbyStudentId(String id) {
         ArrayList<Application> apps = new ArrayList<>();
         Statement stmt = ConnectBdd.getNewStatement();
@@ -45,6 +50,11 @@ public class ApplicationDAO implements DAO<Application> {
         return apps;
     }
 
+    /**
+     * update an application in the database
+     * @param application the application to update
+     * @return true if the application has been updated, false otherwise
+     */
     @Override
     public boolean update(Application application) {
         //update the bdd application with the new values
@@ -68,6 +78,11 @@ public class ApplicationDAO implements DAO<Application> {
 
     }
 
+    /**
+     * Delete an application from the database
+     * @param id the id of the application to delete
+     * @return true if the application has been deleted, false otherwise
+     */
     @Override
     public boolean delete(int id) {
         Statement stmt = ConnectBdd.getNewStatement();
@@ -81,6 +96,12 @@ public class ApplicationDAO implements DAO<Application> {
         return false;
     }
 
+
+    /**
+     * Add a new application in the database
+     * @param application the application to add
+     * @return true if the application has been added, false otherwise
+     */
     @Override
     public boolean add(Application application) {
         Statement stmt = ConnectBdd.getNewStatement();
@@ -147,6 +168,7 @@ public class ApplicationDAO implements DAO<Application> {
 
     /**
      * update an application of a student with the new values
+     * will update the value of the final grade based on the evaluation1 and evaluation2, getting them from the bdd
      * @param application the application to update
      * @return true if the update is successful, false otherwise
      */
@@ -207,6 +229,12 @@ public class ApplicationDAO implements DAO<Application> {
 
 
 
+    /**
+     * Iterate through the result set and create an ArrayList of Application
+     * @param rs the result set
+     * @return ArrayList of Application
+     * @throws SQLException if an error occurs
+     */
     private ArrayList<Application> iterateThroughResultSet(ResultSet rs) throws SQLException {
         ArrayList<Application> applications = new ArrayList<>();
         while(rs.next()) {

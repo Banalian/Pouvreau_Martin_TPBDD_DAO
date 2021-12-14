@@ -9,6 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CoursesDAO implements DAO<Courses> {
+
+    /**
+     * Get all the courses
+     * @return ArrayList<Courses> of all the courses
+     */
     @Override
     public ArrayList<Courses> getAll() {
         ArrayList<Courses> courses = new ArrayList<>();
@@ -24,13 +29,18 @@ public class CoursesDAO implements DAO<Courses> {
         return courses;
     }
 
+    /**
+     * Update a course
+     * @param course the course to update
+     * @return true if the update is successful, false otherwise
+     */
     @Override
-    public boolean update(Courses courses) {
-        String query = "UPDATE courses SET name = '" + courses.getName() +
-                "', ects = " + courses.getEcts() +
-                ", hours = " + courses.getHours() +
-                ", university = '" + courses.getUniversity() +
-                "' WHERE id = " + courses.getId();
+    public boolean update(Courses course) {
+        String query = "UPDATE courses SET name = '" + course.getName() +
+                "', ects = " + course.getEcts() +
+                ", hours = " + course.getHours() +
+                ", university = '" + course.getUniversity() +
+                "' WHERE id = " + course.getId();
         Statement stmt = ConnectBdd.getNewStatement();
         try {
             stmt.executeUpdate(query);
@@ -41,6 +51,11 @@ public class CoursesDAO implements DAO<Courses> {
         return true;
     }
 
+    /**
+     * Delete a course
+     * @param id id of the course to delete
+     * @return true if the delete is successful, false otherwise
+     */
     @Override
     public boolean delete(int id) {
         String query = "DELETE FROM courses WHERE id = " + id;
@@ -54,19 +69,24 @@ public class CoursesDAO implements DAO<Courses> {
         return true;
     }
 
+    /**
+     * Add a course to the database
+     * @param course the course to create
+     * @return true if the creation is successful, false otherwise
+     */
     @Override
-    public boolean add(Courses courses) {
+    public boolean add(Courses course) {
         String query = "INSERT INTO courses (name, ects, hours, university) VALUES ('" +
-                courses.getName() + "', " +
-                courses.getEcts() + ", " +
-                courses.getHours() + ", '" +
-                courses.getUniversity() + "')";
+                course.getName() + "', " +
+                course.getEcts() + ", " +
+                course.getHours() + ", '" +
+                course.getUniversity() + "')";
         Statement stmt = ConnectBdd.getNewStatement();
         try {
             stmt.executeUpdate(query);
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()) {
-                courses.setId(generatedKeys.getInt(1));
+                course.setId(generatedKeys.getInt(1));
             }else {
                 throw new SQLException("Creating user failed, no ID obtained.");
             }
@@ -77,6 +97,11 @@ public class CoursesDAO implements DAO<Courses> {
         return true;
     }
 
+    /**
+     * Get a course by its id
+     * @param id id of the course to get
+     * @return the course if it exists, null otherwise
+     */
     public Courses getByCourseId(int id) {
         String query = "SELECT * FROM courses WHERE id = " + id;
         Statement stmt = ConnectBdd.getNewStatement();
@@ -90,6 +115,12 @@ public class CoursesDAO implements DAO<Courses> {
         return null;
     }
 
+    /**
+     * get all the courses of a university from a student's application
+     * @param id the student's number
+     * @param grant the id of the grant
+     * @return an ArrayList of all the courses of the university
+     */
     public ArrayList<Courses> getByApplicationId(String id, int grant) {
         String query = "SELECT * FROM courses WHERE university IN (SELECT university FROM application WHERE studentid= " + id + " AND grant = " + grant + ")";
         Statement stmt = ConnectBdd.getNewStatement();
@@ -103,6 +134,11 @@ public class CoursesDAO implements DAO<Courses> {
         return null;
     }
 
+    /**
+     * Get all the courses of a university
+     * @param university the university's name
+     * @return an ArrayList of all the courses of the university
+     */
     public ArrayList<Courses> getByUniversity(String university) {
         String query = "SELECT * FROM courses WHERE university = '" + university + "'";
         Statement stmt = ConnectBdd.getNewStatement();
@@ -117,6 +153,12 @@ public class CoursesDAO implements DAO<Courses> {
     }
 
 
+    /**
+     * Iterate through the result set and create an ArrayList of Courses
+     * @param rs the result set
+     * @return ArrayList of Courses
+     * @throws SQLException if an error occurs
+     */
     private ArrayList<Courses> iterateThroughResultSet(ResultSet rs) throws SQLException {
         ArrayList<Courses> courses = new ArrayList<>();
         while(rs.next()) {
