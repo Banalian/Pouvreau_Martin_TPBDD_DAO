@@ -48,12 +48,26 @@ public class TeacherDAO implements DAO<Teacher>{
 
     @Override
     public boolean delete(int id) {
-        return false;
+        Statement stmt = ConnectBdd.getNewStatement();
+        try {
+            stmt.executeUpdate("DELETE FROM teacher WHERE id="+id+";");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean add(Teacher teacher) {
-        return false;
+        Statement stmt = ConnectBdd.getNewStatement();
+        try {
+            stmt.executeUpdate("INSERT INTO teacher (firstname, lastname) VALUES ('"+teacher.getFirstName()+"', '"+teacher.getLastName()+"');")
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     private ArrayList<Teacher> iterateThroughResultSet(ResultSet rs) throws SQLException {
