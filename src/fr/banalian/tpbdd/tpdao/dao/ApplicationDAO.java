@@ -2,7 +2,6 @@ package fr.banalian.tpbdd.tpdao.dao;
 
 import fr.banalian.tpbdd.tpdao.ConnectBdd;
 import fr.banalian.tpbdd.tpdao.model.Application;
-import fr.banalian.tpbdd.tpdao.model.Teacher;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
