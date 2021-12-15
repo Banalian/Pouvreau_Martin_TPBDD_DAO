@@ -20,7 +20,7 @@ public class GrantDAO implements DAO<Grant>{
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM 'grant'");
+            rs = stmt.executeQuery("SELECT * FROM erasmus.grant");
             grant = iterateThroughResultSet(rs);
         } catch (SQLException e){
             e.printStackTrace();
@@ -34,7 +34,7 @@ public class GrantDAO implements DAO<Grant>{
      */
     public boolean deleteAll() {
         Statement stmt = ConnectBdd.getNewStatement();
-        String query = "DELETE FROM 'grant'";
+        String query = "DELETE FROM erasmus.grant";
         try {
             stmt.executeUpdate(query);
             return true;
@@ -49,7 +49,7 @@ public class GrantDAO implements DAO<Grant>{
         Grant grant = null;
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM 'grant' WHERE id = "+ id +";");
+            rs = stmt.executeQuery("SELECT * FROM erasmus.grant WHERE id = "+ id +";");
             grant = iterateThroughResultSet(rs).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,7 +67,7 @@ public class GrantDAO implements DAO<Grant>{
     public boolean delete(int id) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("DELETE FROM 'grant' WHERE id="+id+";");
+            stmt.executeUpdate("DELETE FROM erasmus.grant WHERE id="+id+";");
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -80,7 +80,7 @@ public class GrantDAO implements DAO<Grant>{
     public boolean add(Grant grant) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("INSERT INTO 'grant' (destination, totalseats, teacherid) VALUES ('"+grant.getDestination()+"', "+grant.getTotalSeats()+", "+grant.getTeacherId()+";)");
+            stmt.executeUpdate("INSERT INTO erasmus.grant (destination, totalseats, teacherid) VALUES ('"+grant.getDestination()+"', "+grant.getTotalSeats()+", "+grant.getTeacherId()+";)");
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()) {
                 grant.setId(generatedKeys.getInt(1));
