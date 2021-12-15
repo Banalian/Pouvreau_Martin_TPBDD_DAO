@@ -88,7 +88,7 @@ public class StudentDAO implements DAO<Student>{
     public boolean add(Student student) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("INSERT INTO student (studentnumber, lastname, firstname, averagegrade) VALUES ('"+student.getStudentNumber()+"', '"+student.getLastName()+"', '"+student.getFirstName()+"', "+student.getAverageGrade()+";", Statement.RETURN_GENERATED_KEYS);
+            stmt.executeUpdate("INSERT INTO student (studentnumber, lastname, firstname, averagegrade) VALUES ('"+student.getStudentNumber()+"', '"+student.getLastName()+"', '"+student.getFirstName()+"', "+student.getAverageGrade()+")", Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException e){
             e.printStackTrace();
             return false;
@@ -99,10 +99,10 @@ public class StudentDAO implements DAO<Student>{
     private ArrayList<Student> iterateThroughResultSet(ResultSet rs) throws SQLException {
         ArrayList<Student> students = new ArrayList<>();
         while(rs.next()) {
-            String id = rs.getString("studentid");
+            String id = rs.getString("studentnumber");
             String lastName = rs.getString("lastname");
             String firstName = rs.getString("firstname");
-            int averageGrade = rs.getInt("averagegrade");
+            float averageGrade = rs.getFloat("averagegrade");
 
             Student student = new Student(id, lastName, firstName, averageGrade);
             students.add(student);

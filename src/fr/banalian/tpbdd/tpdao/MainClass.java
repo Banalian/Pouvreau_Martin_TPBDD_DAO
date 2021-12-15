@@ -119,7 +119,7 @@ public class MainClass {
                 System.out.println("\t\tthe teacher id is the id of the teacher who is responsible for the grant/destination");
 
                 System.out.println("\t - student");
-                System.out.println("\t\t- add <firstname : String> <lastname : String> <student number : String>");
+                System.out.println("\t\t- add <firstname : String> <lastname : String> <student number : String> <average grade : float>");
 
                 System.out.println("\t - teacher");
                 System.out.println("\t\t- add <firstname : String> <lastname : String>");
@@ -128,10 +128,11 @@ public class MainClass {
                 if(arguments.length < 5) {
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : add application <studentid : String> <grantid : int> <university : string>");
-                    return false;
+                    break;
                 }else if(arguments.length > 5) {
                     System.err.println("Too many arguments");
                     System.out.println("Usage : add application <studentid : String> <grantid : int> <university : string>");
+                    break;
                 }
                 String [] valuesApplication = new String[arguments.length - 2];
                 System.arraycopy(arguments, 2, valuesApplication, 0, arguments.length - 2);
@@ -163,9 +164,11 @@ public class MainClass {
                 if(arguments.length < 6) {
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : add courses <university : String> <name : String> <ects : int> <hours : float>");
+                    break;
                 }else if(arguments.length > 6) {
                     System.err.println("Too many arguments");
                     System.out.println("Usage : add courses <university : String> <name : String> <ects : int> <hours : float>");
+                    break;
                 }
                 String [] valuesCourses = new String[arguments.length - 2];
                 System.arraycopy(arguments, 2, valuesCourses, 0, arguments.length - 2);
@@ -187,15 +190,18 @@ public class MainClass {
 
                 break;
             case "evaluation":
-
+                System.out.println("Unsupported table, the evaluations are automatically created");
                 break;
+
             case "grant":
                 if(arguments.length < 5) {
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : add grant <destination : String> <total seats : int> <teacher id : int>");
+                    break;
                 }else if(arguments.length > 5) {
                     System.err.println("Too many arguments");
                     System.out.println("Usage : add grant <destination : String> <total seats : int> <teacher id : int>");
+                    break;
                 }
                 String [] valuesGrant = new String[arguments.length - 2];
                 System.arraycopy(arguments, 2, valuesGrant, 0, arguments.length - 2);
@@ -216,16 +222,42 @@ public class MainClass {
                 result = grantDAO.add(tempGrant);
                 break;
             case "student":
-                // TODO
+                if(arguments.length < 6) {
+                    System.err.println("Not enough arguments");
+                    System.out.println("Usage : add student <last name : String> <first name : String> <student number : String> <average grade : float>");
+                    break;
+                }else if(arguments.length > 6) {
+                    System.err.println("Too many arguments");
+                    System.out.println("Usage : add student <last name : String> <first name : String> <student number : String> <average grade : float>");
+                    break;
+                }
+                String [] valuesStudent = new String[arguments.length - 2];
+                System.arraycopy(arguments, 2, valuesStudent, 0, arguments.length - 2);
+                try {
+                    float averageGrade = Float.parseFloat(valuesStudent[3]);
+                    if(averageGrade < 0) {
+                        throw new IllegalArgumentException("average grade must be positive");
+                    }
+                }catch (NumberFormatException e) {
+                    System.err.println("The average grade must be a float");
+                }catch (IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
+                }
+
+                StudentDAO studentDAO = new StudentDAO();
+                Student tempStudent = new Student(valuesStudent[0], valuesStudent[1], valuesStudent[2], Float.parseFloat(valuesStudent[3]));
+                result = studentDAO.add(tempStudent);
                 break;
 
             case "teacher":
                 if(arguments.length < 4) {
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : add teacher <first name : String> <last name : String>");
+                    break;
                 }else if(arguments.length > 4) {
                     System.err.println("Too many arguments");
                     System.out.println("Usage : add teacher <first name : String> <last name : String>");
+                    break;
                 }
                 String [] valuesTeacher = new String[arguments.length - 2];
                 System.arraycopy(arguments, 2, valuesTeacher, 0, arguments.length - 2);
