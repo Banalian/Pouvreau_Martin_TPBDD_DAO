@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * DAO for Students. This class is used to access the database.
+ */
 public class StudentDAO implements DAO<Student>{
     @Override
     public ArrayList<Student> getAll() {
@@ -43,6 +46,11 @@ public class StudentDAO implements DAO<Student>{
     }
 
 
+    /**
+     * This method should not be used. You should use the delete(String id) method instead.
+     * @param id the id of the <T> to delete
+     * @return
+     */
     @Override
     public boolean delete(int id) {
         return delete(String.valueOf(id));

@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * DAO for Courses. This class is used to access the database.
+ */
 public class CoursesDAO implements DAO<Courses> {
 
     /**

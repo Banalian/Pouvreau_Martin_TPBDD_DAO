@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * DAO for grants. This class is used to access the database.
+ */
 public class GrantDAO implements DAO<Grant>{
 
     @Override

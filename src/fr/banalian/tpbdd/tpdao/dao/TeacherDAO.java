@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * DAO for Teachers. This class is used to access the database.
+ */
 public class TeacherDAO implements DAO<Teacher>{
 
     /**

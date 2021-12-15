@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * DAO for Evaluations. This class is used to access the database.
+ */
 public class EvaluationDAO implements DAO<Evaluation>{
     /**
      * Get all the evaluations entries
