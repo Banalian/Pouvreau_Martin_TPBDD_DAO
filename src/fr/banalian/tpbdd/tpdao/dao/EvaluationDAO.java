@@ -82,7 +82,7 @@ public class EvaluationDAO implements DAO<Evaluation>{
             if (generatedKeys.next()) {
                 evaluation.setId(generatedKeys.getInt(1));
             }else {
-                throw new SQLException("Creating user failed, no ID obtained.");
+                throw new SQLException("Creating evaluation failed, no ID obtained.");
             }
         }catch (SQLException e) {
             e.printStackTrace();

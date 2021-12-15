@@ -1,5 +1,9 @@
 package fr.banalian.tpbdd.tpdao;
 
+import fr.banalian.tpbdd.tpdao.dao.ApplicationDAO;
+import fr.banalian.tpbdd.tpdao.model.Application;
+
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -8,7 +12,7 @@ public class MainClass {
     public static void main(String[] args) {
 
         //ConnectBdd.initConnection();
-        String input = "";
+        String input;
         String [] arguments;
         Scanner sc = new Scanner(System.in);
         boolean result;
@@ -180,74 +184,84 @@ public class MainClass {
         }
 
         if(arguments.length >= 2) {
+
+            // IF you want to get all the entries of a table
             if(arguments[iToRead].equals("all")) {
-                all = true;
                 iToRead++;
                 if (arguments.length < 3) {
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : get [all] <tableName> [<Values> ...]\n Or use 'get help' for help");
                     return false;
                 }
+
+                switch (arguments[iToRead].toLowerCase()) {
+                    //TODO : add the possibilities of each table
+                    case "application":
+                        ApplicationDAO applicationDAO = new ApplicationDAO();
+                        ArrayList<Application> applications;
+                        System.out.println("Student number\tgrantId\tuniversity\tevaluation1\tevaluation2\tfinal grade");
+                        applications = applicationDAO.getAll();
+                        for(Application application : applications) {
+                            System.out.println(application.toString());
+                        }
+                        result = true;
+                        break;
+                    case "courses":
+                        // TODO
+                        break;
+                    case "evaluation":
+                        // TODO
+                        break;
+                    case "grant":
+                        // TODO
+                        break;
+                    case "student":
+                        // TODO
+
+                        break;
+                    case "teacher":
+                        // TODO
+
+                    default:
+                        System.err.println("Unknown table, type 'get help' for help");
+
+
+                }
+
+
+            }else{ //Else if you want to get a specific entry of a table
+
+                switch (arguments[iToRead].toLowerCase()) {
+                    //TODO : add the possibilities of each table
+                    case "application":
+                        // TODO
+                        break;
+                    case "courses":
+                        // TODO
+                        break;
+                    case "evaluation":
+                        // TODO
+                        break;
+                    case "grant":
+                        // TODO
+                        break;
+                    case "student":
+                        // TODO
+
+                        break;
+                    case "teacher":
+                        // TODO
+
+                    default:
+                        System.err.println("Unknown table, type 'get help' for help");
+
+
+                }
+
             }
 
-            String tableNameToRead = arguments[iToRead].toLowerCase();
-
-            switch (tableNameToRead) {
-                //TODO : add the possibilities of each table
-                case "application":
-                    // TODO
-                    if (all) {
-
-                    }else {
-
-                    }
-                    break;
-                case "courses":
-                    // TODO
-                    if (all) {
-
-                    }else {
-
-                    }
-                    break;
-                case "evaluation":
-                    // TODO
-                    if (all) {
-
-                    }else {
-
-                    }
-                    break;
-                case "grant":
-                    // TODO
-                    if (all) {
-
-                    }else {
-
-                    }
-                    break;
-                case "student":
-                    // TODO
-                    if (all) {
-
-                    }else {
-
-                    }
-                    break;
-                case "teacher":
-                    // TODO
-                    if (all) {
-
-                    }else {
-
-                    }
-                    break;
-
-                default:
-                    System.err.println("Unknown table, type 'get help' for help");
 
 
-            }
 
 
         }
