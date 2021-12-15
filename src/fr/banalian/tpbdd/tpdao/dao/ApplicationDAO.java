@@ -34,15 +34,16 @@ public class ApplicationDAO implements DAO<Application> {
 
 
     /**
-     * get all the applications of a student
+     * get all the applications of a specific student and grant
      * @param id the id of the student
+     * @param grantId the id of the grant
      * @return ArrayList<Application> of all applications of the student
      */
-    public ArrayList<Application> getAllbyStudentId(String id) {
+    public ArrayList<Application> getByStudentIdGrantId(String id, int grantId) {
         ArrayList<Application> apps = new ArrayList<>();
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
-        String query = "SELECT * FROM application WHERE studentid = " + id;
+        String query = "SELECT * FROM application WHERE studentid = '" + id + "' AND grant = " + grantId;
         try {
             rs = stmt.executeQuery(query);
             apps = iterateThroughResultSet(rs);
@@ -63,13 +64,13 @@ public class ApplicationDAO implements DAO<Application> {
         //update the bdd application with the new values
         Statement stmt = ConnectBdd.getNewStatement();
         String query =
-                "UPDATE application SET studentid = " + application.getStudentId() +
-                ", grant = " + application.getGrantId() +
+                "UPDATE application SET studentid = '" + application.getStudentId() +
+                "', `grant` = " + application.getGrantId() +
                 ", university = '" + application.getUniversity() +
                 "', evaluation1 = " + application.getEval1Id() +
                 ", evaluation2 = " + application.getEval2Id() +
                 ", finalgrade = " + application.getFinalGrade() +
-                " WHERE studentid = " + application.getStudentId();
+                " WHERE studentid = '" + application.getStudentId()+ "' AND grant = " + application.getGrantId();
         try {
             stmt.executeUpdate(query);
             return true;
@@ -83,13 +84,26 @@ public class ApplicationDAO implements DAO<Application> {
 
     /**
      * Delete an application from the database
-     * @param id the id of the application to delete
+     * WARNING: this method will throw an exception.
+     * @param id the id of the student
      * @return true if the application has been deleted, false otherwise
+     * @throws UnsupportedOperationException every time because this method is not supported
      */
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws UnsupportedOperationException{
+        throw new UnsupportedOperationException("Not supported. Use deleteStudentApplication instead.");
+    }
+
+
+    /**
+     * Delete an application from the database
+     * @param studentId the id of the student
+     * @param grantId the id of the grant associated to the application
+     * @return true if the application has been deleted, false otherwise
+     */
+    public boolean deleteStudentApplication(String studentId, int grantId) {
         Statement stmt = ConnectBdd.getNewStatement();
-        String query = "DELETE FROM application WHERE studentid = " + id;
+        String query = "DELETE FROM application WHERE studentid = '" + studentId + "' AND grant = " + grantId;
         try {
             stmt.executeUpdate(query);
             return true;
@@ -109,7 +123,7 @@ public class ApplicationDAO implements DAO<Application> {
     public boolean add(Application application) {
         Statement stmt = ConnectBdd.getNewStatement();
         String query =
-                "INSERT INTO application (studentid, grant, university, evaluation1, evaluation2, finalgrade) " +
+                "INSERT INTO application (studentid, `grant`, university, evaluation1, evaluation2, finalgrade) " +
                 "VALUES (" + application.getStudentId() + ", " +
                         application.getGrantId() + ", '" +
                         application.getUniversity() + "', " +
@@ -197,7 +211,7 @@ public class ApplicationDAO implements DAO<Application> {
             return false;
         }
 
-        String queryStudent = "SELECT * FROM student WHERE id = " + application.getStudentId() + " AND grant = " + application.getGrantId();
+        String queryStudent = "SELECT * FROM student WHERE studentnumber = " + application.getStudentId();
         ResultSet rsStudent;
         try {
             rsStudent = stmt.executeQuery(queryStudent);
