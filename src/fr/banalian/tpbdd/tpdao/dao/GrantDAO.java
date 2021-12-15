@@ -80,7 +80,7 @@ public class GrantDAO implements DAO<Grant>{
     public boolean add(Grant grant) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("INSERT INTO erasmus.grant (destination, totalseats, teacherid) VALUES ('"+grant.getDestination()+"', "+grant.getTotalSeats()+", "+grant.getTeacherId()+";)");
+            stmt.executeUpdate("INSERT INTO erasmus.grant (destination, totalseats, teacher) VALUES ('"+grant.getDestination()+"', "+grant.getTotalSeats()+", "+grant.getTeacherId()+")", Statement.RETURN_GENERATED_KEYS);
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()) {
                 grant.setId(generatedKeys.getInt(1));
@@ -101,7 +101,7 @@ public class GrantDAO implements DAO<Grant>{
             int id = rs.getInt("id");
             String destination = rs.getString("destination");
             int totalSeats = rs.getInt("totalseats");
-            int teacherId = rs.getInt("teacherid");
+            int teacherId = rs.getInt("teacher");
 
             Grant grant = new Grant(id, destination, totalSeats, teacherId);
             grants.add(grant);

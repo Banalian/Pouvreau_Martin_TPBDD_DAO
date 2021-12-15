@@ -11,7 +11,7 @@ public class MainClass {
 
     public static void main(String[] args) {
 
-        //ConnectBdd.initConnection();
+        ConnectBdd.initConnection();
         String input;
         String [] arguments;
         Scanner sc = new Scanner(System.in);
@@ -86,7 +86,7 @@ public class MainClass {
         } while (!exit);
 
 
-        //ConnectBdd.closeConnection();
+        ConnectBdd.closeConnection();
     }
 
     public static boolean add(String [] arguments) {
@@ -125,22 +125,113 @@ public class MainClass {
                 System.out.println("\t\t- add <firstname : String> <lastname : String>");
 
             case "application":
-                // TODO
+                if(arguments.length < 5) {
+                    System.err.println("Not enough arguments");
+                    System.out.println("Usage : add application <studentid : String> <grantid : int> <university : string>");
+                    return false;
+                }else if(arguments.length > 5) {
+                    System.err.println("Too many arguments");
+                    System.out.println("Usage : add application <studentid : String> <grantid : int> <university : string>");
+                }
+                String [] valuesApplication = new String[arguments.length - 2];
+                System.arraycopy(arguments, 2, valuesApplication, 0, arguments.length - 2);
+                try {
+                    int grantId = Integer.parseInt(valuesApplication[1]);
+                    if(grantId < 0) {
+                        throw new IllegalArgumentException("grantid must be positive");
+                    }
+                }catch (NumberFormatException e) {
+                    System.err.println("The grant id must be an integer");
+                    return false;
+                }catch (IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
+                }
+
+                EvaluationDAO evaluationDAO = new EvaluationDAO();
+                //TODO : handle the teacher id request
+                Evaluation evaluation1 = new Evaluation(0, 0);
+                evaluationDAO.add(evaluation1);
+                Evaluation evaluation2 = new Evaluation(0, 0);
+                evaluationDAO.add(evaluation1);
+
+                ApplicationDAO applicationDAO = new ApplicationDAO();
+                Application temp = new Application(valuesApplication[0], Integer.parseInt(valuesApplication[1]), valuesApplication[2], evaluation1.getId(), evaluation2.getId(), 0);
+                result = applicationDAO.add(temp);
                 break;
+
             case "courses":
-                // TODO
+                if(arguments.length < 6) {
+                    System.err.println("Not enough arguments");
+                    System.out.println("Usage : add courses <university : String> <name : String> <ects : int> <hours : float>");
+                }else if(arguments.length > 6) {
+                    System.err.println("Too many arguments");
+                    System.out.println("Usage : add courses <university : String> <name : String> <ects : int> <hours : float>");
+                }
+                String [] valuesCourses = new String[arguments.length - 2];
+                System.arraycopy(arguments, 2, valuesCourses, 0, arguments.length - 2);
+                try {
+                    int ects = Integer.parseInt(valuesCourses[2]);
+                    float hours = Float.parseFloat(valuesCourses[3]);
+                    if(ects < 0 || hours < 0) {
+                        throw new IllegalArgumentException("ects and hours must be positive");
+                    }
+                }catch (NumberFormatException e) {
+                    System.err.println("The ects and hours must be an integer");
+                }catch (IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
+                }
+
+                CoursesDAO courseDAO = new CoursesDAO();
+                Courses tempCourse = new Courses(valuesCourses[1], Integer.parseInt(valuesCourses[2]), Float.parseFloat(valuesCourses[3]), valuesCourses[0]);
+                result = courseDAO.add(tempCourse);
+
                 break;
             case "evaluation":
-                // TODO
+
                 break;
             case "grant":
-                // TODO
+                if(arguments.length < 5) {
+                    System.err.println("Not enough arguments");
+                    System.out.println("Usage : add grant <destination : String> <total seats : int> <teacher id : int>");
+                }else if(arguments.length > 5) {
+                    System.err.println("Too many arguments");
+                    System.out.println("Usage : add grant <destination : String> <total seats : int> <teacher id : int>");
+                }
+                String [] valuesGrant = new String[arguments.length - 2];
+                System.arraycopy(arguments, 2, valuesGrant, 0, arguments.length - 2);
+                try {
+                    int totalSeats = Integer.parseInt(valuesGrant[1]);
+                    int teacherId = Integer.parseInt(valuesGrant[2]);
+                    if(teacherId < 0 || totalSeats < 0) {
+                        throw new IllegalArgumentException("teacher id and total seats must be positive");
+                    }
+                }catch (NumberFormatException e) {
+                    System.err.println("The teacher id and total seats must be an integer");
+                } catch (IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
+                }
+
+                GrantDAO grantDAO = new GrantDAO();
+                Grant tempGrant = new Grant(valuesGrant[0], Integer.parseInt(valuesGrant[1]), Integer.parseInt(valuesGrant[2]));
+                result = grantDAO.add(tempGrant);
                 break;
             case "student":
                 // TODO
                 break;
+
             case "teacher":
-                // TODO
+                if(arguments.length < 4) {
+                    System.err.println("Not enough arguments");
+                    System.out.println("Usage : add teacher <first name : String> <last name : String>");
+                }else if(arguments.length > 4) {
+                    System.err.println("Too many arguments");
+                    System.out.println("Usage : add teacher <first name : String> <last name : String>");
+                }
+                String [] valuesTeacher = new String[arguments.length - 2];
+                System.arraycopy(arguments, 2, valuesTeacher, 0, arguments.length - 2);
+                TeacherDAO teacherDAO = new TeacherDAO();
+                Teacher tempTeacher = new Teacher(valuesTeacher[0], valuesTeacher[1]);
+                result = teacherDAO.add(tempTeacher);
                 break;
 
             default:

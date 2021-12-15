@@ -80,7 +80,7 @@ public class TeacherDAO implements DAO<Teacher>{
     public boolean add(Teacher teacher) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("INSERT INTO teacher (firstname, lastname) VALUES ('"+teacher.getFirstName()+"', '"+teacher.getLastName()+"');");
+            stmt.executeUpdate("INSERT INTO teacher (firstname, lastname) VALUES ('"+teacher.getFirstName()+"', '"+teacher.getLastName()+"');", Statement.RETURN_GENERATED_KEYS);
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()) {
                 teacher.setId(generatedKeys.getInt(1));

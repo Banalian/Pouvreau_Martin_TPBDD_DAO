@@ -88,7 +88,7 @@ public class StudentDAO implements DAO<Student>{
     public boolean add(Student student) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("INSERT INTO student (studentnumber, lastname, firstname, averagegrade) VALUES ('"+student.getStudentNumber()+"', '"+student.getLastName()+"', '"+student.getFirstName()+"', "+student.getAverageGrade()+";");
+            stmt.executeUpdate("INSERT INTO student (studentnumber, lastname, firstname, averagegrade) VALUES ('"+student.getStudentNumber()+"', '"+student.getLastName()+"', '"+student.getFirstName()+"', "+student.getAverageGrade()+";", Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException e){
             e.printStackTrace();
             return false;

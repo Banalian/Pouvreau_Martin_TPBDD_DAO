@@ -93,7 +93,7 @@ public class EvaluationDAO implements DAO<Evaluation>{
         String query = "INSERT INTO evaluation (grade, teacher) VALUES (" + evaluation.getGrade() + ", " + evaluation.getTeacherId() + ")";
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate(query);
+            stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()) {
                 evaluation.setId(generatedKeys.getInt(1));

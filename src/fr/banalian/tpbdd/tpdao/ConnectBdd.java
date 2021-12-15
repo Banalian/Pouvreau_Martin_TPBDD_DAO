@@ -58,7 +58,7 @@ public class ConnectBdd {
      */
     public static PreparedStatement getNewPreparedStatement(String sql) {
         try {
-            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -17,6 +17,14 @@ public class Application {
         this.finalGrade = finalGrade;
     }
 
+    public Application(String studentId, int grantId, String university) {
+        this.studentId = studentId;
+        this.grantId = grantId;
+        this.university = university;
+    }
+
+
+
     public String toString() {
         return  "\t" + studentId + "\t\t" + grantId + "\t\t" + university + "\t\t" + eval1Id + "\t\t" + eval2Id + "\t\t" + finalGrade;
     }

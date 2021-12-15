@@ -102,7 +102,7 @@ public class CoursesDAO implements DAO<Courses> {
                 course.getUniversity() + "')";
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate(query);
+            stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()) {
                 course.setId(generatedKeys.getInt(1));
