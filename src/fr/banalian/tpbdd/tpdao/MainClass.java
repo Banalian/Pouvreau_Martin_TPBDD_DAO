@@ -1,7 +1,7 @@
 package fr.banalian.tpbdd.tpdao;
 
-import fr.banalian.tpbdd.tpdao.dao.ApplicationDAO;
-import fr.banalian.tpbdd.tpdao.model.Application;
+import fr.banalian.tpbdd.tpdao.dao.*;
+import fr.banalian.tpbdd.tpdao.model.*;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -195,11 +195,10 @@ public class MainClass {
                 }
 
                 switch (arguments[iToRead].toLowerCase()) {
-                    //TODO : add the possibilities of each table
                     case "application":
                         ApplicationDAO applicationDAO = new ApplicationDAO();
                         ArrayList<Application> applications;
-                        System.out.println("Student number\tgrantId\tuniversity\tevaluation1\tevaluation2\tfinal grade");
+                        System.out.println("|\tStudent number\t|\tGrantId\t|\tUniversity\t|\tEvaluation 1\t|\tEvaluation 2\t|\tFinal grade\t|");
                         applications = applicationDAO.getAll();
                         for(Application application : applications) {
                             System.out.println(application.toString());
@@ -207,20 +206,50 @@ public class MainClass {
                         result = true;
                         break;
                     case "courses":
-                        // TODO
+                        CoursesDAO coursesDAO = new CoursesDAO();
+                        ArrayList<Courses> courses;
+                        System.out.println("|\tId\t|\tName\t|\tHours\t|\tECTS\t|\tUniversity\t|");
+                        courses = coursesDAO.getAll();
+                        for(Courses course : courses) {
+                            System.out.println(course.toString());
+                        }
+                        result = true;
                         break;
                     case "evaluation":
-                        // TODO
+                        EvaluationDAO evaluationDAO = new EvaluationDAO();
+                        ArrayList<Evaluation> evaluations;
+                        System.out.println("|\tId\t|\tGrade\t|\tTeacher ID\t|");
+                        evaluations = evaluationDAO.getAll();
+                        for(Evaluation evaluation : evaluations){
+                            System.out.println(evaluation.toString());
+                        }
                         break;
                     case "grant":
-                        // TODO
+                        GrantDAO grantDAO = new GrantDAO();
+                        ArrayList<Grant> grants;
+                        System.out.println("|\tId\t|\tDestination\t|\tTotal Seats\t|\tTeacher ID\t|");
+                        grants = grantDAO.getAll();
+                        for(Grant grant : grants){
+                            System.out.println(grant.toString());
+                        }
                         break;
                     case "student":
-                        // TODO
-
+                        StudentDAO studentDAO = new StudentDAO();
+                        ArrayList<Student> students;
+                        System.out.println("|\tStudent Number\t|\tLast Name\t|\tFirst Name\t|\tAverage Grade\t|");
+                        students = studentDAO.getAll();
+                        for(Student student : students){
+                            System.out.println(student.toString());
+                        }
                         break;
                     case "teacher":
-                        // TODO
+                        TeacherDAO teacherDAO = new TeacherDAO();
+                        ArrayList<Teacher> teachers;
+                        System.out.println("|\tId\t|\tLast Name\t|\tFirst Name\t|");
+                        teachers = teacherDAO.getAll();
+                        for(Teacher teacher : teachers){
+                            System.out.println(teacher.toString());
+                        }
 
                     default:
                         System.err.println("Unknown table, type 'get help' for help");
