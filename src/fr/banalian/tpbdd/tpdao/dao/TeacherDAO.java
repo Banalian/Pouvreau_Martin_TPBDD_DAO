@@ -20,7 +20,7 @@ public class TeacherDAO implements DAO<Teacher>{
     public ArrayList<Teacher> getAll() {
         ArrayList<Teacher> teacher = new ArrayList<>();
         Statement stmt = ConnectBdd.getNewStatement();
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM teacher");
             teacher = iterateThroughResultSet(rs);
@@ -33,7 +33,7 @@ public class TeacherDAO implements DAO<Teacher>{
     public Teacher get(int id) {
         Statement stmt = ConnectBdd.getNewStatement();
         Teacher teacher = null;
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM teacher WHERE id = "+ id +";");
             teacher = iterateThroughResultSet(rs).get(0);
@@ -65,7 +65,13 @@ public class TeacherDAO implements DAO<Teacher>{
         Statement stmt = ConnectBdd.getNewStatement();
         try {
             stmt.executeUpdate("INSERT INTO teacher (firstname, lastname) VALUES ('"+teacher.getFirstName()+"', '"+teacher.getLastName()+"');");
-        } catch (SQLException e){
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                teacher.setId(generatedKeys.getInt(1));
+            }else {
+                throw new SQLException("Creating teacher failed, no ID obtained.");
+            }
+        }catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -73,7 +79,7 @@ public class TeacherDAO implements DAO<Teacher>{
     }
 
     private ArrayList<Teacher> iterateThroughResultSet(ResultSet rs) throws SQLException {
-        ArrayList<Teacher> teachers = new ArrayList<Teacher>();
+        ArrayList<Teacher> teachers = new ArrayList<>();
         while(rs.next()) {
             int id = rs.getInt("id");
             String lastName = rs.getString("lastname");

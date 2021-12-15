@@ -16,11 +16,11 @@ public class GrantDAO implements DAO<Grant>{
 
     @Override
     public ArrayList<Grant> getAll() {
-        ArrayList<Grant> grant = new ArrayList<Grant>();
+        ArrayList<Grant> grant = new ArrayList<>();
         Statement stmt = ConnectBdd.getNewStatement();
-        ResultSet rs = null;
+        ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM grant");
+            rs = stmt.executeQuery("SELECT * FROM 'grant'");
             grant = iterateThroughResultSet(rs);
         } catch (SQLException e){
             e.printStackTrace();
@@ -31,9 +31,9 @@ public class GrantDAO implements DAO<Grant>{
     public Grant get(int id) {
         Statement stmt = ConnectBdd.getNewStatement();
         Grant grant = null;
-        ResultSet rs = null;
+        ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM grant WHERE id = "+ id +";");
+            rs = stmt.executeQuery("SELECT * FROM 'grant' WHERE id = "+ id +";");
             grant = iterateThroughResultSet(rs).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class GrantDAO implements DAO<Grant>{
     public boolean delete(int id) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("DELETE FROM grant WHERE id="+id+";");
+            stmt.executeUpdate("DELETE FROM 'grant' WHERE id="+id+";");
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -64,8 +64,14 @@ public class GrantDAO implements DAO<Grant>{
     public boolean add(Grant grant) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("INSERT INTO grant (destination, totalseats, teacherid) VALUES ('"+grant.getDestination()+"', "+grant.getTotalSeats()+", "+grant.getTeacherId()+";)");
-        } catch (SQLException e){
+            stmt.executeUpdate("INSERT INTO 'grant' (destination, totalseats, teacherid) VALUES ('"+grant.getDestination()+"', "+grant.getTotalSeats()+", "+grant.getTeacherId()+";)");
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                grant.setId(generatedKeys.getInt(1));
+            }else {
+                throw new SQLException("Creating grant failed, no ID obtained.");
+            }
+        }catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -74,7 +80,7 @@ public class GrantDAO implements DAO<Grant>{
     }
 
     private ArrayList<Grant> iterateThroughResultSet(ResultSet rs) throws SQLException {
-        ArrayList<Grant> grants = new ArrayList<Grant>();
+        ArrayList<Grant> grants = new ArrayList<>();
         while(rs.next()) {
             int id = rs.getInt("id");
             String destination = rs.getString("destination");
