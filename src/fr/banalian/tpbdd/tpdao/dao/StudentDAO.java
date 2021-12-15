@@ -17,7 +17,7 @@ public class StudentDAO implements DAO<Student>{
     public ArrayList<Student> getAll() {
         ArrayList<Student> student = new ArrayList<>();
         Statement stmt = ConnectBdd.getNewStatement();
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM student");
             student = iterateThroughResultSet(rs);
@@ -27,10 +27,26 @@ public class StudentDAO implements DAO<Student>{
         return student;
     }
 
+    /**
+     * get a connection to the database from connectBdd and delete all entry from the table
+     * @return true if executed, false if errors found
+     */
+    public boolean deleteAll() {
+        Statement stmt = ConnectBdd.getNewStatement();
+        String query = "DELETE FROM student";
+        try {
+            stmt.executeUpdate(query);
+            return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public Student get(String id) {
         Statement stmt = ConnectBdd.getNewStatement();
         Student student = null;
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM student WHERE studentnumber = "+ id +";");
             student = iterateThroughResultSet(rs).get(0);
@@ -49,7 +65,7 @@ public class StudentDAO implements DAO<Student>{
     /**
      * This method should not be used. You should use the delete(String id) method instead.
      * @param id the id of the <T> to delete
-     * @return
+     * @return true if executed, false if errors found
      */
     @Override
     public boolean delete(int id) {
@@ -81,7 +97,7 @@ public class StudentDAO implements DAO<Student>{
     }
 
     private ArrayList<Student> iterateThroughResultSet(ResultSet rs) throws SQLException {
-        ArrayList<Student> students = new ArrayList<Student>();
+        ArrayList<Student> students = new ArrayList<>();
         while(rs.next()) {
             String id = rs.getString("studentid");
             String lastName = rs.getString("lastname");

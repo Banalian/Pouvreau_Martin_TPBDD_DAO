@@ -28,6 +28,22 @@ public class GrantDAO implements DAO<Grant>{
         return grant;
     }
 
+    /**
+     * get a connection to the database from connectBdd and delete all entry from the table
+     * @return true if executed, false if errors found
+     */
+    public boolean deleteAll() {
+        Statement stmt = ConnectBdd.getNewStatement();
+        String query = "DELETE FROM 'grant'";
+        try {
+            stmt.executeUpdate(query);
+            return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public Grant get(int id) {
         Statement stmt = ConnectBdd.getNewStatement();
         Grant grant = null;

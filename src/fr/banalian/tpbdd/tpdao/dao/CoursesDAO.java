@@ -33,6 +33,22 @@ public class CoursesDAO implements DAO<Courses> {
     }
 
     /**
+     * get a connection to the database from connectBdd and delete all entry from the table
+     * @return true if executed, false if errors found
+     */
+    public boolean deleteAll() {
+        Statement stmt = ConnectBdd.getNewStatement();
+        String query = "DELETE FROM courses";
+        try {
+            stmt.executeUpdate(query);
+            return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
      * Update a course
      * @param course the course to update
      * @return true if the update is successful, false otherwise
