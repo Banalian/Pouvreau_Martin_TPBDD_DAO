@@ -11,6 +11,15 @@ public class Evaluation {
         this.teacherId = teacherId;
     }
 
+    public Evaluation(float grade, int teacherId) {
+        this.grade = grade;
+        this.teacherId = teacherId;
+    }
+
+    public String toString() {
+        return id + "\t" + grade + "\t" + teacherId;
+    }
+
     public int getId() {
         return id;
     }

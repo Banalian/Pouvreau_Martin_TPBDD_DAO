@@ -15,6 +15,17 @@ public class Courses {
         this.university = university;
     }
 
+    public Courses(String name, int ects, float hours, String university) {
+        this.name = name;
+        this.ects = ects;
+        this.hours = hours;
+        this.university = university;
+    }
+
+    public String toString() {
+        return id + "\t" + name + "\t" + hours + "\t" + ects + "\t" + university;
+    }
+
     public int getId() {
         return id;
     }

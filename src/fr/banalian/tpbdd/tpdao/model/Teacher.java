@@ -5,14 +5,19 @@ public class Teacher {
     private String lastName;
     private String firstName;
 
-    public Teacher(int id) {
-        this.id = id;
-    }
-
     public Teacher(int id, String lastName, String firstName) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
+    }
+
+    public Teacher(String lastName, String firstName) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+    }
+
+    public String toString() {
+        return id + "\t" + lastName + "\t" + firstName;
     }
 
     public int getId() {
