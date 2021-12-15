@@ -14,7 +14,7 @@ public class Student {
     }
 
     public String toString(){
-        return studentNumber + "\t" + lastName + "\t" + firstName + "\t" + averageGrade;
+        return "\t" + studentNumber + "\t\t" + lastName + "\t\t" + firstName + "\t\t" + averageGrade;
     }
 
     public String getLastName() {

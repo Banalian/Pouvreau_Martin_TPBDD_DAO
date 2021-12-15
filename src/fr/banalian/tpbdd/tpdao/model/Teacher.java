@@ -17,7 +17,7 @@ public class Teacher {
     }
 
     public String toString() {
-        return id + "\t" + lastName + "\t" + firstName;
+        return "\t" + id + "\t\t" + lastName + "\t\t" + firstName;
     }
 
     public int getId() {

@@ -223,6 +223,7 @@ public class MainClass {
                         for(Evaluation evaluation : evaluations){
                             System.out.println(evaluation.toString());
                         }
+                        result = true;
                         break;
                     case "grant":
                         GrantDAO grantDAO = new GrantDAO();
@@ -232,6 +233,7 @@ public class MainClass {
                         for(Grant grant : grants){
                             System.out.println(grant.toString());
                         }
+                        result = true;
                         break;
                     case "student":
                         StudentDAO studentDAO = new StudentDAO();
@@ -241,6 +243,7 @@ public class MainClass {
                         for(Student student : students){
                             System.out.println(student.toString());
                         }
+                        result = true;
                         break;
                     case "teacher":
                         TeacherDAO teacherDAO = new TeacherDAO();
@@ -250,6 +253,8 @@ public class MainClass {
                         for(Teacher teacher : teachers){
                             System.out.println(teacher.toString());
                         }
+                        result = true;
+                        break;
 
                     default:
                         System.err.println("Unknown table, type 'get help' for help");

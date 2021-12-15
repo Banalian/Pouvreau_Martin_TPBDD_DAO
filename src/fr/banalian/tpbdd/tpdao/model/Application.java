@@ -18,7 +18,7 @@ public class Application {
     }
 
     public String toString() {
-        return studentId + "\t" + grantId + "\t" + university + "\t" + eval1Id + "\t" + eval2Id + "\t" + finalGrade;
+        return  "\t" + studentId + "\t\t" + grantId + "\t\t" + university + "\t\t" + eval1Id + "\t\t" + eval2Id + "\t\t" + finalGrade;
     }
 
     public String getStudentId() {

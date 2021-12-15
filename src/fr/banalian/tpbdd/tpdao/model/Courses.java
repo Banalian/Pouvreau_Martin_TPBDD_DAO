@@ -23,7 +23,7 @@ public class Courses {
     }
 
     public String toString() {
-        return id + "\t" + name + "\t" + hours + "\t" + ects + "\t" + university;
+        return "\t" + id + "\t\t" + name + "\t\t" + hours + "\t\t" + ects + "\t\t" + university;
     }
 
     public int getId() {

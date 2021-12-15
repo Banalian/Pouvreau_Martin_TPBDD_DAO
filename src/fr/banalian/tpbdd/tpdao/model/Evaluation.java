@@ -17,7 +17,7 @@ public class Evaluation {
     }
 
     public String toString() {
-        return id + "\t" + grade + "\t" + teacherId;
+        return "\t" + id + "\t\t" + grade + "\t\t" + teacherId;
     }
 
     public int getId() {

@@ -20,7 +20,7 @@ public class Grant {
     }
 
     public String toString() {
-        return id + "\t" + destination + "\t" + totalSeats + "\t" + teacherId;
+        return "\t" + id + "\t\t" + destination + "\t\t" + totalSeats + "\t\t" + teacherId;
     }
 
     public int getId() {
