@@ -13,6 +13,10 @@ public class Student {
         this.averageGrade = averageGrade;
     }
 
+    public String toString(){
+        return studentNumber + "\t" + lastName + "\t" + firstName + "\t" + averageGrade;
+    }
+
     public String getLastName() {
         return lastName;
     }

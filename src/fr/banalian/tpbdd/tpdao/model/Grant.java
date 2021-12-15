@@ -13,6 +13,16 @@ public class Grant {
         this.teacherId = teacherId;
     }
 
+    public Grant(String destination, int totalSeats, int teacherId) {
+        this.destination = destination;
+        this.totalSeats = totalSeats;
+        this.teacherId = teacherId;
+    }
+
+    public String toString() {
+        return id + "\t" + destination + "\t" + totalSeats + "\t" + teacherId;
+    }
+
     public int getId() {
         return id;
     }
