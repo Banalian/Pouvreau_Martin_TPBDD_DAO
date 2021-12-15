@@ -91,7 +91,7 @@ public class CoursesDAO implements DAO<Courses> {
             if (generatedKeys.next()) {
                 course.setId(generatedKeys.getInt(1));
             }else {
-                throw new SQLException("Creating user failed, no ID obtained.");
+                throw new SQLException("Creating course failed, no ID obtained.");
             }
         }catch (SQLException e) {
             e.printStackTrace();
