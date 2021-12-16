@@ -127,7 +127,12 @@ public class CoursesDAO implements DAO<Courses> {
         ResultSet rs;
         try {
             rs = stmt.executeQuery(query);
-           return iterateThroughResultSet(rs).get(0);
+            if(rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs).get(0);
+            }else{
+                return null;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -146,7 +151,13 @@ public class CoursesDAO implements DAO<Courses> {
         ResultSet rs;
         try {
             rs = stmt.executeQuery(query);
-            return iterateThroughResultSet(rs);
+            if (rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs);
+            }else{
+                return null;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -164,7 +175,12 @@ public class CoursesDAO implements DAO<Courses> {
         ResultSet rs;
         try {
             rs = stmt.executeQuery(query);
-            return iterateThroughResultSet(rs);
+            if (rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs);
+            }else{
+                return null;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

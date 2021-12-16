@@ -89,6 +89,9 @@ public class MainClass {
         ConnectBdd.closeConnection();
     }
 
+    //=====================================ADD=========================================
+
+
     public static boolean add(String [] arguments) {
         if(arguments.length < 2) {
             System.err.println("Not enough arguments");
@@ -274,6 +277,8 @@ public class MainClass {
         return result;
     }
 
+    //=====================================GET=========================================
+
     public static boolean get(String [] arguments) {
         boolean result = false;
         boolean all = false;
@@ -281,13 +286,14 @@ public class MainClass {
 
         if(arguments.length < 2) {
             System.err.println("Not enough arguments");
-            System.out.println("Usage : get [all] <tableName> [<Values> ...]\n Or use 'get help' for help");
+            System.out.println("Usage : get [all] <tableName> [<colName> <value>]\n Or use 'get help' for help");
             return false;
         }
 
         String tableName = arguments[1].toLowerCase();
 
         if(tableName.equals("help")) {
+            System.out.println("Usage : get [all] <tableName> [<colName> <value>]\n Or use 'get help' for help");
             System.out.println("Add 'all' to get all the entries of a table");
             System.out.println("for example : get all student\n");
 
@@ -313,7 +319,7 @@ public class MainClass {
                 iToRead++;
                 if (arguments.length < 3) {
                     System.err.println("Not enough arguments");
-                    System.out.println("Usage : get [all] <tableName> [<Values> ...]\n Or use 'get help' for help");
+                    System.out.println("Usage : get [all] <tableName> [<colName> <value>]\n Or use 'get help' for help");
                     return false;
                 }
 
@@ -413,13 +419,81 @@ public class MainClass {
 
             }else{ //Else if you want to get a specific entry of a table
 
+                if (arguments.length < 4) {
+                    //TODO : only show available columns
+                    System.err.println("Not enough arguments");
+                    System.out.println("Usage : get [all] <tableName> <colName> <value>\n Or use 'get help' for help");
+                    System.out.println("Available columns per table : ");
+                    System.out.println("\t- student : studentNumber, lastName, firstName, averageGrade");
+                    System.out.println("\t- teacher : id, lastName, firstName");
+                    System.out.println("\t- evaluation : id, grade, teacherId");
+                    System.out.println("\t- grant : id, destination, totalSeats, teacherId");
+                    System.out.println("\t- course : id, university");
+                    System.out.println("\t- application : studentid, grant, university");
+                    return false;
+                }
+
                 switch (arguments[iToRead].toLowerCase()) {
                     //TODO : add the possibilities of each table
                     case "application":
                         // TODO
                         break;
                     case "courses":
-                        // TODO
+                        switch (arguments[iToRead + 1].toLowerCase()) {
+                            case "id":
+                                //check if the value is an integer
+                                if(isInteger(arguments[iToRead + 2])){
+                                    CoursesDAO courseDAO = new CoursesDAO();
+                                    Courses course = courseDAO.getByCourseId(Integer.parseInt(arguments[iToRead + 2]));
+                                    if (course != null) {
+
+                                        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n",
+                                                "Id",
+                                                "University",
+                                                "Name",
+                                                "ECTS",
+                                                "Hours");
+
+                                        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n",
+                                                course.getId(),
+                                                course.getUniversity(),
+                                                course.getName(),
+                                                course.getEcts(),
+                                                course.getHours());
+                                        result = true;
+                                    }else{
+                                        System.err.println("No course found with this id");
+                                    }
+                                }
+                                break;
+
+                            case "university":
+                                CoursesDAO courseDAO = new CoursesDAO();
+                                ArrayList<Courses> courses = courseDAO.getByUniversity(arguments[iToRead + 2]);
+                                if(courses!=null){
+                                    System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n",
+                                            "Id",
+                                            "University",
+                                            "Name",
+                                            "ECTS",
+                                            "Hours");
+
+                                    for(Courses course : courses){
+                                        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n",
+                                                course.getId(),
+                                                course.getUniversity(),
+                                                course.getName(),
+                                                course.getEcts(),
+                                                course.getHours());
+                                    }
+                                    result = true;
+                                }else{
+                                    System.err.println("No course found with this university");
+                                }
+                                break;
+
+
+                        }
                         break;
                     case "evaluation":
                         // TODO
@@ -466,5 +540,18 @@ public class MainClass {
     }
 
 
+    private static boolean isInteger(String argument) {
+        try {
+            Integer.parseInt(argument);
+            return true;
+        } catch (NumberFormatException e) {
+            System.err.println("The value '"+ argument + "' is not an integer");
+            return false;
+        }
+    }
+
 
 }
+
+
+
