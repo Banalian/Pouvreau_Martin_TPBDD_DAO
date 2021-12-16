@@ -321,60 +321,85 @@ public class MainClass {
                     case "application":
                         ApplicationDAO applicationDAO = new ApplicationDAO();
                         ArrayList<Application> applications;
-                        System.out.println("|\tStudent number\t|\tGrantId\t|\tUniversity\t|\tEvaluation 1\t|\tEvaluation 2\t|\tFinal grade\t|");
+                        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n","Student number","GrantId","University","Evaluation 1","Evaluation 2","Final grade");
                         applications = applicationDAO.getAll();
                         for(Application application : applications) {
-                            System.out.println(application.toString());
+                            System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
+                                    application.getStudentId(),
+                                    application.getGrantId(),
+                                    application.getUniversity(),
+                                    application.getEval1Id(),
+                                    application.getEval2Id(),
+                                    application.getFinalGrade());
                         }
                         result = true;
                         break;
                     case "courses":
                         CoursesDAO coursesDAO = new CoursesDAO();
                         ArrayList<Courses> courses;
-                        System.out.println("|\tId\t|\tName\t|\tHours\t|\tECTS\t|\tUniversity\t|");
+                        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n","Id","Name","Hours","ECTS","University");
                         courses = coursesDAO.getAll();
                         for(Courses course : courses) {
-                            System.out.println(course.toString());
+                            System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n",
+                                    course.getId(),
+                                    course.getName(),
+                                    course.getHours(),
+                                    course.getEcts(),
+                                    course.getUniversity());
                         }
                         result = true;
                         break;
                     case "evaluation":
                         EvaluationDAO evaluationDAO = new EvaluationDAO();
                         ArrayList<Evaluation> evaluations;
-                        System.out.println("|\tId\t|\tGrade\t|\tTeacher ID\t|");
+                        System.out.printf("| %-10s | %-10s | %-10s |\n","Id","Grade","Teacher ID");
                         evaluations = evaluationDAO.getAll();
                         for(Evaluation evaluation : evaluations){
-                            System.out.println(evaluation.toString());
+                            System.out.printf("|%-10s | %-10s | %-10s |\n",
+                                    evaluation.getId(),
+                                    evaluation.getGrade(),
+                                    evaluation.getTeacherId());
                         }
                         result = true;
                         break;
                     case "grant":
                         GrantDAO grantDAO = new GrantDAO();
                         ArrayList<Grant> grants;
-                        System.out.println("|\tId\t|\tDestination\t|\tTotal Seats\t|\tTeacher ID\t|");
+                        System.out.printf("| %-10s | %-10s | %-10s | %-10s |\n","Id","Destination","Total Seats","Teacher ID");
                         grants = grantDAO.getAll();
                         for(Grant grant : grants){
-                            System.out.println(grant.toString());
+                            System.out.printf("| %-10s | %-10s | %-10s | %-10s |\n",
+                                    grant.getId(),
+                                    grant.getDestination(),
+                                    grant.getTotalSeats(),
+                                    grant.getTeacherId());
                         }
                         result = true;
                         break;
                     case "student":
                         StudentDAO studentDAO = new StudentDAO();
                         ArrayList<Student> students;
-                        System.out.println("|\tStudent Number\t|\tLast Name\t|\tFirst Name\t|\tAverage Grade\t|");
+                        System.out.printf("| %-10s | %-10s | %-10s | %-10s |\n","Student Number","Last Name","First Name","Average Grade");
                         students = studentDAO.getAll();
                         for(Student student : students){
-                            System.out.println(student.toString());
+                            System.out.printf("| %-10s | %-10s | %-10s | %-10s |\n",
+                                    student.getStudentNumber(),
+                                    student.getLastName(),
+                                    student.getFirstName(),
+                                    student.getAverageGrade());
                         }
                         result = true;
                         break;
                     case "teacher":
                         TeacherDAO teacherDAO = new TeacherDAO();
                         ArrayList<Teacher> teachers;
-                        System.out.println("|\tId\t|\tLast Name\t|\tFirst Name\t|");
+                        System.out.printf("| %-10s | %-10s | %-10s |\n","Id","Last Name","First Name");
                         teachers = teacherDAO.getAll();
                         for(Teacher teacher : teachers){
-                            System.out.println(teacher.toString());
+                            System.out.printf("| %-10s | %-10s | %-10s |\n",
+                                    teacher.getId(),
+                                    teacher.getLastName(),
+                                    teacher.getFirstName());
                         }
                         result = true;
                         break;
