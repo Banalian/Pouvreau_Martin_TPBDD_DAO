@@ -120,10 +120,11 @@ public class ApplicationDAO implements DAO<Application> {
      */
     public boolean deleteStudentApplication(String studentId, int grantId) {
         Statement stmt = ConnectBdd.getNewStatement();
+        int resAffected;
         String query = "DELETE FROM application WHERE studentid = '" + studentId + "' AND grant = " + grantId;
         try {
-            stmt.executeUpdate(query);
-            return true;
+            resAffected = stmt.executeUpdate(query);
+            return resAffected != 0;
         }catch (SQLException e){
             e.printStackTrace();
         }

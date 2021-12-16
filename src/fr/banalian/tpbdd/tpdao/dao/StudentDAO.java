@@ -74,13 +74,14 @@ public class StudentDAO implements DAO<Student>{
 
     public boolean delete(String id) {
         Statement stmt = ConnectBdd.getNewStatement();
+        int resAffected;
         try {
-            stmt.executeUpdate("DELETE FROM student WHERE studentnumber="+id+";");
+            resAffected = stmt.executeUpdate("DELETE FROM student WHERE studentnumber='"+id+"'");
+            return resAffected != 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
 
     }
 
@@ -104,7 +105,7 @@ public class StudentDAO implements DAO<Student>{
             String firstName = rs.getString("firstname");
             float averageGrade = rs.getFloat("averagegrade");
 
-            Student student = new Student(id, lastName, firstName, averageGrade);
+            Student student = new Student(lastName, firstName, id, averageGrade);
             students.add(student);
         }
         return students;
