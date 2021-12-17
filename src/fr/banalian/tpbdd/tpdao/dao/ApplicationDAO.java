@@ -2,6 +2,7 @@ package fr.banalian.tpbdd.tpdao.dao;
 
 import fr.banalian.tpbdd.tpdao.ConnectBdd;
 import fr.banalian.tpbdd.tpdao.model.Application;
+import fr.banalian.tpbdd.tpdao.model.Courses;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -285,4 +286,72 @@ public class ApplicationDAO implements DAO<Application> {
         return applications;
     }
 
+    /**
+     * Get all the application for a precise grant
+     * @param id the grant's id
+     * @return an ArrayList of all the application for this grant
+     */
+    public ArrayList<Application> getByGrantId(int id) {
+        String query = "SELECT * FROM application WHERE grantid ="+ id;
+        Statement stmt = ConnectBdd.getNewStatement();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs);
+            }else{
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Get all the application where the final grade of the student is superior to a certain grade
+     * @param grade the grade the final grade has to be superior to
+     * @return an ArrayList of all the application where the condition is fulfilled
+     */
+    public ArrayList<Application> getBySupFinalGrade(float grade) {
+        String query = "SELECT * FROM application WHERE finalgrade >="+ grade;
+        Statement stmt = ConnectBdd.getNewStatement();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs);
+            }else{
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Get all the application for a certain university
+     * @param university the university the application is for
+     * @return an ArrayList of all the application where the condition is fulfilled
+     */
+    public ArrayList<Application> getByUniversity(String University) {
+        String query = "SELECT * FROM application WHERE university ="+University;
+        Statement stmt = ConnectBdd.getNewStatement();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs);
+            }else{
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -1,6 +1,7 @@
 package fr.banalian.tpbdd.tpdao.dao;
 
 import fr.banalian.tpbdd.tpdao.ConnectBdd;
+import fr.banalian.tpbdd.tpdao.model.Grant;
 import fr.banalian.tpbdd.tpdao.model.Student;
 import fr.banalian.tpbdd.tpdao.model.Teacher;
 
@@ -110,4 +111,28 @@ public class StudentDAO implements DAO<Student>{
         }
         return students;
     }
+
+    /**
+     * Get the student corresponding to the id
+     * @param id the id to search for
+     * @return the student correspondingt to the id
+     */
+    public Student getById(String id) {
+        String query = "SELECT * FROM student WHERE studentnumber ="+ id;
+        Statement stmt = ConnectBdd.getNewStatement();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs).get(0);
+            }else{
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

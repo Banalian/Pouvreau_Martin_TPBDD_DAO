@@ -1,5 +1,11 @@
 package fr.banalian.tpbdd.tpdao.model;
 
+import fr.banalian.tpbdd.tpdao.ConnectBdd;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Teacher {
     private int id;
     private String lastName;
@@ -43,4 +49,6 @@ public class Teacher {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
+
 }

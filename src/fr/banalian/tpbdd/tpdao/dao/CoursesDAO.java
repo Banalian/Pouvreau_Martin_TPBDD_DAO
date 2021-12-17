@@ -187,6 +187,28 @@ public class CoursesDAO implements DAO<Courses> {
         return null;
     }
 
+    /**
+     * Get all the courses of a certain amount of ECTS
+     * @param ects the number of ects
+     * @return an ArrayList of all the courses of this number of ects
+     */
+    public ArrayList<Courses> getByEcts(int ects) {
+        String query = "SELECT * FROM courses WHERE ects ="+ ects;
+        Statement stmt = ConnectBdd.getNewStatement();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs);
+            }else{
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /**
      * Iterate through the result set and create an ArrayList of Courses

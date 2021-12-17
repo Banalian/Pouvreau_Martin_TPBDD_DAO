@@ -1,6 +1,7 @@
 package fr.banalian.tpbdd.tpdao.dao;
 
 import fr.banalian.tpbdd.tpdao.ConnectBdd;
+import fr.banalian.tpbdd.tpdao.model.Application;
 import fr.banalian.tpbdd.tpdao.model.Grant;
 import fr.banalian.tpbdd.tpdao.model.Teacher;
 
@@ -108,4 +109,74 @@ public class GrantDAO implements DAO<Grant>{
         }
         return grants;
     }
+
+    /**
+     * Get all the grant for a certain destination
+     * @param destination the destination concerned
+     * @return an ArrayList of all the application where the condition is fulfilled
+     */
+    public ArrayList<Grant> getByDestination(String destination) {
+        String query = "SELECT * FROM erasmus.grant WHERE destination ="+ destination;
+        Statement stmt = ConnectBdd.getNewStatement();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs);
+            }else{
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Get all the grant managed by a certain teacher
+     * @param id the id of the teacher managing this grant
+     * @return an ArrayList of all the grant where the condition is fulfilled
+     */
+    public ArrayList<Grant> getByTeacherId(int id) {
+        String query = "SELECT * FROM erasmus.grant WHERE teacherid ="+ id;
+        Statement stmt = ConnectBdd.getNewStatement();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs);
+            }else{
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Get the grant corresponding to the id
+     * @param id the id to search for
+     * @return the grant correspondingt to the id
+     */
+    public Grant getById(int id) {
+        String query = "SELECT * FROM erasmus.grant WHERE id ="+ id;
+        Statement stmt = ConnectBdd.getNewStatement();
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                rs.first();
+                return iterateThroughResultSet(rs).get(0);
+            }else{
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

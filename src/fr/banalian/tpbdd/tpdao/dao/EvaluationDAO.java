@@ -113,7 +113,7 @@ public class EvaluationDAO implements DAO<Evaluation>{
      * @param teacherId the id of the teacher
      * @return ArrayList of evaluations
      */
-    public ArrayList<Evaluation> getAllByTeacher(int teacherId) {
+    public ArrayList<Evaluation> getByTeacher(int teacherId) {
         String query = "SELECT * FROM evaluation WHERE teacher = " + teacherId;
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
@@ -131,7 +131,7 @@ public class EvaluationDAO implements DAO<Evaluation>{
      * @param id the id of the evaluation
      * @return the evaluation
      */
-    public Evaluation getEvaluationById(int id) {
+    public Evaluation getByEvaluationId(int id) {
         String query = "SELECT * FROM evaluation WHERE id = " + id;
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
