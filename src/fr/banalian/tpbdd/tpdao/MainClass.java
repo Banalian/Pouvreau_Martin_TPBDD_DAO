@@ -1,10 +1,7 @@
 package fr.banalian.tpbdd.tpdao;
-
 import fr.banalian.tpbdd.tpdao.parser.*;
-
 import java.util.Scanner;
 
-import static fr.banalian.tpbdd.tpdao.parser.Delete.delete;
 
 public class MainClass {
 
@@ -52,7 +49,7 @@ public class MainClass {
                     break;
 
                 case "delete":
-                    result = delete(arguments);
+                    result = Delete.delete(arguments);
                     if (result) {
                         System.out.println("Entry deleted");
                     } else {
@@ -61,7 +58,7 @@ public class MainClass {
                     break;
 
                 case "update":
-                    result = update(arguments);
+                    result = Update.update(arguments);
                     if (result) {
                         System.out.println("Entry updated");
                     } else {
@@ -87,16 +84,9 @@ public class MainClass {
         ConnectBdd.closeConnection();
     }
 
-    //=====================================DELETE======================================
-
-
     //=====================================UPDATE======================================
 
-    private static boolean update(String[] arguments) {
-        // TODO
-        System.out.println("Not yet implemented");
-        return false;
-    }
+
 
     //=====================================ISTYPE=========================================
 
