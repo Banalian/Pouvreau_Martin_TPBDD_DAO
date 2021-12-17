@@ -334,86 +334,36 @@ public class MainClass {
                         ApplicationDAO applicationDAO = new ApplicationDAO();
                         ArrayList<Application> applications = applicationDAO.getAll();
                         printApplication(applications);
-//                        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n", "Student number", "GrantId", "University", "Evaluation 1", "Evaluation 2", "Final grade");
-//
-//                        for (Application application : applications) {
-//                            System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
-//                                    application.getStudentId(),
-//                                    application.getGrantId(),
-//                                    application.getUniversity(),
-//                                    application.getEval1Id(),
-//                                    application.getEval2Id(),
-//                                    application.getFinalGrade());
-//                        }
                         result = true;
                         break;
                     case "courses":
                         CoursesDAO coursesDAO = new CoursesDAO();
                         ArrayList<Courses> courses = coursesDAO.getAll();
                         printCourses(courses);
-//                        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s |\n", "Id", "Name", "Hours", "ECTS", "University");
-//                        for (Courses course : courses) {
-//                            System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s |\n",
-//                                    course.getId(),
-//                                    course.getName(),
-//                                    course.getHours(),
-//                                    course.getEcts(),
-//                                    course.getUniversity());
-//                        }
                         result = true;
                         break;
                     case "evaluation":
                         EvaluationDAO evaluationDAO = new EvaluationDAO();
                         ArrayList<Evaluation> evaluations = evaluationDAO.getAll();
                         printEvaluation(evaluations);
-//                        System.out.printf("| %-20s | %-20s | %-20s |\n", "Id", "Grade", "Teacher ID");
-//                        for (Evaluation evaluation : evaluations) {
-//                            System.out.printf("|%-20s | %-20s | %-20s |\n",
-//                                    evaluation.getId(),
-//                                    evaluation.getGrade(),
-//                                    evaluation.getTeacherId());
-//                        }
                         result = true;
                         break;
                     case "grant":
                         GrantDAO grantDAO = new GrantDAO();
                         ArrayList<Grant> grants = grantDAO.getAll();
                         printGrant(grants);
-//                        System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n", "Id", "Destination", "Total Seats", "Teacher ID");
-//                        for (Grant grant : grants) {
-//                            System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n",
-//                                    grant.getId(),
-//                                    grant.getDestination(),
-//                                    grant.getTotalSeats(),
-//                                    grant.getTeacherId());
-//                        }
                         result = true;
                         break;
                     case "student":
                         StudentDAO studentDAO = new StudentDAO();
                         ArrayList<Student> students = studentDAO.getAll();
                         printStudent(students);
-//                        System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n", "Student Number", "Last Name", "First Name", "Average Grade");
-//                        for (Student student : students) {
-//                            System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n",
-//                                    student.getStudentNumber(),
-//                                    student.getLastName(),
-//                                    student.getFirstName(),
-//                                    student.getAverageGrade());
-//                        }
                         result = true;
                         break;
                     case "teacher":
                         TeacherDAO teacherDAO = new TeacherDAO();
                         ArrayList<Teacher> teachers = teacherDAO.getAll();
                         printTeacher(teachers);
-//                        System.out.printf("| %-20s | %-20s | %-20s |\n", "Id", "Last Name", "First Name");
-//                        for (Teacher teacher : teachers) {
-//                            System.out.printf("| %-20s | %-20s | %-20s |\n",
-//                                    teacher.getId(),
-//                                    teacher.getLastName(),
-//                                    teacher.getFirstName());
-//                        }
                         result = true;
                         break;
 
@@ -649,13 +599,8 @@ public class MainClass {
 
 
                 }
-
             }
-
-
         }
-
-
         return result;
     }
 
