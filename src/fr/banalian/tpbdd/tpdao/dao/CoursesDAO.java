@@ -128,7 +128,7 @@ public class CoursesDAO implements DAO<Courses> {
         try {
             rs = stmt.executeQuery(query);
             if(rs.next()) {
-                rs.first();
+                rs.beforeFirst();
                 return iterateThroughResultSet(rs).get(0);
             }else{
                 return null;
@@ -146,13 +146,13 @@ public class CoursesDAO implements DAO<Courses> {
      * @return an ArrayList of all the courses of the university
      */
     public ArrayList<Courses> getByApplicationId(String id, int grant) {
-        String query = "SELECT * FROM courses WHERE university IN (SELECT university FROM application WHERE studentid= " + id + " AND grant = " + grant + ")";
+        String query = "SELECT * FROM courses WHERE university IN (SELECT university FROM application WHERE studentid= '" + id + "' AND grant = " + grant + ")";
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
         try {
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                rs.first();
+                rs.beforeFirst();
                 return iterateThroughResultSet(rs);
             }else{
                 return null;
@@ -176,7 +176,7 @@ public class CoursesDAO implements DAO<Courses> {
         try {
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                rs.first();
+                rs.beforeFirst();
                 return iterateThroughResultSet(rs);
             }else{
                 return null;
@@ -199,7 +199,7 @@ public class CoursesDAO implements DAO<Courses> {
         try {
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                rs.first();
+                rs.beforeFirst();
                 return iterateThroughResultSet(rs);
             }else{
                 return null;

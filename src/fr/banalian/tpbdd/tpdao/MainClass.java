@@ -126,13 +126,13 @@ public class MainClass {
                 System.out.println("\t\t- add <firstname : String> <lastname : String>");
 
             case "application":
-                if (arguments.length < 5) {
+                if (arguments.length < 7) {
                     System.err.println("Not enough arguments");
-                    System.out.println("Usage : add application <studentid : String> <grantid : int> <university : string>");
+                    System.out.println("Usage : add application <studentid : String> <grantid : int> <university : string> <eval1 TeacherId : int> <eval2 TeacherId : int>");
                     break;
-                } else if (arguments.length > 5) {
+                } else if (arguments.length > 7) {
                     System.err.println("Too many arguments");
-                    System.out.println("Usage : add application <studentid : String> <grantid : int> <university : string>");
+                    System.out.println("Usage : add application <studentid : String> <grantid : int> <university : string> <eval1 TeacherId : int> <eval2 TeacherId : int>");
                     break;
                 }
                 String[] valuesApplication = new String[arguments.length - 2];
@@ -141,6 +141,14 @@ public class MainClass {
                     int grantId = Integer.parseInt(valuesApplication[1]);
                     if (grantId < 0) {
                         throw new IllegalArgumentException("grantid must be positive");
+                    }
+                    int eval1TeacherId = Integer.parseInt(valuesApplication[3]);
+                    if (eval1TeacherId < 0) {
+                        throw new IllegalArgumentException("eval1TeacherId must be positive");
+                    }
+                    int eval2TeacherId = Integer.parseInt(valuesApplication[4]);
+                    if (eval2TeacherId < 0) {
+                        throw new IllegalArgumentException("eval2TeacherId must be positive");
                     }
                 } catch (NumberFormatException e) {
                     System.err.println("The grant id must be an integer");
@@ -151,10 +159,10 @@ public class MainClass {
 
                 EvaluationDAO evaluationDAO = new EvaluationDAO();
                 //TODO : handle the teacher id request
-                Evaluation evaluation1 = new Evaluation(0, 0);
+                Evaluation evaluation1 = new Evaluation(0, Integer.parseInt(valuesApplication[3]));
                 evaluationDAO.add(evaluation1);
-                Evaluation evaluation2 = new Evaluation(0, 0);
-                evaluationDAO.add(evaluation1);
+                Evaluation evaluation2 = new Evaluation(0, Integer.parseInt(valuesApplication[4]));
+                evaluationDAO.add(evaluation2);
 
                 ApplicationDAO applicationDAO = new ApplicationDAO();
                 Application temp = new Application(valuesApplication[0], Integer.parseInt(valuesApplication[1]), valuesApplication[2], evaluation1.getId(), evaluation2.getId(), 0);
@@ -419,15 +427,14 @@ public class MainClass {
             } else { //Else if you want to get a specific entry of a table
 
                 if (arguments.length < 4) {
-                    //TODO : only show available columns
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : get [all] <tableName> <colName> <value>\n Or use 'get help' for help");
                     System.out.println("Available columns per table : ");
                     System.out.println("\t- student : studentNumber");
                     System.out.println("\t- teacher : id");
-                    System.out.println("\t- evaluation : id, grade, teacherId");
+                    System.out.println("\t- evaluation : id, teacherId");
                     System.out.println("\t- grant : id, destination, teacherId");
-                    System.out.println("\t- course : id");
+                    System.out.println("\t- course : id, ects, university");
                     System.out.println("\t- application : grant, university, finalgrade");
                     return false;
                 }
@@ -483,7 +490,7 @@ public class MainClass {
                                 if (isInteger(arguments[iToRead + 2])) {
                                     course = new ArrayList<>();
                                     course.add(courseDAO.getByCourseId(Integer.parseInt(arguments[iToRead + 2])));
-                                    if (course != null) {
+                                    if (course.size() > 0) {
                                         printCourses(course);
                                         result = true;
                                     } else {
@@ -527,7 +534,7 @@ public class MainClass {
                                 if (isInteger(arguments[iToRead + 2])) {
                                     evaluation = new ArrayList<>();
                                     evaluation.add(evaluationDAO.getByEvaluationId(Integer.parseInt(arguments[iToRead + 2])));
-                                    if (evaluation != null) {
+                                    if (evaluation.size() > 0) {
                                         printEvaluation(evaluation);
                                         result = true;
                                     } else {
@@ -536,7 +543,7 @@ public class MainClass {
                                 }
                                 break;
 
-                            case "teacher":
+                            case "teacherid":
                                 if (isInteger(arguments[iToRead + 2])) {
                                     evaluation = evaluationDAO.getByTeacher(Integer.parseInt(arguments[iToRead + 2]));
                                     if (evaluation != null) {
@@ -559,8 +566,8 @@ public class MainClass {
                             case "id":
                                 if (isInteger(arguments[iToRead + 2])) {
                                     grant = new ArrayList<>();
-                                    grant.add(grantDAO.getById(Integer.parseInt(arguments[iToRead + 2])));
-                                    if (grant != null) {
+                                    grant.add(grantDAO.get(Integer.parseInt(arguments[iToRead + 2])));
+                                    if (grant.size() > 0) {
                                         printGrant(grant);
                                         result = true;
                                     } else {
@@ -579,7 +586,7 @@ public class MainClass {
                                 }
                                 break;
 
-                            case "teacher":
+                            case "teacherid":
                                 if (isInteger(arguments[iToRead + 2])) {
                                     grant = grantDAO.getByTeacherId(Integer.parseInt(arguments[iToRead + 2]));
                                     if (grant != null) {
@@ -600,16 +607,14 @@ public class MainClass {
                         StudentDAO studentDAO = new StudentDAO();
                         ArrayList<Student> student;
                         switch (arguments[iToRead + 1].toLowerCase()) {
-                            case "id":
-                                if (isInteger(arguments[iToRead + 2])) {
-                                    student = new ArrayList<>();
-                                    student.add(studentDAO.getById(arguments[iToRead + 2]));
-                                    if (student != null) {
-                                        printStudent(student);
-                                        result = true;
-                                    } else {
-                                        System.err.println("No student found for this id");
-                                    }
+                            case "studentnumber":
+                                student = new ArrayList<>();
+                                student.add(studentDAO.get(arguments[iToRead + 2]));
+                                if (student.size() > 0) {
+                                    printStudent(student);
+                                    result = true;
+                                } else {
+                                    System.err.println("No student found for this id");
                                 }
                                 break;
 
@@ -625,8 +630,8 @@ public class MainClass {
                             case "id":
                                 if (isInteger(arguments[iToRead + 2])) {
                                     teachers = new ArrayList<>();
-                                    teachers.add(teacherDAO.getById(arguments[iToRead + 2]));
-                                    if (teachers != null) {
+                                    teachers.add(teacherDAO.get(Integer.parseInt(arguments[iToRead + 2])));
+                                    if (teachers.size() > 0) {
                                         printTeacher(teachers);
                                         result = true;
                                     } else {
@@ -763,7 +768,7 @@ public class MainClass {
         }
 
         //Special case for delete application (needs a string id and grant id)
-        if (arguments[1].equals("application")) {
+        if (arguments[1].equalsIgnoreCase("application")) {
             if (arguments.length < 4) {
                 System.err.println("Not enough arguments");
                 System.out.println("Type 'delete help' for help");
@@ -781,7 +786,7 @@ public class MainClass {
         }
 
         //Special case for delete student (needs a string id)
-        if (arguments[1].equals("student")) {
+        if (arguments[1].equalsIgnoreCase("student")) {
             if (arguments.length < 3) {
                 System.err.println("Not enough arguments");
                 System.out.println("Type 'delete help' for help");
@@ -812,6 +817,7 @@ public class MainClass {
             System.out.println("student : Special case if there's no 'all' : delete student <Student Number>");
             System.out.println("teacher");
             System.out.println("<id> is the id of the row to delete");
+            return false;
         }
 
         if (arguments[1].equalsIgnoreCase("all")) {

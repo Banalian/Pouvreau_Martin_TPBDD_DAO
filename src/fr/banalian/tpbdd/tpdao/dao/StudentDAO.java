@@ -49,7 +49,7 @@ public class StudentDAO implements DAO<Student>{
         Student student = null;
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM student WHERE studentnumber = "+ id +";");
+            rs = stmt.executeQuery("SELECT * FROM student WHERE studentnumber = '"+ id +"'");
             student = iterateThroughResultSet(rs).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -118,13 +118,13 @@ public class StudentDAO implements DAO<Student>{
      * @return the student correspondingt to the id
      */
     public Student getById(String id) {
-        String query = "SELECT * FROM student WHERE studentnumber ="+ id;
+        String query = "SELECT * FROM student WHERE studentnumber ='"+ id+"'";
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
         try {
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                rs.first();
+                rs.beforeFirst();
                 return iterateThroughResultSet(rs).get(0);
             }else{
                 return null;

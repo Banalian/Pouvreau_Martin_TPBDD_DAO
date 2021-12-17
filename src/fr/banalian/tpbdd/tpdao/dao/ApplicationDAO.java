@@ -61,7 +61,7 @@ public class ApplicationDAO implements DAO<Application> {
         ArrayList<Application> apps = new ArrayList<>();
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
-        String query = "SELECT * FROM application WHERE studentid = '" + id + "' AND grant = " + grantId;
+        String query = "SELECT * FROM application WHERE studentid = '" + id + "' AND `grant` = " + grantId;
         try {
             rs = stmt.executeQuery(query);
             apps = iterateThroughResultSet(rs);
@@ -88,7 +88,7 @@ public class ApplicationDAO implements DAO<Application> {
                 "', evaluation1 = " + application.getEval1Id() +
                 ", evaluation2 = " + application.getEval2Id() +
                 ", finalgrade = " + application.getFinalGrade() +
-                " WHERE studentid = '" + application.getStudentId()+ "' AND grant = " + application.getGrantId();
+                " WHERE studentid = '" + application.getStudentId()+ "' AND `grant` = " + application.getGrantId();
         try {
             stmt.executeUpdate(query);
             return true;
@@ -122,7 +122,7 @@ public class ApplicationDAO implements DAO<Application> {
     public boolean deleteStudentApplication(String studentId, int grantId) {
         Statement stmt = ConnectBdd.getNewStatement();
         int resAffected;
-        String query = "DELETE FROM application WHERE studentid = '" + studentId + "' AND grant = " + grantId;
+        String query = "DELETE FROM application WHERE studentid = '" + studentId + "' AND `grant` = " + grantId;
         try {
             resAffected = stmt.executeUpdate(query);
             return resAffected != 0;
@@ -153,6 +153,7 @@ public class ApplicationDAO implements DAO<Application> {
 
         try {
             stmt.executeUpdate(query);
+            updateEvaluations(application);
             return true;
         }catch (SQLException e){
             e.printStackTrace();
@@ -170,7 +171,7 @@ public class ApplicationDAO implements DAO<Application> {
         ArrayList<Application> apps = new ArrayList<>();
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
-        String query = "SELECT * FROM application WHERE grant = " + id;
+        String query = "SELECT * FROM application WHERE `grant` = " + id;
         try {
             rs = stmt.executeQuery(query);
             apps = iterateThroughResultSet(rs);
@@ -211,14 +212,21 @@ public class ApplicationDAO implements DAO<Application> {
     public boolean updateEvaluations(Application application){
         Statement stmt = ConnectBdd.getNewStatement();
 
+        Statement stmtEval1 = ConnectBdd.getNewStatement();
+        Statement stmtEval2 = ConnectBdd.getNewStatement();
+
+        Statement stmtStudent = ConnectBdd.getNewStatement();
+
+
+
 
         String queryEval1 = "SELECT * FROM evaluation WHERE id = " + application.getEval1Id();
         String queryEval2 = "SELECT * FROM evaluation WHERE id = " + application.getEval2Id();
         ResultSet rsEval1, rsEval2;
         int finalGrade = 0;
         try {
-            rsEval1 = stmt.executeQuery(queryEval1);
-            rsEval2 = stmt.executeQuery(queryEval2);
+            rsEval1 = stmtEval1.executeQuery(queryEval1);
+            rsEval2 = stmtEval2.executeQuery(queryEval2);
             if(rsEval1.next() && rsEval2.next()){
                 int eval1 = rsEval1.getInt("grade");
                 int eval2 = rsEval2.getInt("grade");
@@ -230,12 +238,12 @@ public class ApplicationDAO implements DAO<Application> {
             return false;
         }
 
-        String queryStudent = "SELECT * FROM student WHERE studentnumber = " + application.getStudentId();
+        String queryStudent = "SELECT * FROM student WHERE studentnumber = '" + application.getStudentId()+"'";
         ResultSet rsStudent;
         try {
-            rsStudent = stmt.executeQuery(queryStudent);
+            rsStudent = stmtStudent.executeQuery(queryStudent);
             if(rsStudent.next()){
-                int studentGrade = rsStudent.getInt("grade");
+                int studentGrade = rsStudent.getInt("averagegrade");
                 finalGrade = (finalGrade + studentGrade)/3;
                 application.setFinalGrade(finalGrade);
             }
@@ -250,8 +258,8 @@ public class ApplicationDAO implements DAO<Application> {
                 "UPDATE application SET evaluation1 = " + application.getEval1Id() +
                         ", evaluation2 = " + application.getEval2Id() +
                         ", finalgrade = " + application.getFinalGrade() +
-                        " WHERE studentid = " + application.getStudentId() +
-                        " AND grant = " + application.getGrantId();
+                        " WHERE studentid = '" + application.getStudentId() +
+                        "' AND `grant` = " + application.getGrantId();
 
         try {
             stmt.executeUpdate(query);
@@ -292,13 +300,13 @@ public class ApplicationDAO implements DAO<Application> {
      * @return an ArrayList of all the application for this grant
      */
     public ArrayList<Application> getByGrantId(int id) {
-        String query = "SELECT * FROM application WHERE grantid ="+ id;
+        String query = "SELECT * FROM application WHERE `grant` ="+ id;
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
         try {
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                rs.first();
+                rs.beforeFirst();
                 return iterateThroughResultSet(rs);
             }else{
                 return null;
@@ -321,7 +329,7 @@ public class ApplicationDAO implements DAO<Application> {
         try {
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                rs.first();
+                rs.beforeFirst();
                 return iterateThroughResultSet(rs);
             }else{
                 return null;
@@ -337,14 +345,14 @@ public class ApplicationDAO implements DAO<Application> {
      * @param university the university the application is for
      * @return an ArrayList of all the application where the condition is fulfilled
      */
-    public ArrayList<Application> getByUniversity(String University) {
-        String query = "SELECT * FROM application WHERE university ="+University;
+    public ArrayList<Application> getByUniversity(String university) {
+        String query = "SELECT * FROM application WHERE university ='"+university+"'";
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
         try {
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                rs.first();
+                rs.beforeFirst();
                 return iterateThroughResultSet(rs);
             }else{
                 return null;

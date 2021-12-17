@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * DAO for Teachers. This class is used to access the database.
  */
-public class TeacherDAO implements DAO<Teacher>{
+public class TeacherDAO implements DAO<Teacher> {
 
     /**
      * get a connection to the database from connectBdd and make a query to get all the teacher
@@ -25,7 +25,7 @@ public class TeacherDAO implements DAO<Teacher>{
         try {
             rs = stmt.executeQuery("SELECT * FROM teacher");
             teacher = iterateThroughResultSet(rs);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return teacher;
@@ -33,6 +33,7 @@ public class TeacherDAO implements DAO<Teacher>{
 
     /**
      * get a connection to the database from connectBdd and delete all entry from the table
+     *
      * @return true if executed, false if errors found
      */
     public boolean deleteAll() {
@@ -41,7 +42,7 @@ public class TeacherDAO implements DAO<Teacher>{
         try {
             stmt.executeUpdate(query);
             return true;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
@@ -52,7 +53,7 @@ public class TeacherDAO implements DAO<Teacher>{
         Teacher teacher = null;
         ResultSet rs;
         try {
-            rs = stmt.executeQuery("SELECT * FROM teacher WHERE id = "+ id +";");
+            rs = stmt.executeQuery("SELECT * FROM teacher WHERE id = " + id + ";");
             teacher = iterateThroughResultSet(rs).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,7 +70,7 @@ public class TeacherDAO implements DAO<Teacher>{
     public boolean delete(int id) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("DELETE FROM teacher WHERE id="+id+";");
+            stmt.executeUpdate("DELETE FROM teacher WHERE id=" + id + ";");
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -81,14 +82,14 @@ public class TeacherDAO implements DAO<Teacher>{
     public boolean add(Teacher teacher) {
         Statement stmt = ConnectBdd.getNewStatement();
         try {
-            stmt.executeUpdate("INSERT INTO teacher (firstname, lastname) VALUES ('"+teacher.getFirstName()+"', '"+teacher.getLastName()+"');", Statement.RETURN_GENERATED_KEYS);
+            stmt.executeUpdate("INSERT INTO teacher (firstname, lastname) VALUES ('" + teacher.getFirstName() + "', '" + teacher.getLastName() + "');", Statement.RETURN_GENERATED_KEYS);
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()) {
                 teacher.setId(generatedKeys.getInt(1));
-            }else {
+            } else {
                 throw new SQLException("Creating teacher failed, no ID obtained.");
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -97,7 +98,7 @@ public class TeacherDAO implements DAO<Teacher>{
 
     private ArrayList<Teacher> iterateThroughResultSet(ResultSet rs) throws SQLException {
         ArrayList<Teacher> teachers = new ArrayList<>();
-        while(rs.next()) {
+        while (rs.next()) {
             int id = rs.getInt("id");
             String lastName = rs.getString("lastname");
             String firstName = rs.getString("firstname");
@@ -108,26 +109,4 @@ public class TeacherDAO implements DAO<Teacher>{
         return teachers;
     }
 
-    /**
-     * Get the teacher corresponding to the id
-     * @param id the id to search for
-     * @return the teacher correspondingt to the id
-     */
-    public Teacher getById(String id) {
-        String query = "SELECT * FROM teacher WHERE studentnumber ="+ id;
-        Statement stmt = ConnectBdd.getNewStatement();
-        ResultSet rs;
-        try {
-            rs = stmt.executeQuery(query);
-            if (rs.next()) {
-                rs.first();
-                return iterateThroughResultSet(rs).get(0);
-            }else{
-                return null;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

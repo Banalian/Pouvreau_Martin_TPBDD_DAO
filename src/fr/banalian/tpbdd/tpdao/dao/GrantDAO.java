@@ -116,13 +116,13 @@ public class GrantDAO implements DAO<Grant>{
      * @return an ArrayList of all the application where the condition is fulfilled
      */
     public ArrayList<Grant> getByDestination(String destination) {
-        String query = "SELECT * FROM erasmus.grant WHERE destination ="+ destination;
+        String query = "SELECT * FROM erasmus.grant WHERE destination ='"+ destination+"'";
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
         try {
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                rs.first();
+                rs.beforeFirst();
                 return iterateThroughResultSet(rs);
             }else{
                 return null;
@@ -139,13 +139,13 @@ public class GrantDAO implements DAO<Grant>{
      * @return an ArrayList of all the grant where the condition is fulfilled
      */
     public ArrayList<Grant> getByTeacherId(int id) {
-        String query = "SELECT * FROM erasmus.grant WHERE teacherid ="+ id;
+        String query = "SELECT * FROM erasmus.grant WHERE teacher ="+ id;
         Statement stmt = ConnectBdd.getNewStatement();
         ResultSet rs;
         try {
             rs = stmt.executeQuery(query);
             if (rs.next()) {
-                rs.first();
+                rs.beforeFirst();
                 return iterateThroughResultSet(rs);
             }else{
                 return null;
@@ -156,27 +156,5 @@ public class GrantDAO implements DAO<Grant>{
         return null;
     }
 
-    /**
-     * Get the grant corresponding to the id
-     * @param id the id to search for
-     * @return the grant correspondingt to the id
-     */
-    public Grant getById(int id) {
-        String query = "SELECT * FROM erasmus.grant WHERE id ="+ id;
-        Statement stmt = ConnectBdd.getNewStatement();
-        ResultSet rs;
-        try {
-            rs = stmt.executeQuery(query);
-            if (rs.next()) {
-                rs.first();
-                return iterateThroughResultSet(rs).get(0);
-            }else{
-                return null;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 }
