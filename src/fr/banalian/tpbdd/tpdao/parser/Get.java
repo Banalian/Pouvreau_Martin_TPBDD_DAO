@@ -38,7 +38,7 @@ public class Get {
             System.out.println("\t - student");
 
             System.out.println("\t - teacher");
-
+            return false;
         }
 
         if (arguments.length >= 2) {
