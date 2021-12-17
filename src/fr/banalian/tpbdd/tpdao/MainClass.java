@@ -13,7 +13,7 @@ public class MainClass {
 
         ConnectBdd.initConnection();
         String input;
-        String [] arguments;
+        String[] arguments;
         Scanner sc = new Scanner(System.in);
         boolean result;
         boolean exit = false;
@@ -40,7 +40,7 @@ public class MainClass {
                     result = add(arguments);
                     if (result) {
                         System.out.println("Entry added");
-                    }else {
+                    } else {
                         System.err.println("No entry added");
                     }
                     break;
@@ -56,7 +56,7 @@ public class MainClass {
                     result = delete(arguments);
                     if (result) {
                         System.out.println("Entry deleted");
-                    }else {
+                    } else {
                         System.err.println("No entry deleted");
                     }
                     break;
@@ -65,7 +65,7 @@ public class MainClass {
                     result = update(arguments);
                     if (result) {
                         System.out.println("Entry updated");
-                    }else {
+                    } else {
                         System.err.println("No entry updated");
                     }
                     break;
@@ -82,7 +82,6 @@ public class MainClass {
             }
 
 
-
         } while (!exit);
 
 
@@ -91,9 +90,8 @@ public class MainClass {
 
     //=====================================ADD=========================================
 
-
-    public static boolean add(String [] arguments) {
-        if(arguments.length < 2) {
+    public static boolean add(String[] arguments) {
+        if (arguments.length < 2) {
             System.err.println("Not enough arguments");
             System.out.println("Usage : add <tableName> [<Values> ...]\n Or use 'add help' for help");
             return false;
@@ -128,26 +126,26 @@ public class MainClass {
                 System.out.println("\t\t- add <firstname : String> <lastname : String>");
 
             case "application":
-                if(arguments.length < 5) {
+                if (arguments.length < 5) {
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : add application <studentid : String> <grantid : int> <university : string>");
                     break;
-                }else if(arguments.length > 5) {
+                } else if (arguments.length > 5) {
                     System.err.println("Too many arguments");
                     System.out.println("Usage : add application <studentid : String> <grantid : int> <university : string>");
                     break;
                 }
-                String [] valuesApplication = new String[arguments.length - 2];
+                String[] valuesApplication = new String[arguments.length - 2];
                 System.arraycopy(arguments, 2, valuesApplication, 0, arguments.length - 2);
                 try {
                     int grantId = Integer.parseInt(valuesApplication[1]);
-                    if(grantId < 0) {
+                    if (grantId < 0) {
                         throw new IllegalArgumentException("grantid must be positive");
                     }
-                }catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     System.err.println("The grant id must be an integer");
                     return false;
-                }catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                 }
 
@@ -164,26 +162,26 @@ public class MainClass {
                 break;
 
             case "courses":
-                if(arguments.length < 6) {
+                if (arguments.length < 6) {
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : add courses <university : String> <name : String> <ects : int> <hours : float>");
                     break;
-                }else if(arguments.length > 6) {
+                } else if (arguments.length > 6) {
                     System.err.println("Too many arguments");
                     System.out.println("Usage : add courses <university : String> <name : String> <ects : int> <hours : float>");
                     break;
                 }
-                String [] valuesCourses = new String[arguments.length - 2];
+                String[] valuesCourses = new String[arguments.length - 2];
                 System.arraycopy(arguments, 2, valuesCourses, 0, arguments.length - 2);
                 try {
                     int ects = Integer.parseInt(valuesCourses[2]);
                     float hours = Float.parseFloat(valuesCourses[3]);
-                    if(ects < 0 || hours < 0) {
+                    if (ects < 0 || hours < 0) {
                         throw new IllegalArgumentException("ects and hours must be positive");
                     }
-                }catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     System.err.println("The ects and hours must be an integer");
-                }catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                 }
 
@@ -197,24 +195,24 @@ public class MainClass {
                 break;
 
             case "grant":
-                if(arguments.length < 5) {
+                if (arguments.length < 5) {
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : add grant <destination : String> <total seats : int> <teacher id : int>");
                     break;
-                }else if(arguments.length > 5) {
+                } else if (arguments.length > 5) {
                     System.err.println("Too many arguments");
                     System.out.println("Usage : add grant <destination : String> <total seats : int> <teacher id : int>");
                     break;
                 }
-                String [] valuesGrant = new String[arguments.length - 2];
+                String[] valuesGrant = new String[arguments.length - 2];
                 System.arraycopy(arguments, 2, valuesGrant, 0, arguments.length - 2);
                 try {
                     int totalSeats = Integer.parseInt(valuesGrant[1]);
                     int teacherId = Integer.parseInt(valuesGrant[2]);
-                    if(teacherId < 0 || totalSeats < 0) {
+                    if (teacherId < 0 || totalSeats < 0) {
                         throw new IllegalArgumentException("teacher id and total seats must be positive");
                     }
-                }catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     System.err.println("The teacher id and total seats must be an integer");
                 } catch (IllegalArgumentException e) {
                     System.err.println(e.getMessage());
@@ -225,25 +223,25 @@ public class MainClass {
                 result = grantDAO.add(tempGrant);
                 break;
             case "student":
-                if(arguments.length < 6) {
+                if (arguments.length < 6) {
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : add student <last name : String> <first name : String> <student number : String> <average grade : float>");
                     break;
-                }else if(arguments.length > 6) {
+                } else if (arguments.length > 6) {
                     System.err.println("Too many arguments");
                     System.out.println("Usage : add student <last name : String> <first name : String> <student number : String> <average grade : float>");
                     break;
                 }
-                String [] valuesStudent = new String[arguments.length - 2];
+                String[] valuesStudent = new String[arguments.length - 2];
                 System.arraycopy(arguments, 2, valuesStudent, 0, arguments.length - 2);
                 try {
                     float averageGrade = Float.parseFloat(valuesStudent[3]);
-                    if(averageGrade < 0) {
+                    if (averageGrade < 0) {
                         throw new IllegalArgumentException("average grade must be positive");
                     }
-                }catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     System.err.println("The average grade must be a float");
-                }catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                 }
 
@@ -253,16 +251,16 @@ public class MainClass {
                 break;
 
             case "teacher":
-                if(arguments.length < 4) {
+                if (arguments.length < 4) {
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : add teacher <first name : String> <last name : String>");
                     break;
-                }else if(arguments.length > 4) {
+                } else if (arguments.length > 4) {
                     System.err.println("Too many arguments");
                     System.out.println("Usage : add teacher <first name : String> <last name : String>");
                     break;
                 }
-                String [] valuesTeacher = new String[arguments.length - 2];
+                String[] valuesTeacher = new String[arguments.length - 2];
                 System.arraycopy(arguments, 2, valuesTeacher, 0, arguments.length - 2);
                 TeacherDAO teacherDAO = new TeacherDAO();
                 Teacher tempTeacher = new Teacher(valuesTeacher[0], valuesTeacher[1]);
@@ -279,12 +277,12 @@ public class MainClass {
 
     //=====================================GET=========================================
 
-    public static boolean get(String [] arguments) {
+    public static boolean get(String[] arguments) {
         boolean result = false;
         boolean all = false;
         int iToRead = 1;
 
-        if(arguments.length < 2) {
+        if (arguments.length < 2) {
             System.err.println("Not enough arguments");
             System.out.println("Usage : get [all] <tableName> [<colName> <value>]\n Or use 'get help' for help");
             return false;
@@ -292,7 +290,7 @@ public class MainClass {
 
         String tableName = arguments[1].toLowerCase();
 
-        if(tableName.equals("help")) {
+        if (tableName.equals("help")) {
             System.out.println("Usage : get [all] <tableName> [<colName> <value>]\n Or use 'get help' for help");
             System.out.println("Add 'all' to get all the entries of a table");
             System.out.println("for example : get all student\n");
@@ -312,10 +310,10 @@ public class MainClass {
 
         }
 
-        if(arguments.length >= 2) {
+        if (arguments.length >= 2) {
 
             // IF you want to get all the entries of a table
-            if(arguments[iToRead].equals("all")) {
+            if (arguments[iToRead].equals("all")) {
                 iToRead++;
                 if (arguments.length < 3) {
                     System.err.println("Not enough arguments");
@@ -326,87 +324,88 @@ public class MainClass {
                 switch (arguments[iToRead].toLowerCase()) {
                     case "application":
                         ApplicationDAO applicationDAO = new ApplicationDAO();
-                        ArrayList<Application> applications;
-                        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n","Student number","GrantId","University","Evaluation 1","Evaluation 2","Final grade");
-                        applications = applicationDAO.getAll();
-                        for(Application application : applications) {
-                            System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s | %-10s |\n",
-                                    application.getStudentId(),
-                                    application.getGrantId(),
-                                    application.getUniversity(),
-                                    application.getEval1Id(),
-                                    application.getEval2Id(),
-                                    application.getFinalGrade());
-                        }
+                        ArrayList<Application> applications = applicationDAO.getAll();
+                        printApplication(applications);
+//                        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n", "Student number", "GrantId", "University", "Evaluation 1", "Evaluation 2", "Final grade");
+//
+//                        for (Application application : applications) {
+//                            System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
+//                                    application.getStudentId(),
+//                                    application.getGrantId(),
+//                                    application.getUniversity(),
+//                                    application.getEval1Id(),
+//                                    application.getEval2Id(),
+//                                    application.getFinalGrade());
+//                        }
                         result = true;
                         break;
                     case "courses":
                         CoursesDAO coursesDAO = new CoursesDAO();
-                        ArrayList<Courses> courses;
-                        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n","Id","Name","Hours","ECTS","University");
-                        courses = coursesDAO.getAll();
-                        for(Courses course : courses) {
-                            System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n",
-                                    course.getId(),
-                                    course.getName(),
-                                    course.getHours(),
-                                    course.getEcts(),
-                                    course.getUniversity());
-                        }
+                        ArrayList<Courses> courses = coursesDAO.getAll();
+                        printCourses(courses);
+//                        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s |\n", "Id", "Name", "Hours", "ECTS", "University");
+//                        for (Courses course : courses) {
+//                            System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s |\n",
+//                                    course.getId(),
+//                                    course.getName(),
+//                                    course.getHours(),
+//                                    course.getEcts(),
+//                                    course.getUniversity());
+//                        }
                         result = true;
                         break;
                     case "evaluation":
                         EvaluationDAO evaluationDAO = new EvaluationDAO();
-                        ArrayList<Evaluation> evaluations;
-                        System.out.printf("| %-10s | %-10s | %-10s |\n","Id","Grade","Teacher ID");
-                        evaluations = evaluationDAO.getAll();
-                        for(Evaluation evaluation : evaluations){
-                            System.out.printf("|%-10s | %-10s | %-10s |\n",
-                                    evaluation.getId(),
-                                    evaluation.getGrade(),
-                                    evaluation.getTeacherId());
-                        }
+                        ArrayList<Evaluation> evaluations = evaluationDAO.getAll();
+                        printEvaluation(evaluations);
+//                        System.out.printf("| %-20s | %-20s | %-20s |\n", "Id", "Grade", "Teacher ID");
+//                        for (Evaluation evaluation : evaluations) {
+//                            System.out.printf("|%-20s | %-20s | %-20s |\n",
+//                                    evaluation.getId(),
+//                                    evaluation.getGrade(),
+//                                    evaluation.getTeacherId());
+//                        }
                         result = true;
                         break;
                     case "grant":
                         GrantDAO grantDAO = new GrantDAO();
-                        ArrayList<Grant> grants;
-                        System.out.printf("| %-10s | %-10s | %-10s | %-10s |\n","Id","Destination","Total Seats","Teacher ID");
-                        grants = grantDAO.getAll();
-                        for(Grant grant : grants){
-                            System.out.printf("| %-10s | %-10s | %-10s | %-10s |\n",
-                                    grant.getId(),
-                                    grant.getDestination(),
-                                    grant.getTotalSeats(),
-                                    grant.getTeacherId());
-                        }
+                        ArrayList<Grant> grants = grantDAO.getAll();
+                        printGrant(grants);
+//                        System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n", "Id", "Destination", "Total Seats", "Teacher ID");
+//                        for (Grant grant : grants) {
+//                            System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n",
+//                                    grant.getId(),
+//                                    grant.getDestination(),
+//                                    grant.getTotalSeats(),
+//                                    grant.getTeacherId());
+//                        }
                         result = true;
                         break;
                     case "student":
                         StudentDAO studentDAO = new StudentDAO();
-                        ArrayList<Student> students;
-                        System.out.printf("| %-10s | %-10s | %-10s | %-10s |\n","Student Number","Last Name","First Name","Average Grade");
-                        students = studentDAO.getAll();
-                        for(Student student : students){
-                            System.out.printf("| %-10s | %-10s | %-10s | %-10s |\n",
-                                    student.getStudentNumber(),
-                                    student.getLastName(),
-                                    student.getFirstName(),
-                                    student.getAverageGrade());
-                        }
+                        ArrayList<Student> students = studentDAO.getAll();
+                        printStudent(students);
+//                        System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n", "Student Number", "Last Name", "First Name", "Average Grade");
+//                        for (Student student : students) {
+//                            System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n",
+//                                    student.getStudentNumber(),
+//                                    student.getLastName(),
+//                                    student.getFirstName(),
+//                                    student.getAverageGrade());
+//                        }
                         result = true;
                         break;
                     case "teacher":
                         TeacherDAO teacherDAO = new TeacherDAO();
-                        ArrayList<Teacher> teachers;
-                        System.out.printf("| %-10s | %-10s | %-10s |\n","Id","Last Name","First Name");
-                        teachers = teacherDAO.getAll();
-                        for(Teacher teacher : teachers){
-                            System.out.printf("| %-10s | %-10s | %-10s |\n",
-                                    teacher.getId(),
-                                    teacher.getLastName(),
-                                    teacher.getFirstName());
-                        }
+                        ArrayList<Teacher> teachers = teacherDAO.getAll();
+                        printTeacher(teachers);
+//                        System.out.printf("| %-20s | %-20s | %-20s |\n", "Id", "Last Name", "First Name");
+//                        for (Teacher teacher : teachers) {
+//                            System.out.printf("| %-20s | %-20s | %-20s |\n",
+//                                    teacher.getId(),
+//                                    teacher.getLastName(),
+//                                    teacher.getFirstName());
+//                        }
                         result = true;
                         break;
 
@@ -417,96 +416,228 @@ public class MainClass {
                 }
 
 
-            }else{ //Else if you want to get a specific entry of a table
+            } else { //Else if you want to get a specific entry of a table
 
                 if (arguments.length < 4) {
                     //TODO : only show available columns
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : get [all] <tableName> <colName> <value>\n Or use 'get help' for help");
                     System.out.println("Available columns per table : ");
-                    System.out.println("\t- student : studentNumber, lastName, firstName, averageGrade");
-                    System.out.println("\t- teacher : id, lastName, firstName");
+                    System.out.println("\t- student : studentNumber");
+                    System.out.println("\t- teacher : id");
                     System.out.println("\t- evaluation : id, grade, teacherId");
-                    System.out.println("\t- grant : id, destination, totalSeats, teacherId");
-                    System.out.println("\t- course : id, university");
-                    System.out.println("\t- application : studentid, grant, university");
+                    System.out.println("\t- grant : id, destination, teacherId");
+                    System.out.println("\t- course : id");
+                    System.out.println("\t- application : grant, university, finalgrade");
                     return false;
                 }
 
                 switch (arguments[iToRead].toLowerCase()) {
-                    //TODO : add the possibilities of each table
                     case "application":
-                        // TODO
+                        ApplicationDAO applicationDAO = new ApplicationDAO();
+                        ArrayList<Application> applications;
+                        switch (arguments[iToRead + 1].toLowerCase()) {
+                            case "grant":
+                                if (isInteger(arguments[iToRead + 2])) {
+                                    applications = applicationDAO.getByGrantId(Integer.parseInt(arguments[iToRead + 2]));
+                                    if (applications != null) {
+                                        printApplication(applications);
+                                        result = true;
+                                    } else {
+                                        System.err.println("No application found for this grant");
+                                    }
+                                }
+                                break;
+
+                            case "university":
+                                applications = applicationDAO.getByUniversity(arguments[iToRead + 2]);
+                                if (applications != null) {
+                                    printApplication(applications);
+                                    result = true;
+                                } else {
+                                    System.err.println("No application found for this University");
+                                }
+                                break;
+
+                            case "finalgrade":
+                                if (isInteger(arguments[iToRead + 2])) {
+                                    applications = applicationDAO.getBySupFinalGrade(Integer.parseInt(arguments[iToRead + 2]));
+                                    if (applications != null) {
+                                        printApplication(applications);
+                                        result = true;
+                                    } else {
+                                        System.err.println("No application found where the student's final grade is superior");
+                                    }
+                                }
+                                break;
+
+                            default:
+                                System.err.println("Invalid column\nUse 'get help' for help");
+                        }
                         break;
                     case "courses":
+                        CoursesDAO courseDAO = new CoursesDAO();
+                        ArrayList<Courses> course;
                         switch (arguments[iToRead + 1].toLowerCase()) {
                             case "id":
-                                //check if the value is an integer
-                                if(isInteger(arguments[iToRead + 2])){
-                                    CoursesDAO courseDAO = new CoursesDAO();
-                                    Courses course = courseDAO.getByCourseId(Integer.parseInt(arguments[iToRead + 2]));
+                                if (isInteger(arguments[iToRead + 2])) {
+                                    course = new ArrayList<>();
+                                    course.add(courseDAO.getByCourseId(Integer.parseInt(arguments[iToRead + 2])));
                                     if (course != null) {
-
-                                        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n",
-                                                "Id",
-                                                "University",
-                                                "Name",
-                                                "ECTS",
-                                                "Hours");
-
-                                        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n",
-                                                course.getId(),
-                                                course.getUniversity(),
-                                                course.getName(),
-                                                course.getEcts(),
-                                                course.getHours());
+                                        printCourses(course);
                                         result = true;
-                                    }else{
+                                    } else {
                                         System.err.println("No course found with this id");
                                     }
                                 }
                                 break;
 
                             case "university":
-                                CoursesDAO courseDAO = new CoursesDAO();
-                                ArrayList<Courses> courses = courseDAO.getByUniversity(arguments[iToRead + 2]);
-                                if(courses!=null){
-                                    System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n",
-                                            "Id",
-                                            "University",
-                                            "Name",
-                                            "ECTS",
-                                            "Hours");
-
-                                    for(Courses course : courses){
-                                        System.out.printf("| %-10s | %-10s | %-10s | %-10s | %-10s |\n",
-                                                course.getId(),
-                                                course.getUniversity(),
-                                                course.getName(),
-                                                course.getEcts(),
-                                                course.getHours());
-                                    }
+                                course = courseDAO.getByUniversity(arguments[iToRead + 2]);
+                                if (course != null) {
+                                    printCourses(course);
                                     result = true;
-                                }else{
+                                } else {
                                     System.err.println("No course found with this university");
                                 }
                                 break;
 
+                            case "ects":
+                                if (isInteger(arguments[iToRead + 2])) {
+                                    course = courseDAO.getByEcts(Integer.parseInt(arguments[iToRead + 2]));
+                                    if (course != null) {
+                                        printCourses(course);
+                                        result = true;
+                                    } else {
+                                        System.err.println("No course found with this number of ECTS");
+                                    }
+                                }
+                                break;
+
+                            default:
+                                System.err.println("Invalid column\nUse 'get help' for help");
 
                         }
                         break;
                     case "evaluation":
-                        // TODO
+                        EvaluationDAO evaluationDAO = new EvaluationDAO();
+                        ArrayList<Evaluation> evaluation;
+                        switch (arguments[iToRead + 1].toLowerCase()) {
+                            case "id":
+                                if (isInteger(arguments[iToRead + 2])) {
+                                    evaluation = new ArrayList<>();
+                                    evaluation.add(evaluationDAO.getByEvaluationId(Integer.parseInt(arguments[iToRead + 2])));
+                                    if (evaluation != null) {
+                                        printEvaluation(evaluation);
+                                        result = true;
+                                    } else {
+                                        System.err.println("No Evaluation found with this id");
+                                    }
+                                }
+                                break;
+
+                            case "teacher":
+                                if (isInteger(arguments[iToRead + 2])) {
+                                    evaluation = evaluationDAO.getByTeacher(Integer.parseInt(arguments[iToRead + 2]));
+                                    if (evaluation != null) {
+                                        printEvaluation(evaluation);
+                                        result = true;
+                                    } else {
+                                        System.err.println("No course found with this university");
+                                    }
+                                }
+                                break;
+
+                            default:
+                                System.err.println("Invalid column\nUse 'get help' for help");
+                        }
                         break;
                     case "grant":
-                        // TODO
-                        break;
-                    case "student":
-                        // TODO
+                        GrantDAO grantDAO = new GrantDAO();
+                        ArrayList<Grant> grant;
+                        switch (arguments[iToRead + 1].toLowerCase()) {
+                            case "id":
+                                if (isInteger(arguments[iToRead + 2])) {
+                                    grant = new ArrayList<>();
+                                    grant.add(grantDAO.getById(Integer.parseInt(arguments[iToRead + 2])));
+                                    if (grant != null) {
+                                        printGrant(grant);
+                                        result = true;
+                                    } else {
+                                        System.err.println("No grant found for this id");
+                                    }
+                                }
+                                break;
 
+                            case "destination":
+                                grant = grantDAO.getByDestination(arguments[iToRead + 2]);
+                                if (grant != null) {
+                                    printGrant(grant);
+                                    result = true;
+                                } else {
+                                    System.err.println("No Grant found for this destination");
+                                }
+                                break;
+
+                            case "teacher":
+                                if (isInteger(arguments[iToRead + 2])) {
+                                    grant = grantDAO.getByTeacherId(Integer.parseInt(arguments[iToRead + 2]));
+                                    if (grant != null) {
+                                        printGrant(grant);
+                                        result = true;
+                                    } else {
+                                        System.err.println("No grant found managed by this teacher");
+                                    }
+                                }
+                                break;
+
+                            default:
+                                System.err.println("Invalid column\nUse 'get help' for help");
+                        }
                         break;
+
+                    case "student":
+                        StudentDAO studentDAO = new StudentDAO();
+                        ArrayList<Student> student;
+                        switch (arguments[iToRead + 1].toLowerCase()) {
+                            case "id":
+                                if (isInteger(arguments[iToRead + 2])) {
+                                    student = new ArrayList<>();
+                                    student.add(studentDAO.getById(arguments[iToRead + 2]));
+                                    if (student != null) {
+                                        printStudent(student);
+                                        result = true;
+                                    } else {
+                                        System.err.println("No student found for this id");
+                                    }
+                                }
+                                break;
+
+                            default:
+                                System.err.println("Invalid column\nUse 'get help' for help");
+                        }
+                        break;
+
                     case "teacher":
-                        // TODO
+                        TeacherDAO teacherDAO = new TeacherDAO();
+                        ArrayList<Teacher> teachers;
+                        switch (arguments[iToRead + 1].toLowerCase()) {
+                            case "id":
+                                if (isInteger(arguments[iToRead + 2])) {
+                                    teachers = new ArrayList<>();
+                                    teachers.add(teacherDAO.getById(arguments[iToRead + 2]));
+                                    if (teachers != null) {
+                                        printTeacher(teachers);
+                                        result = true;
+                                    } else {
+                                        System.err.println("No teacher found for this id");
+                                    }
+                                }
+                                break;
+
+                            default:
+                                System.err.println("Invalid column\nUse 'get help' for help");
+                        }
                         break;
                     default:
                         System.err.println("Unknown table, type 'get help' for help");
@@ -517,33 +648,130 @@ public class MainClass {
             }
 
 
-
-
-
         }
 
 
         return result;
     }
 
+    //=====================================PRINT=======================================
+
+    private static void printCourses(ArrayList<Courses> courses) {
+        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s |\n",
+                "Id",
+                "University",
+                "Name",
+                "ECTS",
+                "Hours");
+        for (Courses course : courses) {
+            System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s |\n",
+                    course.getId(),
+                    course.getUniversity(),
+                    course.getName(),
+                    course.getEcts(),
+                    course.getHours());
+        }
+    }
+
+    private static void printApplication(ArrayList<Application> applications) {
+        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
+                "Student Id",
+                "Grant Id",
+                "University",
+                "Eval1 Id",
+                "Eval2 Id",
+                "Final Grade");
+
+        for (Application application : applications) {
+            System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
+                    application.getStudentId(),
+                    application.getGrantId(),
+                    application.getUniversity(),
+                    application.getEval1Id(),
+                    application.getEval2Id(),
+                    application.getFinalGrade());
+        }
+    }
+
+    private static void printEvaluation(ArrayList<Evaluation> evaluations) {
+        System.out.printf("| %-20s | %-20s | %-20s |\n",
+                "Evaluation Id",
+                "Grade",
+                "Teacher Id");
+
+        for (Evaluation evaluation : evaluations) {
+            System.out.printf("| %-20s | %-20s | %-20s |\n",
+                    evaluation.getId(),
+                    evaluation.getGrade(),
+                    evaluation.getTeacherId());
+        }
+    }
+
+    private static void printGrant(ArrayList<Grant> grants) {
+        System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n",
+                "Grant Id",
+                "Destination",
+                "Total Seats",
+                "Teacher Id");
+
+        for (Grant grant : grants) {
+            System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n",
+                    grant.getId(),
+                    grant.getDestination(),
+                    grant.getTotalSeats(),
+                    grant.getTeacherId());
+        }
+    }
+
+    private static void printStudent(ArrayList<Student> students) {
+        System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n",
+                "Student Number",
+                "Last Name",
+                "First Name",
+                "Average Grade");
+
+        for (Student student : students) {
+            System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n",
+                    student.getStudentNumber(),
+                    student.getLastName(),
+                    student.getFirstName(),
+                    student.getAverageGrade());
+        }
+    }
+
+    private static void printTeacher(ArrayList<Teacher> teachers) {
+        System.out.printf("| %-20s | %-20s | %-20s |\n",
+                "Student Number",
+                "Last Name",
+                "First Name");
+
+        for (Teacher teacher : teachers) {
+            System.out.printf("| %-20s | %-20s | %-20s |\n",
+                    teacher.getId(),
+                    teacher.getLastName(),
+                    teacher.getFirstName());
+        }
+    }
+
+    //=====================================DELETE======================================
 
     private static boolean delete(String[] arguments) {
         boolean result = false;
-        if(arguments.length<2){
+        if (arguments.length < 2) {
             System.err.println("Not enough arguments");
             System.out.println("Type 'delete help' for help");
         }
 
         //Special case for delete application (needs a string id and grant id)
-        if(arguments[1].equals("application")){
-            if(arguments.length<4){
+        if (arguments[1].equals("application")) {
+            if (arguments.length < 4) {
                 System.err.println("Not enough arguments");
                 System.out.println("Type 'delete help' for help");
-            }else{
+            } else {
                 if (isInteger(arguments[3])) {
                     ApplicationDAO applicationDAO = new ApplicationDAO();
                     result = applicationDAO.deleteStudentApplication(arguments[2], Integer.parseInt(arguments[3]));
-                    if(!result){
+                    if (!result) {
                         System.err.println("No application found with this student number and/or grant id");
                     }
                     return result;
@@ -553,14 +781,14 @@ public class MainClass {
         }
 
         //Special case for delete student (needs a string id)
-        if(arguments[1].equals("student")){
-            if(arguments.length<3){
+        if (arguments[1].equals("student")) {
+            if (arguments.length < 3) {
                 System.err.println("Not enough arguments");
                 System.out.println("Type 'delete help' for help");
-            }else{
+            } else {
                 StudentDAO studentDAO = new StudentDAO();
                 result = studentDAO.delete(arguments[2]);
-                if(!result){
+                if (!result) {
                     System.err.println("No student found with this id");
                 }
                 return result;
@@ -568,12 +796,12 @@ public class MainClass {
         }
 
 
-        if(arguments.length>3){
+        if (arguments.length > 3) {
             System.err.println("Too many arguments");
             System.out.println("Type 'delete help' for help");
         }
 
-        if(arguments[1].equalsIgnoreCase("help")){
+        if (arguments[1].equalsIgnoreCase("help")) {
             System.out.println("delete [all <table>] | [<table> <id>]");
             System.out.println("Deletes a/all row/rows from a table");
             System.out.println("<table> can be:");
@@ -586,7 +814,7 @@ public class MainClass {
             System.out.println("<id> is the id of the row to delete");
         }
 
-        if(arguments[1].equalsIgnoreCase("all")){
+        if (arguments[1].equalsIgnoreCase("all")) {
             switch (arguments[2].toLowerCase()) {
                 case "application":
                     ApplicationDAO applicationDAO = new ApplicationDAO();
@@ -619,7 +847,7 @@ public class MainClass {
 
             }
 
-        }else{
+        } else {
 
             if (isInteger(arguments[1])) {
                 switch (arguments[1].toLowerCase()) {
@@ -646,15 +874,16 @@ public class MainClass {
 
                 }
 
-            }else {
+            } else {
                 System.err.println("Invalid id");
             }
         }
 
 
-
         return result;
     }
+
+    //=====================================UPDATE======================================
 
     private static boolean update(String[] arguments) {
         // TODO
@@ -662,13 +891,14 @@ public class MainClass {
         return false;
     }
 
+    //=====================================ISTYPE=========================================
 
     private static boolean isInteger(String argument) {
         try {
             Integer.parseInt(argument);
             return true;
         } catch (NumberFormatException e) {
-            System.err.println("The value '"+ argument + "' is not an integer");
+            System.err.println("The value '" + argument + "' is not an integer");
             return false;
         }
     }
@@ -678,7 +908,7 @@ public class MainClass {
             Float.parseFloat(argument);
             return true;
         } catch (NumberFormatException e) {
-            System.err.println("The value '"+ argument + "' is not a float");
+            System.err.println("The value '" + argument + "' is not a float");
             return false;
         }
     }
