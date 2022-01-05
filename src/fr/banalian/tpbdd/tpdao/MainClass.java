@@ -84,10 +84,6 @@ public class MainClass {
         ConnectBdd.closeConnection();
     }
 
-    //=====================================UPDATE======================================
-
-
-
     //=====================================ISTYPE=========================================
 
     public static boolean isInteger(String argument) {

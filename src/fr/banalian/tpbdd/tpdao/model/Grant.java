@@ -1,26 +1,43 @@
 package fr.banalian.tpbdd.tpdao.model;
 
-public class Grant {
-    private int id;
-    private String destination;
-    private int totalSeats;
-    private int teacherId;
+import javax.persistence.*;
 
-    public Grant(int id, String destination, int totalSeats, int teacherId) {
+@Entity
+@Table(name = "grant")
+public class Grant {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "destination")
+    private String destination;
+
+    @Column(name = "totalseats")
+    private int totalSeats;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Teacher teacher;
+
+    public Grant() {
+    }
+
+    public Grant(int id, String destination, int totalSeats, Teacher teacher) {
         this.id = id;
         this.destination = destination;
         this.totalSeats = totalSeats;
-        this.teacherId = teacherId;
+        this.teacher = teacher;
     }
 
-    public Grant(String destination, int totalSeats, int teacherId) {
+    public Grant(String destination, int totalSeats, Teacher teacher) {
         this.destination = destination;
         this.totalSeats = totalSeats;
-        this.teacherId = teacherId;
+        this.teacher = teacher;
     }
 
     public String toString() {
-        return "\t" + id + "\t\t" + destination + "\t\t" + totalSeats + "\t\t" + teacherId;
+        return "\t" + id + "\t\t" + destination + "\t\t" + totalSeats + "\t\t" + teacher.getId();
     }
 
     public int getId() {
@@ -47,11 +64,11 @@ public class Grant {
         this.totalSeats = totalSeats;
     }
 
-    public int getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }

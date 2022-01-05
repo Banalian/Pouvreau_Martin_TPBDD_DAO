@@ -2,14 +2,29 @@ package fr.banalian.tpbdd.tpdao.model;
 
 import fr.banalian.tpbdd.tpdao.ConnectBdd;
 
+import javax.persistence.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@Entity
+@Table(name = "teacher")
 public class Teacher {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "lastname")
     private String lastName;
+
+    @Column(name = "firstname")
     private String firstName;
+
+    public Teacher() {
+
+    }
 
     public Teacher(int id, String lastName, String firstName) {
         this.id = id;
@@ -49,6 +64,4 @@ public class Teacher {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
-
 }

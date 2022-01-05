@@ -1,10 +1,29 @@
 package fr.banalian.tpbdd.tpdao.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "student")
 public class Student {
+
+    @Column(name = "lastname")
     private String lastName;
+
+    @Column(name = "firstname")
     private String firstName;
+
+    @Id
+    @Column(name = "studentnumber")
     private String studentNumber;
+
+    @Column(name = "averagegrade")
     private float averageGrade;
+
+    public Student() {
+    }
 
     public Student(String lastName, String firstName, String studentNumber, float averageGrade) {
         this.lastName = lastName;

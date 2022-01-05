@@ -1,23 +1,38 @@
 package fr.banalian.tpbdd.tpdao.model;
 
-public class Evaluation {
-    private int id;
-    private float grade;
-    private int teacherId;
+import javax.persistence.*;
 
-    public Evaluation(int id, float grade, int teacherId) {
-        this.id = id;
-        this.grade = grade;
-        this.teacherId = teacherId;
+@Entity
+@Table(name ="evaluation")
+public class Evaluation {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "grade")
+    private float grade;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Teacher teacher;
+
+    public Evaluation() {
     }
 
-    public Evaluation(float grade, int teacherId) {
+    public Evaluation(int id, float grade, Teacher teacher) {
+        this.id = id;
         this.grade = grade;
-        this.teacherId = teacherId;
+        this.teacher = teacher;
+    }
+
+    public Evaluation(float grade, Teacher teacher) {
+        this.grade = grade;
+        this.teacher = teacher;
     }
 
     public String toString() {
-        return "\t" + id + "\t\t" + grade + "\t\t" + teacherId;
+        return "\t" + id + "\t\t" + grade + "\t\t" + teacher.getId();
     }
 
     public int getId() {
@@ -36,11 +51,11 @@ public class Evaluation {
         this.grade = grade;
     }
 
-    public int getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }
