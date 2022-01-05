@@ -1,5 +1,4 @@
 package fr.banalian.tpbdd.tpdao.parser;
-import fr.banalian.tpbdd.tpdao.dao.*;
 import fr.banalian.tpbdd.tpdao.model.*;
 
 public class Add {
@@ -71,16 +70,9 @@ public class Add {
                     System.err.println(e.getMessage());
                 }
 
-                EvaluationDAO evaluationDAO = new EvaluationDAO();
-                //TODO : handle the teacher id request
-                Evaluation evaluation1 = new Evaluation(0, Integer.parseInt(valuesApplication[3]));
-                evaluationDAO.add(evaluation1);
-                Evaluation evaluation2 = new Evaluation(0, Integer.parseInt(valuesApplication[4]));
-                evaluationDAO.add(evaluation2);
+                //TODO : add application
 
-                ApplicationDAO applicationDAO = new ApplicationDAO();
-                Application temp = new Application(valuesApplication[0], Integer.parseInt(valuesApplication[1]), valuesApplication[2], evaluation1.getId(), evaluation2.getId(), 0);
-                result = applicationDAO.add(temp);
+
                 break;
 
             case "courses":
@@ -107,9 +99,7 @@ public class Add {
                     System.err.println(e.getMessage());
                 }
 
-                CoursesDAO courseDAO = new CoursesDAO();
-                Courses tempCourse = new Courses(valuesCourses[1], Integer.parseInt(valuesCourses[2]), Float.parseFloat(valuesCourses[3]), valuesCourses[0]);
-                result = courseDAO.add(tempCourse);
+                //TODO : Add course
 
                 break;
             case "evaluation":
@@ -140,9 +130,9 @@ public class Add {
                     System.err.println(e.getMessage());
                 }
 
-                GrantDAO grantDAO = new GrantDAO();
-                Grant tempGrant = new Grant(valuesGrant[0], Integer.parseInt(valuesGrant[1]), Integer.parseInt(valuesGrant[2]));
-                result = grantDAO.add(tempGrant);
+                //TODO : add grant
+
+
                 break;
             case "student":
                 if (arguments.length < 6) {
@@ -167,9 +157,9 @@ public class Add {
                     System.err.println(e.getMessage());
                 }
 
-                StudentDAO studentDAO = new StudentDAO();
-                Student tempStudent = new Student(valuesStudent[0], valuesStudent[1], valuesStudent[2], Float.parseFloat(valuesStudent[3]));
-                result = studentDAO.add(tempStudent);
+                //TODO : Add student
+
+
                 break;
 
             case "teacher":
@@ -184,9 +174,10 @@ public class Add {
                 }
                 String[] valuesTeacher = new String[arguments.length - 2];
                 System.arraycopy(arguments, 2, valuesTeacher, 0, arguments.length - 2);
-                TeacherDAO teacherDAO = new TeacherDAO();
-                Teacher tempTeacher = new Teacher(valuesTeacher[0], valuesTeacher[1]);
-                result = teacherDAO.add(tempTeacher);
+
+                //TODO : Add Teacher
+
+
                 break;
 
             default:

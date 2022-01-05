@@ -7,7 +7,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
             <property name="javax.persistence.jdbc.driver"
                       value="com.mysql.cj.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/tphibernate"/>
+                      value="jdbc:mysql://localhost:3306/erasmus"/>
             <property name="javax.persistence.jdbc.user"
                       value="root"/>
             <property name="javax.persistence.jdbc.password"

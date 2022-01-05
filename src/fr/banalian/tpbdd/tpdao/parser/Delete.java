@@ -1,5 +1,4 @@
 package fr.banalian.tpbdd.tpdao.parser;
-import fr.banalian.tpbdd.tpdao.dao.*;
 
 import static fr.banalian.tpbdd.tpdao.MainClass.isInteger;
 
@@ -19,8 +18,8 @@ public class Delete {
                 System.out.println("Type 'delete help' for help");
             } else {
                 if (isInteger(arguments[3])) {
-                    ApplicationDAO applicationDAO = new ApplicationDAO();
-                    result = applicationDAO.deleteStudentApplication(arguments[2], Integer.parseInt(arguments[3]));
+
+                    // TODO: delete application
                     if (!result) {
                         System.err.println("No application found with this student number and/or grant id");
                     }
@@ -36,8 +35,8 @@ public class Delete {
                 System.err.println("Not enough arguments");
                 System.out.println("Type 'delete help' for help");
             } else {
-                StudentDAO studentDAO = new StudentDAO();
-                result = studentDAO.delete(arguments[2]);
+                //TODO: delete student
+
                 if (!result) {
                     System.err.println("No student found with this id");
                 }
@@ -68,28 +67,22 @@ public class Delete {
         if (arguments[1].equalsIgnoreCase("all")) {
             switch (arguments[2].toLowerCase()) {
                 case "application":
-                    ApplicationDAO applicationDAO = new ApplicationDAO();
-                    result = applicationDAO.deleteAll();
+                    //TODO : delete all applications
                     break;
                 case "courses":
-                    CoursesDAO coursesDAO = new CoursesDAO();
-                    result = coursesDAO.deleteAll();
+                    //TODO : delete all courses
                     break;
                 case "evaluation":
-                    EvaluationDAO evaluationDAO = new EvaluationDAO();
-                    result = evaluationDAO.deleteAll();
+                    //TODO : delete all evaluations
                     break;
                 case "grant":
-                    GrantDAO grantDAO = new GrantDAO();
-                    result = grantDAO.deleteAll();
+                    //TODO : delete all grants
                     break;
                 case "student":
-                    StudentDAO studentDAO = new StudentDAO();
-                    result = studentDAO.deleteAll();
+                    //TODO : delete all students
                     break;
                 case "teacher":
-                    TeacherDAO teacherDAO = new TeacherDAO();
-                    result = teacherDAO.deleteAll();
+                    //TODO : delete all teachers
                     break;
 
                 default:
@@ -103,20 +96,16 @@ public class Delete {
             if (isInteger(arguments[1])) {
                 switch (arguments[1].toLowerCase()) {
                     case "courses":
-                        CoursesDAO coursesDAO = new CoursesDAO();
-                        result = coursesDAO.delete(Integer.parseInt(arguments[2]));
+                        //TODO : delete course with id
                         break;
                     case "evaluation":
-                        EvaluationDAO evaluationDAO = new EvaluationDAO();
-                        result = evaluationDAO.delete(Integer.parseInt(arguments[2]));
+                        //TODO : delete evaluation with id
                         break;
                     case "grant":
-                        GrantDAO grantDAO = new GrantDAO();
-                        result = grantDAO.delete(Integer.parseInt(arguments[2]));
+                        //TODO : delete grant with id
                         break;
                     case "teacher":
-                        TeacherDAO teacherDAO = new TeacherDAO();
-                        result = teacherDAO.delete(Integer.parseInt(arguments[2]));
+                        //TODO : delete teacher with id
                         break;
 
                     default:

@@ -1,6 +1,5 @@
 package fr.banalian.tpbdd.tpdao.parser;
 import fr.banalian.tpbdd.tpdao.MainClass;
-import fr.banalian.tpbdd.tpdao.dao.*;
 import fr.banalian.tpbdd.tpdao.model.*;
 
 import java.util.ArrayList;
@@ -54,39 +53,27 @@ public class Get {
 
                 switch (arguments[iToRead].toLowerCase()) {
                     case "application":
-                        ApplicationDAO applicationDAO = new ApplicationDAO();
-                        ArrayList<Application> applications = applicationDAO.getAll();
-                        printApplication(applications);
+                        //TODO : get all application
                         result = true;
                         break;
                     case "courses":
-                        CoursesDAO coursesDAO = new CoursesDAO();
-                        ArrayList<Courses> courses = coursesDAO.getAll();
-                        printCourses(courses);
+                        //TODO : get all courses
                         result = true;
                         break;
                     case "evaluation":
-                        EvaluationDAO evaluationDAO = new EvaluationDAO();
-                        ArrayList<Evaluation> evaluations = evaluationDAO.getAll();
-                        printEvaluation(evaluations);
+                        //TODO : get all evaluation
                         result = true;
                         break;
                     case "grant":
-                        GrantDAO grantDAO = new GrantDAO();
-                        ArrayList<Grant> grants = grantDAO.getAll();
-                        printGrant(grants);
+                        //TODO : get all grant
                         result = true;
                         break;
                     case "student":
-                        StudentDAO studentDAO = new StudentDAO();
-                        ArrayList<Student> students = studentDAO.getAll();
-                        printStudent(students);
+                        //TODO : get all student
                         result = true;
                         break;
                     case "teacher":
-                        TeacherDAO teacherDAO = new TeacherDAO();
-                        ArrayList<Teacher> teachers = teacherDAO.getAll();
-                        printTeacher(teachers);
+                        //TODO : get all teacher
                         result = true;
                         break;
 
@@ -100,6 +87,7 @@ public class Get {
             } else { //Else if you want to get a specific entry of a table
 
                 if (arguments.length < 4) {
+                    //TODO : adapt help with the correct column available
                     System.err.println("Not enough arguments");
                     System.out.println("Usage : get [all] <tableName> <colName> <value>\n Or use 'get help' for help");
                     System.out.println("Available columns per table : ");
@@ -114,208 +102,24 @@ public class Get {
 
                 switch (arguments[iToRead].toLowerCase()) {
                     case "application":
-                        ApplicationDAO applicationDAO = new ApplicationDAO();
-                        ArrayList<Application> applications;
-                        switch (arguments[iToRead + 1].toLowerCase()) {
-                            case "grant":
-                                if (MainClass.isInteger(arguments[iToRead + 2])) {
-                                    applications = applicationDAO.getByGrantId(Integer.parseInt(arguments[iToRead + 2]));
-                                    if (applications != null) {
-                                        printApplication(applications);
-                                        result = true;
-                                    } else {
-                                        System.err.println("No application found for this grant");
-                                    }
-                                }
-                                break;
-
-                            case "university":
-                                applications = applicationDAO.getByUniversity(arguments[iToRead + 2]);
-                                if (applications != null) {
-                                    printApplication(applications);
-                                    result = true;
-                                } else {
-                                    System.err.println("No application found for this University");
-                                }
-                                break;
-
-                            case "finalgrade":
-                                if (MainClass.isInteger(arguments[iToRead + 2])) {
-                                    applications = applicationDAO.getBySupFinalGrade(Integer.parseInt(arguments[iToRead + 2]));
-                                    if (applications != null) {
-                                        printApplication(applications);
-                                        result = true;
-                                    } else {
-                                        System.err.println("No application found where the student's final grade is superior");
-                                    }
-                                }
-                                break;
-
-                            default:
-                                System.err.println("Invalid column\nUse 'get help' for help");
-                        }
+                        //TODO : get application with specific columns
                         break;
                     case "courses":
-                        CoursesDAO courseDAO = new CoursesDAO();
-                        ArrayList<Courses> course;
-                        switch (arguments[iToRead + 1].toLowerCase()) {
-                            case "id":
-                                if (MainClass.isInteger(arguments[iToRead + 2])) {
-                                    course = new ArrayList<>();
-                                    course.add(courseDAO.getByCourseId(Integer.parseInt(arguments[iToRead + 2])));
-                                    if (course.size() > 0) {
-                                        printCourses(course);
-                                        result = true;
-                                    } else {
-                                        System.err.println("No course found with this id");
-                                    }
-                                }
-                                break;
-
-                            case "university":
-                                course = courseDAO.getByUniversity(arguments[iToRead + 2]);
-                                if (course != null) {
-                                    printCourses(course);
-                                    result = true;
-                                } else {
-                                    System.err.println("No course found with this university");
-                                }
-                                break;
-
-                            case "ects":
-                                if (MainClass.isInteger(arguments[iToRead + 2])) {
-                                    course = courseDAO.getByEcts(Integer.parseInt(arguments[iToRead + 2]));
-                                    if (course != null) {
-                                        printCourses(course);
-                                        result = true;
-                                    } else {
-                                        System.err.println("No course found with this number of ECTS");
-                                    }
-                                }
-                                break;
-
-                            default:
-                                System.err.println("Invalid column\nUse 'get help' for help");
-
-                        }
+                        //TODO : get courses with specific columns
                         break;
                     case "evaluation":
-                        EvaluationDAO evaluationDAO = new EvaluationDAO();
-                        ArrayList<Evaluation> evaluation;
-                        switch (arguments[iToRead + 1].toLowerCase()) {
-                            case "id":
-                                if (MainClass.isInteger(arguments[iToRead + 2])) {
-                                    evaluation = new ArrayList<>();
-                                    evaluation.add(evaluationDAO.getByEvaluationId(Integer.parseInt(arguments[iToRead + 2])));
-                                    if (evaluation.size() > 0) {
-                                        printEvaluation(evaluation);
-                                        result = true;
-                                    } else {
-                                        System.err.println("No Evaluation found with this id");
-                                    }
-                                }
-                                break;
-
-                            case "teacherid":
-                                if (MainClass.isInteger(arguments[iToRead + 2])) {
-                                    evaluation = evaluationDAO.getByTeacher(Integer.parseInt(arguments[iToRead + 2]));
-                                    if (evaluation != null) {
-                                        printEvaluation(evaluation);
-                                        result = true;
-                                    } else {
-                                        System.err.println("No course found with this university");
-                                    }
-                                }
-                                break;
-
-                            default:
-                                System.err.println("Invalid column\nUse 'get help' for help");
-                        }
+                        //TODO : get evaluation with specific columns
                         break;
                     case "grant":
-                        GrantDAO grantDAO = new GrantDAO();
-                        ArrayList<Grant> grant;
-                        switch (arguments[iToRead + 1].toLowerCase()) {
-                            case "id":
-                                if (MainClass.isInteger(arguments[iToRead + 2])) {
-                                    grant = new ArrayList<>();
-                                    grant.add(grantDAO.get(Integer.parseInt(arguments[iToRead + 2])));
-                                    if (grant.size() > 0) {
-                                        printGrant(grant);
-                                        result = true;
-                                    } else {
-                                        System.err.println("No grant found for this id");
-                                    }
-                                }
-                                break;
-
-                            case "destination":
-                                grant = grantDAO.getByDestination(arguments[iToRead + 2]);
-                                if (grant != null) {
-                                    printGrant(grant);
-                                    result = true;
-                                } else {
-                                    System.err.println("No Grant found for this destination");
-                                }
-                                break;
-
-                            case "teacherid":
-                                if (MainClass.isInteger(arguments[iToRead + 2])) {
-                                    grant = grantDAO.getByTeacherId(Integer.parseInt(arguments[iToRead + 2]));
-                                    if (grant != null) {
-                                        printGrant(grant);
-                                        result = true;
-                                    } else {
-                                        System.err.println("No grant found managed by this teacher");
-                                    }
-                                }
-                                break;
-
-                            default:
-                                System.err.println("Invalid column\nUse 'get help' for help");
-                        }
+                        //TODO : get grant with specific columns
                         break;
 
                     case "student":
-                        StudentDAO studentDAO = new StudentDAO();
-                        ArrayList<Student> student;
-                        switch (arguments[iToRead + 1].toLowerCase()) {
-                            case "studentnumber":
-                                student = new ArrayList<>();
-                                student.add(studentDAO.get(arguments[iToRead + 2]));
-                                if (student.size() > 0) {
-                                    printStudent(student);
-                                    result = true;
-                                } else {
-                                    System.err.println("No student found for this id");
-                                }
-                                break;
-
-                            default:
-                                System.err.println("Invalid column\nUse 'get help' for help");
-                        }
+                        //TODO : get student with specific columns
                         break;
 
                     case "teacher":
-                        TeacherDAO teacherDAO = new TeacherDAO();
-                        ArrayList<Teacher> teachers;
-                        switch (arguments[iToRead + 1].toLowerCase()) {
-                            case "id":
-                                if (MainClass.isInteger(arguments[iToRead + 2])) {
-                                    teachers = new ArrayList<>();
-                                    teachers.add(teacherDAO.get(Integer.parseInt(arguments[iToRead + 2])));
-                                    if (teachers.size() > 0) {
-                                        Print.printTeacher(teachers);
-                                        result = true;
-                                    } else {
-                                        System.err.println("No teacher found for this id");
-                                    }
-                                }
-                                break;
-
-                            default:
-                                System.err.println("Invalid column\nUse 'get help' for help");
-                        }
+                        //TODO : get teacher with specific columns
                         break;
                     default:
                         System.err.println("Unknown table, type 'get help' for help");
