@@ -3,7 +3,9 @@
   <component name="FacetManager">
     <facet type="jpa" name="JPA">
       <configuration>
-        <setting name="validation-enabled" value="true" />        <datasource-mapping>
+        <setting name="validation-enabled" value="true" />
+        <datasource-mapping>
+          <factory-entry name="erasmus" value="13701a6b-0e3c-424f-9c47-bebd38dc1682" />
           <factory-entry name="test" value="13701a6b-0e3c-424f-9c47-bebd38dc1682" />
         </datasource-mapping>
         <naming-strategy-map />

@@ -1,68 +1,43 @@
 package fr.banalian.tpbdd.tpdao;
 
 
-import java.sql.*;
-import java.util.Properties;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 
 public class ConnectBdd {
 
-    private static Connection conn;
-    private static Statement stmt;
-    private static PreparedStatement pstmt;
+    private static EntityManager em;
+    private static SessionFactory sessionFactory;
 
     public static void initConnection() {
 
-        Properties userInfo = new Properties();
-        userInfo.setProperty("user", "root");
-        userInfo.setProperty("password", "root");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("erasmus");
+        em = emf.createEntityManager();
 
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/erasmus", userInfo);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    }
 
+    public static SessionFactory getSessionFactory() {
+        Configuration configuration = new Configuration().configure();
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
+                .applySettings(configuration.getProperties());
+        sessionFactory = configuration
+                .buildSessionFactory(builder.build());
+        return sessionFactory;
     }
 
     public static void closeConnection() {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        em.close();
     }
 
-
-    public static Connection getConn() {
-        return conn;
-    }
-
-    /**
-     * Create a new statement and return it
-     * @return a new statement
-     */
-    public static Statement getNewStatement() {
-        try {
-            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return stmt;
-    }
-
-    /**
-     * Create a new prepared statement and return it
-     * @param sql the sql query
-     * @return a new prepared statement
-     */
-    public static PreparedStatement getNewPreparedStatement(String sql) {
-        try {
-            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return pstmt;
+    public static Session getSession() {
+        return sessionFactory.openSession();
     }
 
 
