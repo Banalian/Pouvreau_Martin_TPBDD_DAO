@@ -1,10 +1,18 @@
 package fr.banalian.tpbdd.tpdao.model;
 
-public class Courses {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "courses")
+public class Courses implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private int ects;
     private float hours;
+    @Id
     private String university;
 
     public Courses(int id, String name, int ects, float hours, String university) {
@@ -20,6 +28,10 @@ public class Courses {
         this.ects = ects;
         this.hours = hours;
         this.university = university;
+    }
+
+    public Courses() {
+
     }
 
     public String toString() {

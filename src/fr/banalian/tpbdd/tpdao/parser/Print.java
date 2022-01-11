@@ -3,6 +3,7 @@ import fr.banalian.tpbdd.tpdao.model.*;
 
 import java.util.ArrayList;
 
+//TODO : REFAIRE LES PRINTS (peut etre avec des ToString?)
 public class Print {
 
     public static void printCourses(ArrayList<Courses> courses) {
@@ -34,10 +35,10 @@ public class Print {
         for (Application application : applications) {
             System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
                     application.getStudentId(),
-                    application.getGrantId(),
+                    application.getGrant(),
                     application.getUniversity(),
-                    application.getEval1Id(),
-                    application.getEval2Id(),
+                    application.getEval1(),
+                    application.getEval2(),
                     application.getFinalGrade());
         }
     }
@@ -52,7 +53,7 @@ public class Print {
             System.out.printf("| %-20s | %-20s | %-20s |\n",
                     evaluation.getId(),
                     evaluation.getGrade(),
-                    evaluation.getTeacherId());
+                    evaluation.getTeacher().getId());
         }
     }
 
@@ -68,7 +69,7 @@ public class Print {
                     grant.getId(),
                     grant.getDestination(),
                     grant.getTotalSeats(),
-                    grant.getTeacherId());
+                    grant.getTeacher().getId());
         }
     }
 

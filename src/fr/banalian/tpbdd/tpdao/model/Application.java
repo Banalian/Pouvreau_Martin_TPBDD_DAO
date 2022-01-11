@@ -1,32 +1,61 @@
 package fr.banalian.tpbdd.tpdao.model;
 
-public class Application {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+
+@Entity
+@Table(name = "application")
+public class Application implements Serializable {
+
+    @Id @PrimaryKeyJoinColumn(name = "studentid")
     private String studentId;
-    private int grantId;
-    private String university;
-    private int eval1Id;
-    private int eval2Id;
+
+    @Id
+    @ManyToOne(optional = false)
+    @PrimaryKeyJoinColumn(name = "grant")
+    private Grant grant;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "university", referencedColumnName = "university"),
+            @JoinColumn(name = "id", referencedColumnName = "id")
+    })
+    private Courses university;
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "evaluation1")
+    private Evaluation eval1;
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "evaluation2")
+    private Evaluation eval2;
+
+    @Column(name = "finalgrade")
     private float finalGrade;
 
-    public Application(String studentId, int grantId, String university, int eval1Id, int eval2Id, float finalGrade) {
+    public Application(String studentId, Grant grant, Courses university, Evaluation eval1, Evaluation eval2, float finalGrade) {
         this.studentId = studentId;
-        this.grantId = grantId;
+        this.grant = grant;
         this.university = university;
-        this.eval1Id = eval1Id;
-        this.eval2Id = eval2Id;
+        this.eval1 = eval1;
+        this.eval2 = eval2;
         this.finalGrade = finalGrade;
     }
 
-    public Application(String studentId, int grantId, String university) {
+    public Application(String studentId, Grant grant, Courses university) {
         this.studentId = studentId;
-        this.grantId = grantId;
+        this.grant = grant;
         this.university = university;
     }
 
+    public Application() {
+
+    }
 
 
     public String toString() {
-        return  "\t" + studentId + "\t\t" + grantId + "\t\t" + university + "\t\t" + eval1Id + "\t\t" + eval2Id + "\t\t" + finalGrade;
+        return  "\t" + studentId + "\t\t" + grant + "\t\t" + university + "\t\t" + eval1 + "\t\t" + eval2 + "\t\t" + finalGrade;
     }
 
     public String getStudentId() {
@@ -37,36 +66,36 @@ public class Application {
         this.studentId = studentId;
     }
 
-    public int getGrantId() {
-        return grantId;
+    public Grant getGrant() {
+        return grant;
     }
 
-    public void setGrantId(int grantId) {
-        this.grantId = grantId;
+    public void setGrant(Grant grant) {
+        this.grant = grant;
     }
 
-    public String getUniversity() {
+    public Courses getUniversity() {
         return university;
     }
 
-    public void setUniversity(String university) {
+    public void setUniversity(Courses university) {
         this.university = university;
     }
 
-    public int getEval1Id() {
-        return eval1Id;
+    public Evaluation getEval1() {
+        return eval1;
     }
 
-    public void setEval1Id(int eval1Id) {
-        this.eval1Id = eval1Id;
+    public void setEval1(Evaluation eval1) {
+        this.eval1 = eval1;
     }
 
-    public int getEval2Id() {
-        return eval2Id;
+    public Evaluation getEval2() {
+        return eval2;
     }
 
-    public void setEval2Id(int eval2Id) {
-        this.eval2Id = eval2Id;
+    public void setEval2(Evaluation eval2) {
+        this.eval2 = eval2;
     }
 
     public float getFinalGrade() {

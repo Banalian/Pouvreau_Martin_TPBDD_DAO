@@ -1,11 +1,19 @@
 package fr.banalian.tpbdd.tpdao;
 import fr.banalian.tpbdd.tpdao.parser.*;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.Scanner;
 
 
 public class MainClass {
 
     public static void main(String[] args) {
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("erasmus");
+        EntityManager em = emf.createEntityManager();
+
 
         ConnectBdd.initConnection();
         String input;
