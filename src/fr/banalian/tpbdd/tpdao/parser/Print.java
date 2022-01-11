@@ -17,7 +17,7 @@ public class Print {
             System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s |\n",
                     course.getId(),
                     course.getUniversity(),
-                    course.getName(),
+                    course.getSyllabusName(),
                     course.getEcts(),
                     course.getHours());
         }

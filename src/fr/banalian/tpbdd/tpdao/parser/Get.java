@@ -1,8 +1,10 @@
 package fr.banalian.tpbdd.tpdao.parser;
+import fr.banalian.tpbdd.tpdao.ConnectBdd;
 import fr.banalian.tpbdd.tpdao.MainClass;
 import fr.banalian.tpbdd.tpdao.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static fr.banalian.tpbdd.tpdao.parser.Print.*;
 
@@ -54,6 +56,10 @@ public class Get {
                 switch (arguments[iToRead].toLowerCase()) {
                     case "application":
                         //TODO : get all application
+                        List<Application> apps = ConnectBdd.getEntityManager().createQuery("SELECT a FROM Application a").getResultList();
+                        for (Application a : apps) {
+                            System.out.println(a);
+                        }
                         result = true;
                         break;
                     case "courses":
@@ -62,6 +68,12 @@ public class Get {
                         break;
                     case "evaluation":
                         //TODO : get all evaluation
+                        //get all evaluation using hibernate
+                        List<Evaluation> evaluations = ConnectBdd.getEntityManager().createQuery("SELECT e FROM Evaluation e").getResultList();
+                        for (Evaluation e : evaluations) {
+                            System.out.println(e);
+                        }
+
                         result = true;
                         break;
                     case "grant":

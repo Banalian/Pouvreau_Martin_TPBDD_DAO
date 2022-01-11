@@ -2,7 +2,6 @@ package fr.banalian.tpbdd.tpdao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "application")
@@ -13,14 +12,11 @@ public class Application implements Serializable {
 
     @Id
     @ManyToOne(optional = false)
-    @PrimaryKeyJoinColumn(name = "grant")
+    @JoinColumn(name = "grant")
     private Grant grant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "university", referencedColumnName = "university"),
-            @JoinColumn(name = "id", referencedColumnName = "id")
-    })
+    @OneToOne
+    @JoinColumn(name = "university")
     private Courses university;
 
     @OneToOne(optional = false)

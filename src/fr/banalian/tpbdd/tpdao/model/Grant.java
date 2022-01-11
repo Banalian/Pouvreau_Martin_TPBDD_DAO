@@ -17,7 +17,7 @@ public class Grant {
     private int totalSeats;
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "teacher")
     private Teacher teacher;
 
     public Grant() {

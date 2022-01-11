@@ -9,25 +9,29 @@ public class Courses implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    @Column(name = "syllabus_name")
+    private String syllabusName;
     private int ects;
     private float hours;
-    @Id
     private String university;
 
-    public Courses(int id, String name, int ects, float hours, String university) {
+    private String description;
+
+    public Courses(int id, String syllabusName, int ects, float hours, String university, String description) {
         this.id = id;
-        this.name = name;
+        this.syllabusName = syllabusName;
         this.ects = ects;
         this.hours = hours;
         this.university = university;
+        this.description = description;
     }
 
-    public Courses(String name, int ects, float hours, String university) {
-        this.name = name;
+    public Courses(String syllabusName, int ects, float hours, String university, String description) {
+        this.syllabusName = syllabusName;
         this.ects = ects;
         this.hours = hours;
         this.university = university;
+        this.description = description;
     }
 
     public Courses() {
@@ -35,7 +39,7 @@ public class Courses implements Serializable {
     }
 
     public String toString() {
-        return "\t" + id + "\t\t" + name + "\t\t" + hours + "\t\t" + ects + "\t\t" + university;
+        return "\t" + id + "\t\t" + syllabusName + "\t\t" + hours + "\t\t" + ects + "\t\t" + university;
     }
 
     public int getId() {
@@ -46,12 +50,12 @@ public class Courses implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSyllabusName() {
+        return syllabusName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSyllabusName(String syllabusName) {
+        this.syllabusName = syllabusName;
     }
 
     public int getEcts() {
@@ -76,5 +80,13 @@ public class Courses implements Serializable {
 
     public void setUniversity(String university) {
         this.university = university;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

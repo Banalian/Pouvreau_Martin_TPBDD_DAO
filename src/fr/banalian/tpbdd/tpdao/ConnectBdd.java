@@ -21,6 +21,12 @@ public class ConnectBdd {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("erasmus");
         em = emf.createEntityManager();
 
+        //sessionFactory = getSessionFactory();
+
+    }
+
+    public static EntityManager getEntityManager() {
+        return em;
     }
 
     public static SessionFactory getSessionFactory() {

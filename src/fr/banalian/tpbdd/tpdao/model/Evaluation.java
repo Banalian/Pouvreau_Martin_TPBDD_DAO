@@ -14,7 +14,7 @@ public class Evaluation {
     private float grade;
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "teacher", insertable=false, updatable=false)
     private Teacher teacher;
 
     public Evaluation() {
