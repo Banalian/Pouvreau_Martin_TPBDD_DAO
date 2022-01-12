@@ -3,8 +3,8 @@ package fr.banalian.tpbdd.tpdao.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "grant")
-public class Grant {
+@Table(name = "scholarship")
+public class Scholarship {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -20,17 +20,17 @@ public class Grant {
     @JoinColumn(name = "teacher")
     private Teacher teacher;
 
-    public Grant() {
+    public Scholarship() {
     }
 
-    public Grant(int id, String destination, int totalSeats, Teacher teacher) {
+    public Scholarship(int id, String destination, int totalSeats, Teacher teacher) {
         this.id = id;
         this.destination = destination;
         this.totalSeats = totalSeats;
         this.teacher = teacher;
     }
 
-    public Grant(String destination, int totalSeats, Teacher teacher) {
+    public Scholarship(String destination, int totalSeats, Teacher teacher) {
         this.destination = destination;
         this.totalSeats = totalSeats;
         this.teacher = teacher;

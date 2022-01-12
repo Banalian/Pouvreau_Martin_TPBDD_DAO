@@ -57,19 +57,19 @@ public class Print {
         }
     }
 
-    public static void printGrant(ArrayList<Grant> grants) {
+    public static void printGrant(ArrayList<Scholarship> scholarships) {
         System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n",
                 "Grant Id",
                 "Destination",
                 "Total Seats",
                 "Teacher Id");
 
-        for (Grant grant : grants) {
+        for (Scholarship scholarship : scholarships) {
             System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n",
-                    grant.getId(),
-                    grant.getDestination(),
-                    grant.getTotalSeats(),
-                    grant.getTeacher().getId());
+                    scholarship.getId(),
+                    scholarship.getDestination(),
+                    scholarship.getTotalSeats(),
+                    scholarship.getTeacher().getId());
         }
     }
 

@@ -12,8 +12,8 @@ public class Application implements Serializable {
 
     @Id
     @ManyToOne(optional = false)
-    @JoinColumn(name = "grant")
-    private Grant grant;
+    @JoinColumn(name = "scholarship")
+    private Scholarship scholarship;
 
     @OneToOne
     @JoinColumn(name = "university")
@@ -30,18 +30,18 @@ public class Application implements Serializable {
     @Column(name = "finalgrade")
     private float finalGrade;
 
-    public Application(String studentId, Grant grant, Courses university, Evaluation eval1, Evaluation eval2, float finalGrade) {
+    public Application(String studentId, Scholarship scholarship, Courses university, Evaluation eval1, Evaluation eval2, float finalGrade) {
         this.studentId = studentId;
-        this.grant = grant;
+        this.scholarship = scholarship;
         this.university = university;
         this.eval1 = eval1;
         this.eval2 = eval2;
         this.finalGrade = finalGrade;
     }
 
-    public Application(String studentId, Grant grant, Courses university) {
+    public Application(String studentId, Scholarship scholarship, Courses university) {
         this.studentId = studentId;
-        this.grant = grant;
+        this.scholarship = scholarship;
         this.university = university;
     }
 
@@ -51,7 +51,7 @@ public class Application implements Serializable {
 
 
     public String toString() {
-        return  "\t" + studentId + "\t\t" + grant + "\t\t" + university + "\t\t" + eval1 + "\t\t" + eval2 + "\t\t" + finalGrade;
+        return  "\t" + studentId + "\t\t" + scholarship + "\t\t" + university + "\t\t" + eval1 + "\t\t" + eval2 + "\t\t" + finalGrade;
     }
 
     public String getStudentId() {
@@ -62,12 +62,12 @@ public class Application implements Serializable {
         this.studentId = studentId;
     }
 
-    public Grant getGrant() {
-        return grant;
+    public Scholarship getGrant() {
+        return scholarship;
     }
 
-    public void setGrant(Grant grant) {
-        this.grant = grant;
+    public void setGrant(Scholarship scholarship) {
+        this.scholarship = scholarship;
     }
 
     public Courses getUniversity() {

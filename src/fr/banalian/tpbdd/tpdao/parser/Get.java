@@ -64,6 +64,11 @@ public class Get {
                         break;
                     case "courses":
                         //TODO : get all courses
+                        List<Courses> courses = ConnectBdd.getEntityManager().createQuery("SELECT c FROM Courses c").getResultList();
+                        for (Courses c : courses) {
+                            System.out.println(c);
+                        }
+
                         result = true;
                         break;
                     case "evaluation":
@@ -78,14 +83,26 @@ public class Get {
                         break;
                     case "grant":
                         //TODO : get all grant
+                        List<Scholarship> scholarships = ConnectBdd.getEntityManager().createQuery("SELECT s FROM Scholarship s").getResultList();
+                        for (Scholarship s : scholarships) {
+                            System.out.println(s);
+                        }
                         result = true;
                         break;
                     case "student":
                         //TODO : get all student
+                        List<Student> students = ConnectBdd.getEntityManager().createQuery("SELECT s FROM Student s").getResultList();
+                        for (Student s : students) {
+                            System.out.println(s);
+                        }
                         result = true;
                         break;
                     case "teacher":
                         //TODO : get all teacher
+                        List<Teacher> teachers = ConnectBdd.getEntityManager().createQuery("SELECT t FROM Teacher t").getResultList();
+                        for (Teacher t : teachers) {
+                            System.out.println(t);
+                        }
                         result = true;
                         break;
 
