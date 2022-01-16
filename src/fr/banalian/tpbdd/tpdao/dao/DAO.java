@@ -4,6 +4,8 @@ import fr.banalian.tpbdd.tpdao.ConnectBdd;
 import fr.banalian.tpbdd.tpdao.model.Scholarship;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DAO<T> {
@@ -15,10 +17,18 @@ public class DAO<T> {
         this.type = type;
     }
 
-
+    public static void main(String[] args) {
+        String[] test = Scholarship.class.getName().split("\\.");
+        for (String s : test) {
+            System.out.println(s);
+        }
+    }
 
     public List<T> getAll() {
-        return ConnectBdd.getEntityManager().createQuery("SELECT t FROM " + type.getName()  + " t", type).getResultList();
+        String [] test = type.getName().split("\\.");
+        String name = test[test.length - 1];
+
+        return ConnectBdd.getEntityManager().createQuery("SELECT t FROM " + name + " t", type).getResultList();
     }
 
     public T get(int id) {
