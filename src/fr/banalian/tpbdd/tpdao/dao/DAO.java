@@ -31,6 +31,17 @@ public class DAO<T> {
         return ConnectBdd.getEntityManager().createQuery("SELECT t FROM " + name + " t", type).getResultList();
     }
 
+    public List<T> getAllByColumns(String[] columns, String[] values) {
+        String [] test = type.getName().split("\\.");
+        String name = test[test.length - 1];
+
+        String query = "SELECT t FROM " + name + " t WHERE ";
+        for (int i = 0; i < columns.length; i++) {
+            query += columns[i] + " = '" + values[i] + "'";
+        }
+        return ConnectBdd.getEntityManager().createQuery(query).getResultList();
+    }
+
     public T get(int id) {
         return ConnectBdd.getEntityManager().find(type, id);
     }
