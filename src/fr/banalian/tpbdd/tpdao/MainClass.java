@@ -1,5 +1,6 @@
 package fr.banalian.tpbdd.tpdao;
 
+import fr.banalian.tpbdd.tpdao.dao.DAO;
 import fr.banalian.tpbdd.tpdao.model.*;
 import fr.banalian.tpbdd.tpdao.parser.*;
 
@@ -13,89 +14,19 @@ public class MainClass {
 
     public static void main(String[] args) {
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("erasmus");
-        EntityManager em = emf.createEntityManager();
+        //EntityManagerFactory emf = Persistence.createEntityManagerFactory("erasmus");
+        //EntityManager em = emf.createEntityManager();
 
 
-        ConnectBdd.initConnection();
-        String input;
-        String[] arguments;
-        Scanner sc = new Scanner(System.in);
-        boolean result;
-        boolean exit = false;
-        System.out.println("Welcome. type 'help' for help");
-        // while the user doesn't input "exit"
-        do {
-            input = sc.nextLine();
-            arguments = input.split(" ");
+        //ConnectBdd.initConnection();
 
-            switch (arguments[0]) {
-                case "help":
-                    System.out.println("Available commands :");
-                    System.out.println("\t- help : display this help");
-                    System.out.println("\t- exit : exit the program");
-                    System.out.println("\t- add : add a new entry in the database");
-                    System.out.println("\t- get : get one or multiples entry/ies from the database");
-                    System.out.println("\t- delete : delete one or multiples entry/ies from the database");
-                    System.out.println("\t- update : update an entry from the database");
+        menu();
 
-
-                    break;
-
-                case "add":
-                    result = Add.add(arguments);
-                    if (result) {
-                        System.out.println("Entry added");
-                    } else {
-                        System.err.println("No entry added");
-                    }
-                    break;
-
-                case "get":
-                    result = Get.get(arguments);
-                    if (!result) {
-                        System.err.println("No entry found");
-                    }
-                    break;
-
-                case "delete":
-                    result = Delete.delete(arguments);
-                    if (result) {
-                        System.out.println("Entry deleted");
-                    } else {
-                        System.err.println("No entry deleted");
-                    }
-                    break;
-
-                case "update":
-                    result = Update.update(arguments);
-                    if (result) {
-                        System.out.println("Entry updated");
-                    } else {
-                        System.err.println("No entry updated");
-                    }
-                    break;
-
-
-                case "exit":
-                    System.out.println("Bye bye");
-                    exit = true;
-                    break;
-
-                default:
-                    System.err.println("Unknown command, type 'help' for help");
-                    break;
-            }
-
-
-        } while (!exit);
-
-
-        ConnectBdd.closeConnection();
+        //ConnectBdd.closeConnection();
     }
 
 
-    public void menu() {
+    public static void menu() {
         System.out.println("Welcome. type 'help' for help");
         String input;
         boolean stop = false;
@@ -103,27 +34,15 @@ public class MainClass {
         do {
             input = sc.nextLine().toLowerCase();
             switch (input) {
-                case "help":
-                    helpMenu("help", null);
-                    break;
-                case "exit":
-                    stop = true;
-                    break;
-                case "1":
-                case "2":
-                case "3":
-                case "4":
-                case "5":
-                case "6":
-                    classMenu(Integer.parseInt(input), sc);
-                    break;
-                default:
-                    System.out.println("Unknown command, type 'help' for help");
+                case "help" -> helpMenu("help", null);
+                case "exit" -> stop = true;
+                case "1", "2", "3", "4", "5" -> classMenu(Integer.parseInt(input), sc);
+                default -> System.out.println("Unknown command, type 'help' for help");
             }
         } while (!stop);
     }
 
-    public void helpMenu(String help, Class currentClass) {
+    public static void helpMenu(String help, Class currentClass) {
 
         switch (help) {
             case "help":
@@ -136,9 +55,8 @@ public class MainClass {
                 System.out.println("\t- 1 - Application");
                 System.out.println("\t- 2 - Students");
                 System.out.println("\t- 3 - Teachers");
-                System.out.println("\t- 4 - Universities");
-                System.out.println("\t- 5 - Scholarships");
-                System.out.println("\t- 6 - Courses");
+                System.out.println("\t- 4 - Scholarships");
+                System.out.println("\t- 5- Courses");
                 break;
             case "class":
                 if (currentClass == null) {
@@ -146,7 +64,7 @@ public class MainClass {
                     break;
                 }
                 String name = currentClass.getSimpleName();
-                System.out.println("enter a number:");
+                System.out.println("Enter a number:");
                 System.out.println("\t- 1 - Add one " + name);
                 System.out.println("\t- 2 - Update one " + name);
                 System.out.println("\t- 3 - Delete one " + name);
@@ -159,34 +77,136 @@ public class MainClass {
     }
 
 
-    public void classMenu(int classNumber, Scanner sc) {
-        Scanner scanner = sc;
+    public static void classMenu(int classNumber, Scanner sc) {
         Class currentClass = null;
-        if(classNumber<1 || classNumber>6){
+        if(classNumber<1 || classNumber>5){
             System.err.println("Unknown class");
             return;
         }
 
         switch (classNumber) {
-            case 1:
-                currentClass = Application.class;
-                break;
-            case 2:
-                currentClass = Student.class;
-                break;
-            case 3:
-                currentClass = Teacher.class;
-                break;
-            case 4:
-            case 6:
-                currentClass = Courses.class;
-                break;
-            case 5:
-                currentClass = Scholarship.class;
-                break;
+            case 1 -> currentClass = Application.class;
+            case 2 -> currentClass = Student.class;
+            case 3 -> currentClass = Teacher.class;
+            case 4 -> currentClass = Courses.class;
+            case 5 -> currentClass = Scholarship.class;
         }
 
         //TODO: show menu
+        String input;
+        boolean stop = false;
+        do {
+            helpMenu("class", currentClass);
+            input = sc.nextLine().toLowerCase();
+            switch (input) {
+                case "help":
+                    helpMenu("class", currentClass);
+                case "1":
+                    add(currentClass, sc);
+                    break;
+                case "2":
+                    update(currentClass, sc);
+                    break;
+                case "3":
+                    delete(currentClass, sc);
+                    break;
+                case "4":
+                    get(currentClass, sc);
+                    break;
+                case "back":
+                    stop = true;
+                    break;
+                default:
+                    System.out.println("Unknown command, type 'help' for help");
+            }
+        }while (!stop);
+    }
+
+    public static void add(Class classToAdd, Scanner sc){
+        switch (classToAdd.getSimpleName()) {
+            case "Application" -> {
+                //request the user to enter the data
+                System.out.println("Enter the student's number :");
+                String studentNumber = sc.nextLine();
+                System.out.println("What is the destination/university of the application?");
+                String destination = sc.nextLine();
+                System.out.println("What is the name of the course?");
+                String courseName = sc.nextLine();
+
+                //create the application
+                //call the method to add the application
+
+                System.out.println("Application added, id : ");
+            }
+            case "Student" -> {
+                //request the user to enter the data
+                System.out.println("Enter the student's number :");
+                String studentNumber = sc.nextLine();
+                System.out.println("Enter the student's firstname :");
+                String firstName = sc.nextLine();
+                System.out.println("Enter the student's lastname :");
+                String lastName = sc.nextLine();
+
+                //create the student
+                //call the method to add the student
+
+
+            }
+
+            case "Teacher" -> {
+                //request the user to enter the data
+                System.out.println("Enter the teacher's firstname :");
+                String firstName = sc.nextLine();
+                System.out.println("Enter the teacher's lastname :");
+                String lastName = sc.nextLine();
+
+                //create the teacher
+                //call the method to add the teacher
+
+            }
+
+            case "Courses" -> {
+                //request the user to enter the data
+                System.out.println("Enter the course's name :");
+                String courseName = sc.nextLine();
+                System.out.println("Enter the course's description :");
+                String description = sc.nextLine();
+                System.out.println("Enter the course's total credit amount :");
+                int ects = sc.nextInt();
+                System.out.println("Enter the course's total amount of hours :");
+                int hours = sc.nextInt();
+
+                //create the course
+                //call the method to add the course
+            }
+
+            case "Scholarship" -> {
+                //request the user to enter the data
+                System.out.println("Enter the scholarship's destination :");
+                String destination = sc.nextLine();
+                System.out.println("Enter the scholarship's total seat places :");
+                int totalSeatPlaces = sc.nextInt();
+                System.out.println("Who's the teacher of the scholarship? (firstname lastname)");
+                String teacher = sc.nextLine();
+
+                //create the scholarship
+                //call the method to add the scholarship
+            }
+
+            default -> System.out.println("Unknown class, type 'help' for help");
+        }
+    }
+
+    private static void update (Class classToUpdate, Scanner sc){
+
+    }
+
+    private static void delete(Class classToDelete, Scanner sc){
+
+    }
+
+    private static void get(Class classToGet, Scanner sc){
+
     }
 /*
 Main:
