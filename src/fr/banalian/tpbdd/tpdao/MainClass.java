@@ -141,9 +141,12 @@ public class MainClass {
                 String firstName = sc.nextLine();
                 System.out.println("Enter the student's lastname :");
                 String lastName = sc.nextLine();
+                System.out.println("Enter the student's average grade :");
+                double averageGrade = sc.nextDouble();
 
                 //create the student
                 //call the method to add the student
+                StudentFunction.create(studentNumber, lastName, firstName);
 
 
             }
@@ -157,6 +160,7 @@ public class MainClass {
 
                 //create the teacher
                 //call the method to add the teacher
+                TeacherFunction.create(lastName, firstName);
 
             }
 
@@ -193,15 +197,189 @@ public class MainClass {
     }
 
     private static void update (Class classToUpdate, Scanner sc){
+        switch (classToUpdate.getSimpleName()) {
+            case "Application" -> {
+                System.out.println("Do you want to update an application or an evaluation? (1 or 2)");
+                int choice = sc.nextInt();
+                if (choice == 1) {
+                    System.out.println("Enter the student number of the application :");
+                    String studentNumber = sc.nextLine();
 
+                    //call the method to update the application
+                } else if (choice == 2) {
+                    System.out.println("Enter the student number of the application :");
+                    String studentNumber = sc.nextLine();
+                    System.out.println("Which evaluation do you want to update? (1 or 2)");
+                    int evaluationChoice = sc.nextInt();
+                    System.out.println("Enter the new grade :");
+                    double newGrade = sc.nextDouble();
+                    System.out.println("Enter the new teacher:");
+                    String newTeacher = sc.nextLine();
+
+                    //call the method to update the evaluation
+
+
+                } else {
+                    System.out.println("Unknown choice, type 'help' for help");
+                }
+            }
+
+            case "Student" -> {
+                System.out.println("Who's the student you want to update?");
+                String studentNumber = sc.nextLine();
+
+                //call the method to update the student
+
+            }
+
+            case "Teacher" -> {
+                System.out.println("Who's the teacher you want to update?");
+
+                //call the method to update the teacher
+                TeacherFunction.update(sc);
+            }
+
+            case "Course" -> {
+                System.out.println("Which course do you want to update?");
+
+            }
+
+            case "Scholarship" -> {
+                System.out.println("Which scholarship do you want to update?");
+
+            }
+
+            default -> System.out.println("Unknown class, type 'help' for help");
+        }
     }
 
     private static void delete(Class classToDelete, Scanner sc){
+        switch (classToDelete.getSimpleName()) {
+            case "Application" -> {
+                System.out.println("Enter the student number of the application :");
+                String studentNumber = sc.nextLine();
 
+                //call the method to delete the application
+            }
+
+            case "Student" -> {
+                System.out.println("Who's the student you want to delete?");
+                //call the method to delete the student
+                StudentFunction.delete(sc);
+            }
+
+            case "Teacher" -> {
+                System.out.println("Who's the teacher you want to delete?");
+                //call the method to delete the teacher
+                TeacherFunction.delete(sc);
+            }
+
+            case "Course" -> {
+                System.out.println("Which course do you want to delete?");
+                String courseName = sc.nextLine();
+
+                //call the method to delete the course
+            }
+
+            case "Scholarship" -> {
+                System.out.println("Which scholarship do you want to delete?");
+                String scholarshipName = sc.nextLine();
+
+                //call the method to delete the scholarship
+            }
+
+            default -> System.out.println("Unknown class, type 'help' for help");
+        }
     }
 
     private static void get(Class classToGet, Scanner sc){
+        switch (classToGet.getSimpleName()) {
+            case "Application" -> {
+                System.out.println("Enter the student number of the application :");
+                String studentNumber = sc.nextLine();
 
+                //call the method to get the application
+            }
+
+            case "Student" -> {
+                System.out.println("Do you want to see all the students or a specific one? (1 or 2)");
+                int choice = sc.nextInt();
+                if (choice == 1) {
+                    StudentFunction.seeAll();
+                } else if (choice == 2) {
+                    System.out.println("Do you want to check by student number, by last name or by first name only, or by both names? (1 or 2 or 3 or 4)");
+                    int choice2 = sc.nextInt();
+                    if (choice2 == 1) {
+                        System.out.println("Enter the student number :");
+                        String studentNumber = sc.nextLine();
+                        StudentFunction.seeOne(1,new String[]{studentNumber});
+                    }else if (choice2 == 2) {
+                        System.out.println("Enter the last name :");
+                        String lastName = sc.nextLine();
+                        StudentFunction.seeOne(2,new String[]{lastName});
+                    }else if (choice2 == 3) {
+                        System.out.println("Enter the first name :");
+                        String firstName = sc.nextLine();
+                        StudentFunction.seeOne(3,new String[]{firstName});
+                    }else if (choice2 == 4) {
+                        System.out.println("Enter the first name :");
+                        String firstName = sc.nextLine();
+                        System.out.println("Enter the last name :");
+                        String lastName = sc.nextLine();
+                        StudentFunction.seeOne(4,new String[]{lastName,firstName});
+
+                    }else {
+                        System.out.println("Unknown choice, type 'help' for help");
+                    }
+                }
+            }
+
+            case "Teacher" -> {
+                System.out.println("Do you want to see all the teachers or a specific one? (1 or 2)");
+                int choice = sc.nextInt();
+                if (choice == 1) {
+                    TeacherFunction.seeAll();
+                }else if (choice == 2) {
+                    System.out.println("Do you want to check by last name or by first name only, or by both names? (1 or 2 or 3)");
+                    int choice2 = sc.nextInt();
+                    if (choice2 == 1) {
+                        System.out.println("Enter the last name :");
+                        String lastName = sc.nextLine();
+                        TeacherFunction.seeOne(1,new String[]{lastName});
+                    } else if (choice2 == 2) {
+                        System.out.println("Enter the first name :");
+                        String firstName = sc.nextLine();
+                        TeacherFunction.seeOne(2,new String[]{firstName});
+                    }else if (choice2 == 3) {
+                        System.out.println("Enter the first name :");
+                        String firstName = sc.nextLine();
+                        System.out.println("Enter the last name :");
+                        String lastName = sc.nextLine();
+                        TeacherFunction.seeOne(3,new String[]{lastName,firstName});
+                    }
+                }else {
+                    System.out.println("Unknown choice, type 'help' for help");
+                }
+
+
+            }
+
+            case "Course" -> {
+                System.out.println("Which course do you want to get?");
+                String courseName = sc.nextLine();
+
+                //call the method to get the course
+            }
+
+            case "Scholarship" -> {
+                System.out.println("Which scholarship do you want to get?");
+                String scholarshipName = sc.nextLine();
+
+                //call the method to get the scholarship
+            }
+
+            default -> System.out.println("Unknown class, type 'help' for help");
+        }
     }
 /*
 Main:

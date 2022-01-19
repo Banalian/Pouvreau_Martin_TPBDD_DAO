@@ -9,12 +9,12 @@ import java.util.Scanner;
 
 public class TeacherFunction {
     public static void create(String lastName, String firstName) {
-        DAO teacherDAO = new DAO(Teacher.class);
+        DAO<Teacher> teacherDAO = new DAO<>(Teacher.class);
         teacherDAO.persist(new Teacher(lastName, firstName));
     }
 
     public static void update(Scanner scanner) {
-        DAO teacherDAO = new DAO(Teacher.class);
+        DAO<Teacher> teacherDAO = new DAO<>(Teacher.class);
         Teacher teacher = gather(scanner);
 
         System.out.println("Type the new informations:");
@@ -31,13 +31,13 @@ public class TeacherFunction {
     }
 
     public static void seeAll() {
-        DAO teacherDAO = new DAO(Teacher.class);
+        DAO<Teacher> teacherDAO = new DAO<>(Teacher.class);
         ArrayList result = (ArrayList) teacherDAO.getAll();
         Print.printTeacher(result);
     }
 
     public static void seeOne(int mode, String[] info) {
-        DAO teacherDAO = new DAO(Teacher.class);
+        DAO<Teacher> teacherDAO = new DAO<>(Teacher.class);
         String[] columns;
         switch (mode) {
             case 1 -> {
@@ -57,12 +57,12 @@ public class TeacherFunction {
     }
 
     public static void delete(Scanner scanner) {
-        DAO teacherDAO = new DAO(Teacher.class);
+        DAO<Teacher> teacherDAO = new DAO<>(Teacher.class);
         teacherDAO.delete(gather(scanner));
     }
 
     private static Teacher gather(Scanner scanner) {
-        DAO teacherDAO = new DAO(Teacher.class);
+        DAO<Teacher> teacherDAO = new DAO<>(Teacher.class);
         boolean correct = false;
         Teacher teacher = null;
 
