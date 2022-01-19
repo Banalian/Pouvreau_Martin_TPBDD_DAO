@@ -42,7 +42,7 @@ public class DAO<T> {
         return ConnectBdd.getEntityManager().createQuery(query).getResultList();
     }
 
-    public T get(int id) {
+    public T get(Object id) {
         return ConnectBdd.getEntityManager().find(type, id);
     }
 

@@ -142,11 +142,11 @@ public class MainClass {
                 System.out.println("Enter the student's lastname :");
                 String lastName = sc.nextLine();
                 System.out.println("Enter the student's average grade :");
-                double averageGrade = sc.nextDouble();
+                float averageGrade = sc.nextFloat();
 
                 //create the student
                 //call the method to add the student
-                StudentFunction.create(studentNumber, lastName, firstName);
+                StudentFunction.create(studentNumber, lastName, firstName, averageGrade);
 
 
             }

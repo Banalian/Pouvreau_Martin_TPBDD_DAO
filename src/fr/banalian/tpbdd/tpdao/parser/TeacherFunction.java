@@ -32,7 +32,7 @@ public class TeacherFunction {
 
     public static void seeAll() {
         DAO<Teacher> teacherDAO = new DAO<>(Teacher.class);
-        ArrayList result = (ArrayList) teacherDAO.getAll();
+        ArrayList<Teacher> result = (ArrayList<Teacher>) teacherDAO.getAll();
         Print.printTeacher(result);
     }
 
@@ -40,18 +40,12 @@ public class TeacherFunction {
         DAO<Teacher> teacherDAO = new DAO<>(Teacher.class);
         String[] columns;
         switch (mode) {
-            case 1 -> {
-                columns = new String[]{"lastname"};
-            }
-            case 2 -> {
-                columns = new String[]{"firstname"};
-            }
-            case 3 -> {
-                columns = new String[]{"lastname", "firstname"};
-            }
+            case 1 -> columns = new String[]{"lastname"};
+            case 2 -> columns = new String[]{"firstname"};
+            case 3 -> columns = new String[]{"lastname", "firstname"};
             default -> throw new IllegalArgumentException();
         }
-        ArrayList result = (ArrayList) teacherDAO.getAllByColumns(columns, info);
+        ArrayList<Teacher> result = (ArrayList<Teacher>) teacherDAO.getAllByColumns(columns, info);
         Print.printTeacher(result);
 
     }
@@ -67,9 +61,9 @@ public class TeacherFunction {
         Teacher teacher = null;
 
         System.out.println("Last Name: ");
-        String lastName = scanner.nextLine().toLowerCase(Locale.ROOT);
+        String lastName = scanner.nextLine().toLowerCase();
         System.out.println("First Name: ");
-        String firstName = scanner.nextLine().toLowerCase(Locale.ROOT);
+        String firstName = scanner.nextLine().toLowerCase();
 
         String[] columns = new String[]{"lastname", "firstname"};
         String[] values = new String[]{lastName, firstName};
