@@ -1,0 +1,100 @@
+package fr.banalian.tpbdd.tpdao.parser;
+
+import fr.banalian.tpbdd.tpdao.dao.DAO;
+import fr.banalian.tpbdd.tpdao.model.Student;
+import fr.banalian.tpbdd.tpdao.model.Teacher;
+
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Scanner;
+
+public class StudentFunction {
+    public static void create(String studentNumber, String lastName, String firstName) {
+        DAO studentDAO = new DAO(Student.class);
+        studentDAO.persist(new Student(lastName, firstName, studentNumber));
+    }
+
+    public static void update(Scanner scanner) {
+        DAO teacherDAO = new DAO(Teacher.class);
+        Teacher teacher = gather(scanner);
+
+        System.out.println("Type the new informations:");
+
+        System.out.println("First Name: ");
+        String newFirstName = scanner.nextLine();
+        System.out.println("Last Name: ");
+        String newLastname = scanner.nextLine();
+
+        teacher.setFirstName(newFirstName);
+        teacher.setLastName(newLastname);
+
+        teacherDAO.update(teacher);
+    }
+
+    public static void seeAll() {
+        DAO teacherDAO = new DAO(Teacher.class);
+        ArrayList result = (ArrayList) teacherDAO.getAll();
+        Print.printTeacher(result);
+    }
+
+    public static void seeOne(int mode, String[] info) {
+        DAO teacherDAO = new DAO(Teacher.class);
+        String[] columns;
+        switch (mode) {
+            case 1 -> {
+                columns = new String[]{"lastname"};
+            }
+            case 2 -> {
+                columns = new String[]{"firstname"};
+            }
+            case 3 -> {
+                columns = new String[]{"lastname", "firstname"};
+            }
+            default -> throw new IllegalArgumentException();
+        }
+        ArrayList result = (ArrayList) teacherDAO.getAllByColumns(columns, info);
+        Print.printTeacher(result);
+
+    }
+
+    public static void delete(Scanner scanner) {
+        DAO teacherDAO = new DAO(Teacher.class);
+        teacherDAO.delete(gather(scanner));
+    }
+
+    private static Teacher gather(Scanner scanner) {
+        DAO teacherDAO = new DAO(Teacher.class);
+        boolean correct = false;
+        Teacher teacher = null;
+
+        System.out.println("Last Name: ");
+        String lastName = scanner.nextLine().toLowerCase(Locale.ROOT);
+        System.out.println("First Name: ");
+        String firstName = scanner.nextLine().toLowerCase(Locale.ROOT);
+
+        String[] columns = new String[]{"lastname", "firstname"};
+        String[] values = new String[]{lastName, firstName};
+        ArrayList result = (ArrayList) teacherDAO.getAllByColumns(columns, values);
+
+        if (result.size() > 1) {
+            do {
+                System.out.println("Several teachers correspond to your search.\n" +
+                        "Choose the teacher to be updated by typing its ID.\n");
+                Print.printTeacher(result);
+
+                int id = scanner.nextInt();
+
+                for (int i = 0; i < result.size(); i++) {
+                    if (((Teacher) result.get(i)).getId() == id) {
+                        correct = true;
+                    }
+                    teacher = ((Teacher) result.get(i));
+                }
+
+            } while (!correct);
+        }
+
+        return teacher;
+
+    }
+}

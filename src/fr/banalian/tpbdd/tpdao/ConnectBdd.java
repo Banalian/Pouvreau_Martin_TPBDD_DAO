@@ -38,7 +38,6 @@ public class ConnectBdd {
         getEntityManager().getTransaction().rollback();
     }
 
-
     public static void closeConnection() {
         em.close();
     }

@@ -91,7 +91,7 @@ public class Print {
 
     public static void printTeacher(ArrayList<Teacher> teachers) {
         System.out.printf("| %-20s | %-20s | %-20s |\n",
-                "Student Number",
+                "ID",
                 "Last Name",
                 "First Name");
 

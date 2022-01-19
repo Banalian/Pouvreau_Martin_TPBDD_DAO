@@ -46,6 +46,11 @@ public class DAO<T> {
         return ConnectBdd.getEntityManager().find(type, id);
     }
 
+    public Object getColumn(int id, String column){
+        String[] string = type.getName().split("\\.");
+        return ConnectBdd.getEntityManager().createQuery("SELECT " + column + " FROM " + string[string.length-1] + " WHERE id =" + id).getSingleResult();
+    }
+
     public void persist(T t) {
         ConnectBdd.startTransaction();
         ConnectBdd.getEntityManager().persist(t);
