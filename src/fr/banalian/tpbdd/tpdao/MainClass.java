@@ -171,9 +171,11 @@ public class MainClass {
                 System.out.println("Enter the course's description :");
                 String description = sc.nextLine();
                 System.out.println("Enter the course's total credit amount :");
-                int ects = sc.nextInt();
+                float ects = sc.nextFloat();
                 System.out.println("Enter the course's total amount of hours :");
                 int hours = sc.nextInt();
+                System.out.println("Enter the course's University name :");
+                String universityName = sc.nextLine();
 
                 //create the course
                 //call the method to add the course

@@ -66,7 +66,7 @@ public class StudentFunction {
     }
 
     public static void delete(Scanner scanner) {
-        DAO studentDao = new DAO(Student.class);
+        DAO<Student> studentDao = new DAO(Student.class);
         studentDao.delete(search(scanner));
     }
 
