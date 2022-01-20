@@ -38,43 +38,35 @@ public class StudentFunction {
 
     public static void seeAll() {
         DAO<Student> studentDAO = new DAO<>(Student.class);
-        ArrayList result = (ArrayList) studentDAO.getAll();
+        ArrayList<Student> result = (ArrayList<Student>) studentDAO.getAll();
         Print.printStudent(result);
     }
 
-    public static void seeOne(int mode, String[] info) {
+    public static void seeOne(int mode, ArrayList<Object> info) {
         DAO<Student> studentDAO = new DAO<>(Student.class);
         String[] columns;
         switch (mode) {
-            case 1 -> {
-                columns = new String[]{"lastname"};
-            }
-            case 2 -> {
-                columns = new String[]{"firstname"};
-            }
-            case 3 -> {
-                columns = new String[]{"lastname", "firstname"};
-            }
-            case 4 -> {
-                columns = new String[]{"studentnumber"};
-            }
+            case 1 -> columns = new String[]{"lastname"};
+            case 2 -> columns = new String[]{"firstname"};
+            case 3 -> columns = new String[]{"lastname", "firstname"};
+            case 4 -> columns = new String[]{"studentnumber"};
             default -> throw new IllegalArgumentException();
         }
-        ArrayList result = (ArrayList) studentDAO.getAllByColumns(columns, info);
+        ArrayList<Student> result = (ArrayList<Student>) studentDAO.getAllByColumns(columns, info);
         Print.printStudent(result);
 
     }
 
     public static void delete(Scanner scanner) {
-        DAO<Student> studentDao = new DAO(Student.class);
+        DAO<Student> studentDao = new DAO<>(Student.class);
         studentDao.delete(search(scanner));
     }
 
 
     private static Student search(Scanner scanner){
-        DAO<Student> studentDAO = new DAO(Student.class);
+        DAO<Student> studentDAO = new DAO<>(Student.class);
         boolean correct = false;
-        int mode = 0;
+        int mode;
         ArrayList<Student> student = new ArrayList<>();
         System.out.println("How do you want to search for the student?");
         System.out.println("Type 1 for searching by its student number\n" +
@@ -102,7 +94,7 @@ public class StudentFunction {
                 System.out.println("Is this the correct Student?");
                 Print.printStudent(student);
 
-                if(scanner.nextLine().toLowerCase() == "yes"){
+                if(scanner.nextLine().equalsIgnoreCase("yes")){
                     correct = true;
                 }
             } while (!correct);
@@ -115,7 +107,7 @@ public class StudentFunction {
     }
 
     private static Student gather(Scanner scanner) {
-        DAO<Student> studentDAO = new DAO(Student.class);
+        DAO<Student> studentDAO = new DAO<>(Student.class);
         boolean correct = false;
         Student student = null;
 
@@ -125,22 +117,26 @@ public class StudentFunction {
         String firstName = scanner.nextLine().toLowerCase();
 
         String[] columns = new String[]{"lastname", "firstname"};
-        String[] values = new String[]{lastName, firstName};
-        ArrayList result = (ArrayList) studentDAO.getAllByColumns(columns, values);
+        ArrayList<Object> values = new ArrayList<>();
+        values.add(lastName);
+        values.add(firstName);
+        ArrayList<Student> result = (ArrayList<Student>) studentDAO.getAllByColumns(columns, values);
 
         if (result.size() > 1) {
             do {
-                System.out.println("Several student correspond to your search.\n" +
-                        "Choose the student to be updated by typing its ID.\n");
+                System.out.println("""
+                        Several student correspond to your search.
+                        Choose the student to be edited by typing its ID.
+                        """);
                 Print.printStudent(result);
 
                 String id = scanner.nextLine();
 
-                for (int i = 0; i < result.size(); i++) {
-                    if (((Student) result.get(i)).getStudentNumber() == id) {
+                for (Student value : result) {
+                    if (((Student) value).getStudentNumber().equals(id)) {
                         correct = true;
                     }
-                    student = ((Student) result.get(i));
+                    student = ((Student) value);
                 }
 
             } while (!correct);

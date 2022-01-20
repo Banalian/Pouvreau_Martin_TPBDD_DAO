@@ -7,6 +7,7 @@ import fr.banalian.tpbdd.tpdao.parser.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -150,7 +151,6 @@ public class MainClass {
 
 
             }
-
             case "Teacher" -> {
                 //request the user to enter the data
                 System.out.println("Enter the teacher's firstname :");
@@ -163,7 +163,6 @@ public class MainClass {
                 TeacherFunction.create(lastName, firstName);
 
             }
-
             case "Courses" -> {
                 //request the user to enter the data
                 System.out.println("Enter the course's name :");
@@ -180,15 +179,12 @@ public class MainClass {
                 //create the course
                 //call the method to add the course
             }
-
             case "Scholarship" -> {
                 //request the user to enter the data
                 System.out.println("Enter the scholarship's destination :");
                 String destination = sc.nextLine();
                 System.out.println("Enter the scholarship's total seat places :");
                 int totalSeatPlaces = sc.nextInt();
-                System.out.println("Who's the teacher of the scholarship? (firstname lastname)");
-                String teacher = sc.nextLine();
 
                 //create the scholarship
                 //call the method to add the scholarship
@@ -312,23 +308,36 @@ public class MainClass {
                     System.out.println("Do you want to check by student number, by last name or by first name only, or by both names? (1 or 2 or 3 or 4)");
                     int choice2 = sc.nextInt();
                     if (choice2 == 1) {
-                        System.out.println("Enter the student number :");
+                        System.out.println("EnArrayList<> see = new ArrayList<>().add(studentNumber);ter the student number :");
                         String studentNumber = sc.nextLine();
-                        StudentFunction.seeOne(1,new String[]{studentNumber});
+                        ArrayList<Object> see = new ArrayList<>(){{
+                            add(studentNumber);
+                        }};
+                        StudentFunction.seeOne(1, see);
                     }else if (choice2 == 2) {
                         System.out.println("Enter the last name :");
                         String lastName = sc.nextLine();
-                        StudentFunction.seeOne(2,new String[]{lastName});
+                        ArrayList<Object> see = new ArrayList<>(){{
+                            add(lastName);
+                        }};
+                        StudentFunction.seeOne(2,see);
                     }else if (choice2 == 3) {
                         System.out.println("Enter the first name :");
                         String firstName = sc.nextLine();
-                        StudentFunction.seeOne(3,new String[]{firstName});
+                        ArrayList<Object> see = new ArrayList<>(){{
+                            add(firstName);
+                        }};
+                        StudentFunction.seeOne(3,see);
                     }else if (choice2 == 4) {
                         System.out.println("Enter the first name :");
                         String firstName = sc.nextLine();
                         System.out.println("Enter the last name :");
                         String lastName = sc.nextLine();
-                        StudentFunction.seeOne(4,new String[]{lastName,firstName});
+                        ArrayList<Object> see = new ArrayList<>(){{
+                            add(firstName);
+                            add(lastName);
+                        }};
+                        StudentFunction.seeOne(4,see);
 
                     }else {
                         System.out.println("Unknown choice, type 'help' for help");
@@ -347,17 +356,27 @@ public class MainClass {
                     if (choice2 == 1) {
                         System.out.println("Enter the last name :");
                         String lastName = sc.nextLine();
-                        TeacherFunction.seeOne(1,new String[]{lastName});
+                        ArrayList<Object> see = new ArrayList<>(){{
+                            add(lastName);
+                        }};
+                        TeacherFunction.seeOne(1,see);
                     } else if (choice2 == 2) {
                         System.out.println("Enter the first name :");
                         String firstName = sc.nextLine();
-                        TeacherFunction.seeOne(2,new String[]{firstName});
+                        ArrayList<Object> see = new ArrayList<>(){{
+                            add(firstName);
+                        }};
+                        TeacherFunction.seeOne(2,see);
                     }else if (choice2 == 3) {
                         System.out.println("Enter the first name :");
                         String firstName = sc.nextLine();
                         System.out.println("Enter the last name :");
                         String lastName = sc.nextLine();
-                        TeacherFunction.seeOne(3,new String[]{lastName,firstName});
+                        ArrayList<Object> see = new ArrayList<>(){{
+                            add(firstName);
+                            add(lastName);
+                        }};
+                        TeacherFunction.seeOne(3,see);
                     }
                 }else {
                     System.out.println("Unknown choice, type 'help' for help");

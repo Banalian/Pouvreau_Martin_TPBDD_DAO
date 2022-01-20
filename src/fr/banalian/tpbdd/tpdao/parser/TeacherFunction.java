@@ -36,7 +36,7 @@ public class TeacherFunction {
         Print.printTeacher(result);
     }
 
-    public static void seeOne(int mode, String[] info) {
+    public static void seeOne(int mode, ArrayList<Object> info) {
         DAO<Teacher> teacherDAO = new DAO<>(Teacher.class);
         String[] columns;
         switch (mode) {
@@ -55,7 +55,7 @@ public class TeacherFunction {
         teacherDAO.delete(gather(scanner));
     }
 
-    private static Teacher gather(Scanner scanner) {
+    protected static Teacher gather(Scanner scanner) {
         DAO<Teacher> teacherDAO = new DAO<>(Teacher.class);
         boolean correct = false;
         Teacher teacher = null;
@@ -66,22 +66,26 @@ public class TeacherFunction {
         String firstName = scanner.nextLine().toLowerCase();
 
         String[] columns = new String[]{"lastname", "firstname"};
-        String[] values = new String[]{lastName, firstName};
-        ArrayList result = (ArrayList) teacherDAO.getAllByColumns(columns, values);
+        ArrayList<Object> values = new ArrayList<>();
+        values.add(lastName);
+        values.add(firstName);
+        ArrayList<Teacher> result = (ArrayList<Teacher>) teacherDAO.getAllByColumns(columns, values);
 
         if (result.size() > 1) {
             do {
-                System.out.println("Several teachers correspond to your search.\n" +
-                        "Choose the teacher to be updated by typing its ID.\n");
+                System.out.println("""
+                        Several teachers correspond to your search.
+                        Choose the teacher to be edited by typing its ID.
+                        """);
                 Print.printTeacher(result);
 
                 int id = scanner.nextInt();
 
-                for (int i = 0; i < result.size(); i++) {
-                    if (((Teacher) result.get(i)).getId() == id) {
+                for (Teacher value : result) {
+                    if (((Teacher) value).getId() == id) {
                         correct = true;
                     }
-                    teacher = ((Teacher) result.get(i));
+                    teacher = ((Teacher) value);
                 }
 
             } while (!correct);

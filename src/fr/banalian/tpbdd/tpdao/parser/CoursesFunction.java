@@ -18,7 +18,7 @@ public class CoursesFunction {
         Print.printCourses(result);
     }
 
-    public static void seeOne(int mode, String[] info) {
+    public static void seeOne(int mode, ArrayList<Object> info) {
         DAO<Courses> coursesDAO = new DAO<>(Courses.class);
         String[] columns;
         switch (mode) {
@@ -57,7 +57,9 @@ public class CoursesFunction {
         String univ = scanner.nextLine().toLowerCase();
 
         String[] columns = new String[]{"syllabus_name", "university"};
-        String[] values = new String[]{name, univ};
+        ArrayList<Object> values = new ArrayList<>();
+        values.add(name);
+        values.add(univ);
         ArrayList<Courses> result = (ArrayList<Courses>) coursesDAO.getAllByColumns(columns, values);
 
         if (result.size() > 1) {
