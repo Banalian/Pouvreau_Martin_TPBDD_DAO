@@ -26,19 +26,19 @@ public class Print {
     public static void printApplication(ArrayList<Application> applications) {
         System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
                 "Student Id",
-                "Grant Id",
+                "Scholarship destination",
                 "University",
-                "Eval1 Id",
-                "Eval2 Id",
-                "Final Grade");
+                "Eval1 grade",
+                "Eval2 grade",
+                "Final grade");
 
         for (Application application : applications) {
             System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
                     application.getStudentId(),
-                    application.getGrant(),
+                    application.getGrant().getDestination(),
                     application.getUniversity(),
-                    application.getEval1(),
-                    application.getEval2(),
+                    application.getEval1().getGrade(),
+                    application.getEval2().getGrade(),
                     application.getFinalGrade());
         }
     }

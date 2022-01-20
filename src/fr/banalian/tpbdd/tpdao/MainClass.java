@@ -237,9 +237,8 @@ public class MainClass {
                 TeacherFunction.update(sc);
             }
 
-            case "Course" -> {
-                System.out.println("Which course do you want to update?");
-
+            case "Courses" -> {
+                System.out.println("You cannot modify a course, please delete one an recreate it");
             }
 
             case "Scholarship" -> {
@@ -272,9 +271,9 @@ public class MainClass {
                 TeacherFunction.delete(sc);
             }
 
-            case "Course" -> {
+            case "Courses" -> {
                 System.out.println("Which course do you want to delete?");
-                String courseName = sc.nextLine();
+                CoursesFunction.delete(sc);
 
                 //call the method to delete the course
             }
@@ -385,11 +384,39 @@ public class MainClass {
 
             }
 
-            case "Course" -> {
-                System.out.println("Which course do you want to get?");
-                String courseName = sc.nextLine();
-
-                //call the method to get the course
+            case "Courses" -> {
+                System.out.println("Do you want to see all the courses or a specific one? (1 or 2)");
+                int choice = sc.nextInt();
+                if (choice == 1) {
+                    CoursesFunction.seeAll();
+                }else if (choice == 2) {
+                    System.out.println("Do you want to check by university name, by hours, by ects or by course name ? (1 or 2 or 3 or 4)");
+                    int choice2 = sc.nextInt();
+                    switch (choice2) {
+                        case 1 -> {
+                            System.out.println("Enter the university name :");
+                            String universityName = sc.nextLine();
+                            CoursesFunction.seeOne(2, new String[]{universityName});
+                        }
+                        case 2 -> {
+                            System.out.println("Enter the total amount of hours :");
+                            int totalHours = sc.nextInt();
+                            CoursesFunction.seeOne(3, new String[]{String.valueOf(totalHours)});
+                        }
+                        case 3 -> {
+                            System.out.println("Enter the ects :");
+                            int ects = sc.nextInt();
+                            CoursesFunction.seeOne(1, new String[]{String.valueOf(ects)});
+                        }
+                        case 4 -> {
+                            System.out.println("Enter the course name :");
+                            String courseName = sc.nextLine();
+                            CoursesFunction.seeOne(4, new String[]{courseName});
+                        }
+                    }
+                }else {
+                    System.out.println("Unknown choice, type 'help' for help");
+                }
             }
 
             case "Scholarship" -> {
