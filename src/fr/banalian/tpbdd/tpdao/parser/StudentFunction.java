@@ -106,7 +106,7 @@ public class StudentFunction {
         return student.get(0);
     }
 
-    private static Student gather(Scanner scanner) {
+    protected static Student gather(Scanner scanner) {
         DAO<Student> studentDAO = new DAO<>(Student.class);
         boolean correct = false;
         Student student = null;

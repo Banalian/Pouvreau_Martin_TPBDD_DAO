@@ -46,14 +46,14 @@ public class CoursesFunction {
         return courses.get(0);
     }
 
-    private static Courses gather(Scanner scanner) {
+    protected static Courses gather(Scanner scanner) {
         DAO<Courses> coursesDAO = new DAO<>(Courses.class);
         boolean correct = false;
         Courses courses = null;
 
         System.out.println("Name: ");
         String name = scanner.nextLine().toLowerCase();
-        System.out.println("University");
+        System.out.println("University: ");
         String univ = scanner.nextLine().toLowerCase();
 
         String[] columns = new String[]{"syllabus_name", "university"};

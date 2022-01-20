@@ -46,7 +46,7 @@ public class ScholarshipFunction {
         scholarshipDAO.delete(gather(scanner));
     }
 
-    private static Scholarship gather(Scanner scanner) {
+    protected static Scholarship gather(Scanner scanner) {
         DAO<Scholarship> scholarshipDAO = new DAO<>(Scholarship.class);
         boolean correct = false;
         Scholarship scholarship = null;

@@ -24,22 +24,25 @@ public class Print {
     }
 
     public static void printApplication(ArrayList<Application> applications) {
-        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
+        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
+                "Row number",
                 "Student Id",
                 "Scholarship destination",
                 "University",
                 "Eval1 grade",
                 "Eval2 grade",
                 "Final grade");
-
+        int i = 1;
         for (Application application : applications) {
-            System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
+            System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
+                    i,
                     application.getStudentId(),
                     application.getGrant().getDestination(),
                     application.getUniversity(),
                     application.getEval1().getGrade(),
                     application.getEval2().getGrade(),
                     application.getFinalGrade());
+            i++;
         }
     }
 
