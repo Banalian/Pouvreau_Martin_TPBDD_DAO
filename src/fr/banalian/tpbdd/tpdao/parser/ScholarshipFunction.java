@@ -25,7 +25,6 @@ public class ScholarshipFunction {
     public static void seeOne(int mode, ArrayList<Object> info, Scanner scanner) {
         DAO<Scholarship> scholarshipDAO = new DAO<>(Scholarship.class);
 
-        //TODO: dcp toi tu dois juste me donner le mode et la destination si c'est en mode 1, je m'occupe de demande le nom prénom
         String[] columns;
         switch (mode) {
             case 1 -> columns = new String[]{"destination"};

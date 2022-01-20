@@ -43,6 +43,8 @@ public class Application implements Serializable {
         this.studentId = studentId;
         this.scholarship = scholarship;
         this.university = university;
+        this.eval1 = null;
+        this.eval2 = null;
     }
 
     public Application() {

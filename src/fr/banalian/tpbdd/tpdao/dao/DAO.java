@@ -1,11 +1,10 @@
 package fr.banalian.tpbdd.tpdao.dao;
 
 import fr.banalian.tpbdd.tpdao.ConnectBdd;
-import fr.banalian.tpbdd.tpdao.model.Scholarship;
 
-import java.lang.reflect.ParameterizedType;
+
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
 
 public class DAO<T> {
@@ -15,13 +14,6 @@ public class DAO<T> {
 
     public DAO(Class<T> type) {
         this.type = type;
-    }
-
-    public static void main(String[] args) {
-        String[] test = Scholarship.class.getName().split("\\.");
-        for (String s : test) {
-            System.out.println(s);
-        }
     }
 
     public List<T> getAll() {

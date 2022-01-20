@@ -18,21 +18,59 @@ public class ApplicationFunction {
         applicationDAO.persist(new Application(studentNumber, scholarship, courses));
     }
 
-    public static void update(Scanner scanner) {
+    public static void update(int mode, Scanner scanner) {
         DAO<Application> applicationDAO = new DAO<>(Application.class);
         Application application = gather(scanner);
 
-        // trucs à faire là
+        switch (mode) {
+            case 1 -> {
+                System.out.println("Which courses will the student be taking?");
+                Courses courses = CoursesFunction.gather(scanner);
+                application.setUniversity(courses);
+            }
+            case 2 -> {
+                System.out.println("Where is the student going?");
+                Scholarship scholarship = ScholarshipFunction.gather(scanner);
+                application.setGrant(scholarship);
+            }
+            case 3 -> {
+                System.out.println("Which evaluation do you want to edit ? (1 or 2)");
+                int evaluation = scanner.nextInt();
+                if (evaluation == 1 || evaluation == 2) {
+                    System.out.println("What is the new evaluation grade?");
+                    float grade = scanner.nextFloat();
+                    System.out.println("What is the new evaluation teacher?");
+                    Teacher teacher = TeacherFunction.gather(scanner);
+                    switch (evaluation) {
+                        case 1:
+                            if (application.getEval1() != null) {
+                                application.getEval1().setGrade(grade);
+                                application.getEval1().setTeacher(teacher);
+                            } else {
+                                application.setEval1(new Evaluation(grade, teacher));
+                            }
+                            break;
+                        case 2:
+                            if (application.getEval2() != null) {
+                                application.getEval2().setGrade(grade);
+                                application.getEval2().setTeacher(teacher);
+                            } else {
+                                application.setEval2(new Evaluation(grade, teacher));
+                            }
+                            break;
+                    }
+
+                } else {
+                    System.out.println("Invalid evaluation, try the process again");
+                }
+            }
+            default -> System.out.println("Invalid mode, try the process again");
+        }
+
 
         applicationDAO.update(application);
     }
 
-    public static void updateEvaluation(Scanner scanner){
-        DAO<Application> applicationDAO = new DAO<>(Application.class);
-        Application application = gather(scanner);
-
-        //Trucs à faire là
-    }
 
     public static void seeAll() {
         DAO<Application> applicationDAO = new DAO<>(Application.class);
@@ -44,9 +82,8 @@ public class ApplicationFunction {
         DAO<Application> applicationDAO = new DAO<>(Application.class);
         System.out.println("For which student do you want to see the application?");
         Student student = StudentFunction.gather(scanner);
-        ArrayList<Object> list = new ArrayList<>(){{
-        add(student.getStudentNumber();
-        }};
+        ArrayList<Object> list = new ArrayList<>();
+        list.add(student.getStudentNumber());
         ArrayList<Application> result = (ArrayList<Application>) applicationDAO.getAllByColumns(new String[]{"studentId"}, list);
 
         Print.printApplication(result);

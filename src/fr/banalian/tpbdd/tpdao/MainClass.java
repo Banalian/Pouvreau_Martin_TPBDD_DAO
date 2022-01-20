@@ -121,16 +121,7 @@ public class MainClass {
     public static void add(Class classToAdd, Scanner sc){
         switch (classToAdd.getSimpleName()) {
             case "Application" -> {
-                //request the user to enter the data
-                System.out.println("Enter the student's number :");
-                String studentNumber = sc.nextLine();
-                System.out.println("What is the destination/university of the application?");
-                String destination = sc.nextLine();
-                System.out.println("What is the name of the course?");
-                String courseName = sc.nextLine();
-
-                //create the application
-                //call the method to add the application
+                ApplicationFunction.create(sc);
 
                 System.out.println("Application added, id : ");
             }
@@ -176,8 +167,7 @@ public class MainClass {
                 System.out.println("Enter the course's University name :");
                 String universityName = sc.nextLine();
 
-                //create the course
-                //call the method to add the course
+
             }
             case "Scholarship" -> {
                 //request the user to enter the data
@@ -186,8 +176,7 @@ public class MainClass {
                 System.out.println("Enter the scholarship's total seat places :");
                 int totalSeatPlaces = sc.nextInt();
 
-                //create the scholarship
-                //call the method to add the scholarship
+                ScholarshipFunction.create(destination, totalSeatPlaces, sc);
             }
 
             default -> System.out.println("Unknown class, type 'help' for help");
@@ -197,26 +186,14 @@ public class MainClass {
     private static void update (Class classToUpdate, Scanner sc){
         switch (classToUpdate.getSimpleName()) {
             case "Application" -> {
-                System.out.println("Do you want to update an application or an evaluation? (1 or 2)");
+                System.out.println("Do you want to update an application's course, an application's destination or an evaluation? (1 or 2 or 3)");
                 int choice = sc.nextInt();
                 if (choice == 1) {
-                    System.out.println("Enter the student number of the application :");
-                    String studentNumber = sc.nextLine();
-
-                    //call the method to update the application
+                    ApplicationFunction.update(1, sc);
                 } else if (choice == 2) {
-                    System.out.println("Enter the student number of the application :");
-                    String studentNumber = sc.nextLine();
-                    System.out.println("Which evaluation do you want to update? (1 or 2)");
-                    int evaluationChoice = sc.nextInt();
-                    System.out.println("Enter the new grade :");
-                    double newGrade = sc.nextDouble();
-                    System.out.println("Enter the new teacher:");
-                    String newTeacher = sc.nextLine();
-
-                    //call the method to update the evaluation
-
-
+                    ApplicationFunction.update(2, sc);
+                } else if (choice == 3) {
+                    ApplicationFunction.update(3, sc);
                 } else {
                     System.out.println("Unknown choice, type 'help' for help");
                 }
@@ -226,7 +203,7 @@ public class MainClass {
                 System.out.println("Who's the student you want to update?");
                 String studentNumber = sc.nextLine();
 
-                //call the method to update the student
+                StudentFunction.update(sc);
 
             }
 
@@ -242,7 +219,7 @@ public class MainClass {
             }
 
             case "Scholarship" -> {
-                System.out.println("Which scholarship do you want to update?");
+                System.out.println("You cannot modify a grant/scholarship, please delete one an recreate it");
 
             }
 
@@ -253,10 +230,7 @@ public class MainClass {
     private static void delete(Class classToDelete, Scanner sc){
         switch (classToDelete.getSimpleName()) {
             case "Application" -> {
-                System.out.println("Enter the student number of the application :");
-                String studentNumber = sc.nextLine();
-
-                //call the method to delete the application
+                ApplicationFunction.delete(sc);
             }
 
             case "Student" -> {
@@ -280,9 +254,9 @@ public class MainClass {
 
             case "Scholarship" -> {
                 System.out.println("Which scholarship do you want to delete?");
-                String scholarshipName = sc.nextLine();
 
                 //call the method to delete the scholarship
+                ScholarshipFunction.delete(sc);
             }
 
             default -> System.out.println("Unknown class, type 'help' for help");
@@ -292,10 +266,16 @@ public class MainClass {
     private static void get(Class classToGet, Scanner sc){
         switch (classToGet.getSimpleName()) {
             case "Application" -> {
-                System.out.println("Enter the student number of the application :");
-                String studentNumber = sc.nextLine();
-
-                //call the method to get the application
+                System.out.println("Do you want to see all the applications or a specific one? (1 or 2)");
+                int choice = sc.nextInt();
+                if (choice == 1) {
+                    //call the method to get all the applications
+                    ApplicationFunction.seeAll();
+                }else if (choice == 2) {
+                    ApplicationFunction.seeOne(sc);
+                }else {
+                    System.out.println("Unknown choice, type 'help' for help");
+                }
             }
 
             case "Student" -> {
@@ -396,22 +376,30 @@ public class MainClass {
                         case 1 -> {
                             System.out.println("Enter the university name :");
                             String universityName = sc.nextLine();
-                            CoursesFunction.seeOne(2, new String[]{universityName});
+                            ArrayList<Object> list = new ArrayList<>();
+                            list.add(universityName);
+                            CoursesFunction.seeOne(2, list);
                         }
                         case 2 -> {
                             System.out.println("Enter the total amount of hours :");
                             int totalHours = sc.nextInt();
-                            CoursesFunction.seeOne(3, new String[]{String.valueOf(totalHours)});
+                            ArrayList<Object> list = new ArrayList<>();
+                            list.add(totalHours);
+                            CoursesFunction.seeOne(3, list);
                         }
                         case 3 -> {
                             System.out.println("Enter the ects :");
                             int ects = sc.nextInt();
-                            CoursesFunction.seeOne(1, new String[]{String.valueOf(ects)});
+                            ArrayList<Object> list = new ArrayList<>();
+                            list.add(ects);
+                            CoursesFunction.seeOne(1, list);
                         }
                         case 4 -> {
                             System.out.println("Enter the course name :");
                             String courseName = sc.nextLine();
-                            CoursesFunction.seeOne(4, new String[]{courseName});
+                            ArrayList<Object> list = new ArrayList<>();
+                            list.add(courseName);
+                            CoursesFunction.seeOne(4, list);
                         }
                     }
                 }else {
@@ -420,8 +408,27 @@ public class MainClass {
             }
 
             case "Scholarship" -> {
-                System.out.println("Which scholarship do you want to get?");
-                String scholarshipName = sc.nextLine();
+                System.out.println("Do you want to see all the scholarships or a specific one? (1 or 2)");
+                int choice = sc.nextInt();
+                if (choice == 1) {
+                    ScholarshipFunction.seeAll();
+                }else if (choice == 2) {
+                    System.out.println("Do you want to check by destination or by a teacher name ? (1 or 2)");
+                    int choice2 = sc.nextInt();
+                    if (choice2 == 1) {
+                        System.out.println("Enter the destination :");
+                        String destination = sc.nextLine();
+                        ArrayList<Object> list = new ArrayList<>();
+                        list.add(destination);
+                        ScholarshipFunction.seeOne(1,list, sc);
+                    }else if (choice2 == 2) {
+                        ScholarshipFunction.seeOne(2,new ArrayList<>() , sc);
+                    }else {
+                        System.out.println("Unknown choice, type 'help' for help");
+                    }
+                }else {
+                    System.out.println("Unknown choice, type 'help' for help");
+                }
 
                 //call the method to get the scholarship
             }
