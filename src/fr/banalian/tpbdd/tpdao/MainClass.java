@@ -24,6 +24,7 @@ public class MainClass {
 
     public static void menu() {
         System.out.println("Welcome. type 'help' for help");
+        helpMenu("main", null);
         String input;
         boolean stop = false;
         Scanner sc = new Scanner(System.in);
@@ -66,6 +67,9 @@ public class MainClass {
                 System.out.println("\t- 3 - Delete one " + name);
                 System.out.println("\t- 4 - Get one or more " + name);
                 System.out.println("Back : - Go back to the previous menu");
+                break;
+            default:
+                System.err.println("Unknown command");
 
         }
 
@@ -88,7 +92,6 @@ public class MainClass {
             case 5 -> currentClass = Scholarship.class;
         }
 
-        //TODO: show menu
         String input;
         boolean stop = false;
         do {
@@ -135,6 +138,7 @@ public class MainClass {
                 String lastName = sc.nextLine();
                 System.out.println("Enter the student's average grade :");
                 float averageGrade = sc.nextFloat();
+                sc.nextLine();
 
                 //create the student
                 //call the method to add the student
@@ -162,8 +166,10 @@ public class MainClass {
                 String description = sc.nextLine();
                 System.out.println("Enter the course's total credit amount :");
                 float ects = sc.nextFloat();
+                sc.nextLine();
                 System.out.println("Enter the course's total amount of hours :");
                 int hours = sc.nextInt();
+                sc.nextLine();
                 System.out.println("Enter the course's University name :");
                 String universityName = sc.nextLine();
 
@@ -175,6 +181,7 @@ public class MainClass {
                 String destination = sc.nextLine();
                 System.out.println("Enter the scholarship's total seat places :");
                 int totalSeatPlaces = sc.nextInt();
+                sc.nextLine();
 
                 ScholarshipFunction.create(destination, totalSeatPlaces, sc);
             }
@@ -188,6 +195,7 @@ public class MainClass {
             case "Application" -> {
                 System.out.println("Do you want to update an application's course, an application's destination or an evaluation? (1 or 2 or 3)");
                 int choice = sc.nextInt();
+                sc.nextLine();
                 if (choice == 1) {
                     ApplicationFunction.update(1, sc);
                 } else if (choice == 2) {
@@ -201,7 +209,6 @@ public class MainClass {
 
             case "Student" -> {
                 System.out.println("Who's the student you want to update?");
-                String studentNumber = sc.nextLine();
 
                 StudentFunction.update(sc);
 
@@ -268,6 +275,7 @@ public class MainClass {
             case "Application" -> {
                 System.out.println("Do you want to see all the applications or a specific one? (1 or 2)");
                 int choice = sc.nextInt();
+                sc.nextLine();
                 if (choice == 1) {
                     //call the method to get all the applications
                     ApplicationFunction.seeAll();
@@ -281,42 +289,40 @@ public class MainClass {
             case "Student" -> {
                 System.out.println("Do you want to see all the students or a specific one? (1 or 2)");
                 int choice = sc.nextInt();
+                sc.nextLine();
                 if (choice == 1) {
                     StudentFunction.seeAll();
                 } else if (choice == 2) {
                     System.out.println("Do you want to check by student number, by last name or by first name only, or by both names? (1 or 2 or 3 or 4)");
                     int choice2 = sc.nextInt();
+                    sc.nextLine();
                     if (choice2 == 1) {
-                        System.out.println("EnArrayList<> see = new ArrayList<>().add(studentNumber);ter the student number :");
+                        System.out.println("Enter the student number :");
                         String studentNumber = sc.nextLine();
-                        ArrayList<Object> see = new ArrayList<>(){{
-                            add(studentNumber);
-                        }};
-                        StudentFunction.seeOne(1, see);
+                        ArrayList<Object> list = new ArrayList<>();
+                        list.add(studentNumber);
+                        StudentFunction.seeOne(4, list);
                     }else if (choice2 == 2) {
                         System.out.println("Enter the last name :");
                         String lastName = sc.nextLine();
-                        ArrayList<Object> see = new ArrayList<>(){{
-                            add(lastName);
-                        }};
-                        StudentFunction.seeOne(2,see);
+                        ArrayList<Object> list = new ArrayList<>();
+                        list.add(lastName);
+                        StudentFunction.seeOne(1,list);
                     }else if (choice2 == 3) {
                         System.out.println("Enter the first name :");
                         String firstName = sc.nextLine();
-                        ArrayList<Object> see = new ArrayList<>(){{
-                            add(firstName);
-                        }};
-                        StudentFunction.seeOne(3,see);
+                        ArrayList<Object> list = new ArrayList<>();
+                        list.add(firstName);
+                        StudentFunction.seeOne(2,list);
                     }else if (choice2 == 4) {
                         System.out.println("Enter the first name :");
                         String firstName = sc.nextLine();
                         System.out.println("Enter the last name :");
                         String lastName = sc.nextLine();
-                        ArrayList<Object> see = new ArrayList<>(){{
-                            add(firstName);
-                            add(lastName);
-                        }};
-                        StudentFunction.seeOne(4,see);
+                        ArrayList<Object> list = new ArrayList<>();
+                        list.add(firstName);
+                        list.add(lastName);
+                        StudentFunction.seeOne(3,list);
 
                     }else {
                         System.out.println("Unknown choice, type 'help' for help");
@@ -327,35 +333,34 @@ public class MainClass {
             case "Teacher" -> {
                 System.out.println("Do you want to see all the teachers or a specific one? (1 or 2)");
                 int choice = sc.nextInt();
+                sc.nextLine();
                 if (choice == 1) {
                     TeacherFunction.seeAll();
                 }else if (choice == 2) {
                     System.out.println("Do you want to check by last name or by first name only, or by both names? (1 or 2 or 3)");
                     int choice2 = sc.nextInt();
+                    sc.nextLine();
                     if (choice2 == 1) {
                         System.out.println("Enter the last name :");
                         String lastName = sc.nextLine();
-                        ArrayList<Object> see = new ArrayList<>(){{
-                            add(lastName);
-                        }};
-                        TeacherFunction.seeOne(1,see);
+                        ArrayList<Object> list = new ArrayList<>();
+                        list.add(lastName);
+                        TeacherFunction.seeOne(1,list);
                     } else if (choice2 == 2) {
                         System.out.println("Enter the first name :");
                         String firstName = sc.nextLine();
-                        ArrayList<Object> see = new ArrayList<>(){{
-                            add(firstName);
-                        }};
-                        TeacherFunction.seeOne(2,see);
+                        ArrayList<Object> list = new ArrayList<>();
+                        list.add(firstName);
+                        TeacherFunction.seeOne(2,list);
                     }else if (choice2 == 3) {
                         System.out.println("Enter the first name :");
                         String firstName = sc.nextLine();
                         System.out.println("Enter the last name :");
                         String lastName = sc.nextLine();
-                        ArrayList<Object> see = new ArrayList<>(){{
-                            add(firstName);
-                            add(lastName);
-                        }};
-                        TeacherFunction.seeOne(3,see);
+                        ArrayList<Object> list = new ArrayList<>();
+                        list.add(firstName);
+                        list.add(lastName);
+                        TeacherFunction.seeOne(3,list);
                     }
                 }else {
                     System.out.println("Unknown choice, type 'help' for help");
@@ -367,11 +372,13 @@ public class MainClass {
             case "Courses" -> {
                 System.out.println("Do you want to see all the courses or a specific one? (1 or 2)");
                 int choice = sc.nextInt();
+                sc.nextLine();
                 if (choice == 1) {
                     CoursesFunction.seeAll();
                 }else if (choice == 2) {
                     System.out.println("Do you want to check by university name, by hours, by ects or by course name ? (1 or 2 or 3 or 4)");
                     int choice2 = sc.nextInt();
+                    sc.nextLine();
                     switch (choice2) {
                         case 1 -> {
                             System.out.println("Enter the university name :");
@@ -383,6 +390,7 @@ public class MainClass {
                         case 2 -> {
                             System.out.println("Enter the total amount of hours :");
                             int totalHours = sc.nextInt();
+                            sc.nextLine();
                             ArrayList<Object> list = new ArrayList<>();
                             list.add(totalHours);
                             CoursesFunction.seeOne(3, list);
@@ -390,6 +398,7 @@ public class MainClass {
                         case 3 -> {
                             System.out.println("Enter the ects :");
                             int ects = sc.nextInt();
+                            sc.nextLine();
                             ArrayList<Object> list = new ArrayList<>();
                             list.add(ects);
                             CoursesFunction.seeOne(1, list);
@@ -410,11 +419,13 @@ public class MainClass {
             case "Scholarship" -> {
                 System.out.println("Do you want to see all the scholarships or a specific one? (1 or 2)");
                 int choice = sc.nextInt();
+                sc.nextLine();
                 if (choice == 1) {
                     ScholarshipFunction.seeAll();
                 }else if (choice == 2) {
                     System.out.println("Do you want to check by destination or by a teacher name ? (1 or 2)");
                     int choice2 = sc.nextInt();
+                    sc.nextLine();
                     if (choice2 == 1) {
                         System.out.println("Enter the destination :");
                         String destination = sc.nextLine();
@@ -436,42 +447,6 @@ public class MainClass {
             default -> System.out.println("Unknown class, type 'help' for help");
         }
     }
-/*
-Main:
-Help
-Applications
-    Create new application
-    Update application X
-    Update application evaluation
-    See all applications
-    See application of student X
-    Delete applicationX
-Students
-    Create new student
-    Update student X
-    See all students
-    See student X
-    Delete student X
-Teachers
-    Create new teacher
-    Update teacher X
-    See all teachers
-    See teacher X
-    Delete teacher X
-Scholarships
-    Create new scholarship
-    See all scholarship
-    See specific scholarship using X column
-    Delete scholarship
-Courses
-    Create new course
-    See all courses
-    See courses by X
-    Delete course X
-University
-    Delete university X
-Exit
- */
 
 
     //=====================================ISTYPE=========================================

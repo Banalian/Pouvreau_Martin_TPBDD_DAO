@@ -74,6 +74,7 @@ public class StudentFunction {
 
         do {
             mode = scanner.nextInt();
+            scanner.nextLine();
             if(mode == 1 || mode == 2 ){
                 correct = true;
             } else {
@@ -89,7 +90,6 @@ public class StudentFunction {
                 System.out.println("What is the student number you're searching for?\n");
                 String id = scanner.nextLine();
                 student.add(studentDAO.get(id));
-                //TODO: gestion du "si 0 étudiant correspondant"
 
                 System.out.println("Is this the correct Student?");
                 Print.printStudent(student);

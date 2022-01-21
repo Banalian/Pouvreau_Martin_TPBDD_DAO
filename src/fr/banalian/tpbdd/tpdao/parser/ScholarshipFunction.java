@@ -67,6 +67,7 @@ public class ScholarshipFunction {
                 Print.printGrant(result);
 
                 int id = scanner.nextInt();
+                scanner.nextLine();
 
                 for (Scholarship value : result) {
                     if (((Scholarship) value).getId() == id) {

@@ -36,9 +36,11 @@ public class ApplicationFunction {
             case 3 -> {
                 System.out.println("Which evaluation do you want to edit ? (1 or 2)");
                 int evaluation = scanner.nextInt();
+                scanner.nextLine();
                 if (evaluation == 1 || evaluation == 2) {
                     System.out.println("What is the new evaluation grade?");
                     float grade = scanner.nextFloat();
+                    scanner.nextLine();
                     System.out.println("What is the new evaluation teacher?");
                     Teacher teacher = TeacherFunction.gather(scanner);
                     switch (evaluation) {
@@ -116,6 +118,7 @@ public class ApplicationFunction {
                 Print.printApplication(result);
 
                 int id = scanner.nextInt();
+                scanner.nextLine();
 
                     if ((id <= result.size())) {
                         correct = true;

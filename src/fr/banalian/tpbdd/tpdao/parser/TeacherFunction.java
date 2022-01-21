@@ -80,6 +80,7 @@ public class TeacherFunction {
                 Print.printTeacher(result);
 
                 int id = scanner.nextInt();
+                scanner.nextLine();
 
                 for (Teacher value : result) {
                     if (((Teacher) value).getId() == id) {

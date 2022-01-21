@@ -71,6 +71,7 @@ public class CoursesFunction {
                 Print.printCourses(result);
 
                 int id = scanner.nextInt();
+                scanner.nextLine();
 
                 for (Courses value : result) {
                     if (((Courses) value).getId() == id) {
